@@ -1,32 +1,33 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+    <Nav :categories="listCategory"/>
     <router-view/>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+@import "assets/css/style.css";
 </style>
+<script>
+    import Nav from "./components/Nav";
+    export default {
+      data() {
+        return {
+          listCategory: []
+        }
+      },
+      components: {Nav},
+      created() {
+        this.loadListCategory()
+      },
+      methods: {
+        async loadListCategory() {
+          this.listCategory = await fetch(
+            `${this.$store.getters.getServerUrl}/category`
+          ).then(response => response.json())
+          console.log(this.listCategory)
+        }
+      },
+
+    }
+</script>
