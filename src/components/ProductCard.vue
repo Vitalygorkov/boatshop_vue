@@ -10,8 +10,8 @@
         </div> -->
         <div class="product-lodki-text1">
             <div class="cart-product-name">
-                лодка
             <a :href="product.category+'/'+product.slug"><h2>{{ product.name }}</h2></a>
+            {{ product.price }}
             </div>
             <!-- <details class="cart_product"><summary class="all_characteristics">
             <div class="text-characteristics-container">

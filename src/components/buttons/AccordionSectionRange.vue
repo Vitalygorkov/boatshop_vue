@@ -31,6 +31,7 @@
 
 
 <script>
+import {mapActions} from 'vuex'
 export default {
     name: 'SearchMenu',
     data() {
@@ -42,17 +43,20 @@ export default {
     },
     props: ['title2'],
     methods: {
-        toggleShowForm() {
-            this.showForm = !this.showForm
-        },
-        setRangeSlider() {
-          if (this.minPrice > this.maxPrice) {
-            let temp = this.maxPrice;
-            this.maxPrice = this.minPrice;
-            this.minPrice = temp;
-          }
+      ...mapActions(['filter_products_by_price']),
+      toggleShowForm() {
+          this.showForm = !this.showForm
+      },
+      setRangeSlider() {
+        this.filter_products_by_price([this.minPrice,this.maxPrice])
+        if (this.minPrice > this.maxPrice) {
+          let temp = this.maxPrice;
+          this.maxPrice = this.minPrice;
+          this.minPrice = temp;
         }
-    }
+      },
+    },
+    
 }
 
 

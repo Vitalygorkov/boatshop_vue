@@ -4,9 +4,21 @@
   <div class="block-results">
 
     <div class="product-container">
-      <div v-for="product in getProducts" :key="product.name">
+      <div id="example-1">
+      <button v-on:click="getFilterPrice">knopka</button>
+      <p>{{ getFilterPrice }}</p>
+      </div>
+      <p>Сортированные блоки:</p><br>
+
+      <div v-for="product in getSortProducts" :key="product.name">
         <product-card :product="product"/>
       </div>
+
+      <!-- <br><p>Несортированные блоки:</p><br>
+
+      <div v-for="product in getProducts" :key="product.name">
+        <product-card :product="product"/>Le,kbrfn
+      </div> -->
 
     <!-- <div v-for="product in listProducts" :key="product.name" >{{ product.name }}</div> -->
       <!-- <div v-for="product in listProducts" :key="product.name" >
@@ -30,11 +42,15 @@ export default {
   //     listProducts: [],
   //   }
   // },
-  computed: mapGetters(['getProducts']),
-  methods: mapActions(['fetchProducts']),
+  computed: mapGetters(['getSortProducts', 'getProducts','getFilterPrice']),
+  methods: mapActions(['fetchProducts','reset_sorted_products','filter_products_by_price']),
   async mounted() {
     this.fetchProducts();
+    this.reset_sorted_products();
   },
+  // async mounted() {
+  //   this.reset_sorted_products();
+  // },
   components: {
     ProductCard,
     SearchMenu
