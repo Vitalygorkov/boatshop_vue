@@ -25,7 +25,6 @@
           this.listCategory = await fetch(
             `${this.$store.getters.getServerUrl}/category`
           ).then(response => response.json())
-          console.log(this.listCategory)
         }
       },
 

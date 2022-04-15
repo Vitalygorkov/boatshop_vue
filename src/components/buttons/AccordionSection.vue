@@ -21,7 +21,6 @@ export default {
     methods: {
         toggleShowForm() {
             this.showForm = !this.showForm
-            console.log(this.showForm)
         }
     }
 }
