@@ -1,7 +1,7 @@
   <template>
   <div class="search-menu-box">
       <accordion-section :title="title" :content="content"/>
-      <accordion-section-range :title2="title2"/>
+      <accordion-section-range parametr="price" title="Цена" :min_value="0" :max_value="215000" unitType="Р"/>
 
   </div>
 
@@ -43,6 +43,10 @@ export default {
     display: block;
     min-width: 230px;
 }
-
+@media all and (max-width: 720px) {
+    .search-menu-box{
+        display: none;
+    }
+}
 
 </style>

@@ -1,28 +1,28 @@
 <template>
 <div>
-    <button @click="toggleShowForm" class="accordion">{{ title2 }}</button>
+    <button @click="toggleShowForm" class="accordion">{{ title }}</button>
     <div v-bind:class="{ panel: showForm }">
         <div class="range-slider">
           <input
               type="range"
-              min="0"
-              max="200000"
+              :min="min_value"
+              :max="max_value"
               step="100"
-              v-model.number="minPrice"
+              v-model.number="local_min"
               @change="setRangeSlider"
-          >
+          > 
           <input
               type="range"
-              min="0"
-              max="200000"
+              :min="min_value"
+              :max="max_value"
               step="100"
-              v-model.number="maxPrice"
+              v-model.number="local_max"
               @change="setRangeSlider"
           >
-        </div>
+        </div>{{ unitType }}
         <div class="range-values">
-          <p>Min: {{ minPrice }}</p>
-          <p>Max: {{ maxPrice }}</p>
+          <p>От: {{ local_min }} {{ unitType }}</p> 
+          <p>До: {{ local_max }} {{ unitType }}</p>
         </div>
     </div>
 
@@ -37,24 +37,39 @@ export default {
     data() {
         return {
             showForm: true,
-            minPrice:0,
-            maxPrice:200000
+            local_min: 0,
+            local_max: this.max_value,
         }
     },
-    props: ['title2'],
+    props: {
+      title: String,
+      min_value: Number,
+      max_value: Number,
+      unitType: String,
+      parametr: String,
+    },
     methods: {
-      ...mapActions(['filter_products_by_price']),
+      ...mapActions(['FILTERS_PRODUCTS_SET']),
       toggleShowForm() {
           this.showForm = !this.showForm
-      },
+        },
       setRangeSlider() {
-        this.filter_products_by_price([this.minPrice,this.maxPrice])
-        if (this.minPrice > this.maxPrice) {
-          let temp = this.maxPrice;
-          this.maxPrice = this.minPrice;
-          this.minPrice = temp;
+        
+        if (this.local_min > this.local_max) {
+          let temp = this.local_max;
+          this.local_max = this.local_min;
+          this.local_min = temp;
+
+          this.FILTERS_PRODUCTS_SET({"min_price": this.local_min, "max_price": this.local_max})
         }
+        else {
+          this.FILTERS_PRODUCTS_SET({"min_price": this.local_min, "max_price": this.local_max})
+        }
+      
       },
+      // mounted() {
+      //   this.filter_products_by_price();
+      // }
     },
     
 }

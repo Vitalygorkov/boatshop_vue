@@ -1,32 +1,46 @@
 <template>
   <div id="app">
-    <Nav :categories="listCategory"/>
+    <Nav/>
     <router-view/>
   </div>
 </template>
 
 <style>
-@import "assets/css/style.css";
+
 </style>
 <script>
+    import {mapGetters, mapActions} from 'vuex'
     import Nav from "./components/Nav";
     export default {
-      data() {
-        return {
-          listCategory: []
-        }
-      },
+      // data() {
+      //   return {
+      //     listCategory: []
+      //   }
+      // },
       components: {Nav},
-      created() {
-        this.loadListCategory()
+      // created() {
+      //   this.loadListCategory()
+      // },
+      computed: { 
+        ...mapGetters(['GET_SERVER_URL']),
+
       },
-      methods: {
-        async loadListCategory() {
-          this.listCategory = await fetch(
-            `${this.$store.getters.getServerUrl}/category`
-          ).then(response => response.json())
-        }
+      methods: { 
+        ...mapActions(['FETCH_CATEGORIES']),
+        // async loadListCategory() {
+        //   this.listCategory = await fetch(
+        //     `${this.GET_SERVER_URL}/category`
+        //   ).then(response => response.json())
+        // }
+
       },
+      // methods: {
+      //   async loadListCategory() {
+      //     this.listCategory = await fetch(
+      //       `${this.$store.getters.GET_SERVER_URLl}/category`
+      //     ).then(response => response.json())
+      //   }
+      // },
 
     }
 </script>

@@ -1,133 +1,169 @@
 <template>
-<div>
-    <div class="product-display-lodki">
-        <!-- <div v-if="product.sale" class="sale_block">
-            СКИДКА {{ product.sale }} %
-        </div> -->
-        <!-- <div v-if="product.image" class="prod-display-lodki-inside-img">
-
-            <a href="{{ product.slug }}"><img class="product-display-img" src="#"></a>
-        </div> -->
-        <div class="product-lodki-text1">
-            <div class="cart-product-name">
-            <a :href="product.category+'/'+product.slug"><h2>{{ product.name }}</h2></a>
-            {{ product.price }}
-            </div>
-            <!-- <details class="cart_product"><summary class="all_characteristics">
-            <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Длина:</div>
-            <div class="text-characteristics">{{ product.length }} см</div>
-            </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Ширина:</div>
-            <div class="text-characteristics">{{ product.width }} см</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Диаметр баллонов:</div>
-            <div class="text-characteristics">{{ product.cylinder_diameter }} см</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Вес лодки:</div>
-            <div class="text-characteristics">{{ product.boat_weight }} кг</div>
-                </div>
-                <div class="text-characteristics-container">
-                <center><font style="color:blue">ПОКАЗАТЬ ХАРАКТЕРИСТИКИ:</font></center>
-                </div>
-            </summary>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Производитель:</div>
-            <div class="text-characteristics">{{ product.manufacturer }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Тип дна:</div>
-            <div class="text-characteristics">{{ product.category }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Длина кокпита (см):</div>
-            <div class="text-characteristics">{{ product.cockpit_length }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Ширина кокпита (см):</div>
-            <div class="text-characteristics">{{ product.cockpit_width }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Плотность ткани борта (г/м²):</div>
-            <div class="text-characteristics">{{ product.fabric_thickness_side }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Плотность ткани дна (г/м²):</div>
-            <div class="text-characteristics">{{ product.fabric_thickness_bottom }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Кол-во надувных отсеков:</div>
-            <div class="text-characteristics">{{ product.inflatable_compartments }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Грузоподъемность (кг):</div>
-            <div class="text-characteristics">{{ product.load_capacity }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Пассожировместимость (чел):</div>
-            <div class="text-characteristics">{{ product.passenger_capacity }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Макс мощность мотора (лс):</div>
-            <div class="text-characteristics">{{ product.maximum_motor_power }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Вес полного комплекта кг:</div>
-            <div class="text-characteristics">{{ product.complete_set_weight }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Фальшборт:</div>
-            <div class="text-characteristics">{{ product.bulwark }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Киль:</div>
-            <div class="text-characteristics">{{ product.keel }}</div>
-                </div>
-                <div class="text-characteristics-container">
-            <div class="text-characteristics-name">Габариты упаковки(Д*Ш*В):</div>
-            <div class="text-characteristics">{{ product.upak }}</div>
-                </div>
-            </details>
-        </div> -->
-
-        <!-- <div class="price-sale-button-block">
-            {% if product.sale != 0 %}
-            <div class="prod-display-lodki-inside-price">
-                Цена: <font size="5"> {{ product.get_sale }}</font> р.
-            </div>
-            <div class="prod-display-lodki-inside-price">
-                <s><font color="#20B2AA">Цена: </font></s><font color="#20B2AA" size="5"><s>{{ product.price }}</s></font><font color="#20B2AA"><s> р.</s></font>
-            </div>
-            <div class="sale_block">
-                -{{ product.sale }} %
-            </div>
-
-            {% else %}
-            <div class="prod-display-lodki-inside-price">
-                <p>Цена: <font size="5">{{ product.price }}</font> р.</p>
-            </div>
-            {% endif %}
-
-            <div class="prod-display-lodki-inside-price">
-                <form action="/contacts/">
-                <input class="button-search" type="submit" value="Заказать">
-                </form>
-            </div> -->
+<div class="card">
+    <div class="card-heart">
+        <a href="#">
+            <img src="..\src\assets\img\like.png">
+        </a>
+    </div>
+    <a :href="product.product_abs_url"><img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image"></a>
+    <div class="card-body">
+        <div class="card-title card-sale">
+            <a :href="product.product_abs_url">{{ product.name }}</a>
+        </div>
+        <div class="card-prise">
+            {{ product.price }} руб.
+        </div>
+        <div class="card-discount">
+            <span class="card-discount-price">1500 руб.</span>
+            <span class="card-discount-size">7%</span>
+        </div>
+        <div class="card-xarakteristiki card-brona">
+            <a href="#">ХАРАКТЕРИСТИКИ</a>  
         </div>
     </div>
-</div>    
+    <!-- <div class="card-shopping">
+        <a href="#">В КОРЗИНУ</a>
+    </div> -->
+</div>   
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
     props: ['product'],
+    computed: {
+    ...mapGetters(['GET_MEDIA_URL',]),
+
+    },
+    methods: {
+        // geturl(category) {
+        //     // let url = 'https://neptun55.ru/media'+ category
+        //     this.GET_CATEGORIES.forEach(element => {
+        //         console.log(element.id)
+        //         if (element.id == category)
+        //         return element
+        //         else
+        //         console.log("нет элемента")
+        //     });
+        //     // string.split('media')[1]
+            
+        // }
+    },
 }
 
 
 </script>
 <style>
+  .card{
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    font-family: montserrat;
+  }
+  .card-image{
+    max-width: 100%;
+    max-height: 250px;
+    transition: 1s;
+   }
+   .card-image:hover{
+    transform: scale(1.1);
+  }
 
+
+  .card-body{
+    padding: 4px 7px;
+  }
+  .card-title{
+    font-size: 18px;
+  }
+  .card-title a{
+    text-decoration: none;
+    color: #000;
+  }
+  .card-title a:hover{
+    color: red;
+  }
+  .card-sale::before{
+    content: 'SALE';
+    background: red;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  .card-prise{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 6px;
+  }
+  .card-discount{
+    font-size: 3;
+    margin-top: 4px;
+  }
+  .card-discount-price{
+    color: #a2a2a2;
+    text-decoration: line-through;
+  }
+  .card-discount-size{
+    color: red;
+    font-weight: bold;
+    padding: 2px;
+    background: #fff1f1;
+  }
+  .card-xarakteristiki{
+    font-size: 15px;
+  }
+  .card-xarakteristiki a{
+    text-decoration: none;
+    color: #2a5fc1;
+    margin-top: 4px;
+    background: #ecf6fb;
+  }
+  .card-xarakteristiki a:hover{
+    color: rgb(136, 0, 255);
+  }
+  .card-brona::before{
+    content: 'АКЦИЯ';
+    font-style: italic;
+    background: #fffc00;
+    padding: 2px 3px;
+    border-radius: 3px;
+    text-shadow: 0 0 1px #897f72;
+    font-weight: normal;
+  }
+  .card-heart{
+    position: absolute;
+    top: 170px;
+    right: 10px;
+    background: rgb(174, 234, 251);
+    padding: 5px;
+    border-radius: 30px;
+    opacity: 0;
+    transition: opacity .5s ease-in;
+  }
+  .card:hover{
+    box-shadow: 0 0 5px rgb(155, 205, 214);
+  }
+  .card:hover .card-heart{
+    opacity: 1;
+  }
+  .card-shopping {
+    text-decoration: none;
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 40px 40px #F137A6 inset, 0 0 0 0 #F137A6;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: white;
+    transition: .15s ease-in-out;
+  }
+  .card-shopping:hover {
+    box-shadow: 0 0 10px 0 #F137A6 inset, 0 0 10px 4px #F137A6;
+    color: #F137A6;
+  }
 </style>
