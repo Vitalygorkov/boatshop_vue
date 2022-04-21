@@ -51,25 +51,32 @@ export default {
       productsPerPage: 10,
       pageNumber: 1,
       filteredProducts: [],
-      // minPrice: [0],
-      // maxPrice: [999999],
+      
     }
   },
   methods: { 
     ...mapActions(['FETCH_PRODUCTS']),
     filterProducts() {
-      // // console.log('функция filter products')
-      // // console.log(this.filteredProducts)
-      // this.filteredProducts = [...this.GET_PRODUCTS]
-      // console.log('копирование объектов')
-      // // console.log(this.filteredProducts)
-      // let min = this.minPrice
-      // let max = this.maxPrice
-      // this.filteredProducts = this.filteredProducts.filter(function(item) {
-      //   // console.log('перед ретерном')
-      //   // console.log(min,max)
-      //   return item.price >= min && item.price <= max
-      // })
+      // console.log('функция filter products')
+      // console.log(this.filteredProducts)
+      this.filteredProducts = [...this.GET_PRODUCTS]
+      console.log('копирование объектов')
+      // console.log(this.filteredProducts)
+      let filterset = this.GET_FILTER_PRODUCTS_SET
+      let lastcategory = this.LAST_CATEGORY
+      // if (lastcategory) {
+      // this.filteredProducts = this.filteredProducts.filter(
+      //   function(item){
+      //   console.log('функция фильтра по категории')
+      //   return item.category == lastcategory
+      //   })
+      // }
+      this.filteredProducts = this.filteredProducts.filter(function(item) {
+        // console.log('перед ретерном')
+        // console.log(min,max)
+        console.log('функция фильтра по цене')
+        return item.price >= filterset.min_price && item.price <= filterset.max_price && item.category == lastcategory
+      })
     },
     pageClick(page) {
       this.pageNumber = page
@@ -83,12 +90,9 @@ export default {
     paginatedProducts() {
       let from = (this.pageNumber - 1)*this.productsPerPage
       let to = from + this.productsPerPage
-      console.log(from,to)
-      console.log(this.FilterProductsSet.slice(from,to))
       return this.FilterProductsSet.slice(from,to)
     },
     FilterProductsSet() {
-      console.log(this.filteredProducts[0])
       console.log(this.filteredProducts.length)
       if (this.filteredProducts.length) {
         // console.log(this.filteredProducts[0])
@@ -113,14 +117,22 @@ export default {
     // }
   },
   watch: {
-    minPrice() {
-      this.filterProducts()
-      console.log('сработал maxPrice')
+    // minPrice() {
+    //   this.filterProducts()
+    //   console.log('сработал maxPrice')
+    // },
+    // maxPrice() {
+    //   this.filterProducts()
+    //   console.log('сработал maxPrice')    
+    // },
+    GET_FILTER_PRODUCTS_SET() {
+      console.log('сработал GET_FILTER_PRODUCTS_SET') 
+      this.filterProducts()   
     },
-    maxPrice() {
-      this.filterProducts()
-      console.log('сработал maxPrice')    
-    },  
+    LAST_CATEGORY() {
+      console.log('сработал LAST_CATEGORY') 
+      this.filterProducts()   
+    }, 
   },
   mounted() {
     this.FETCH_PRODUCTS();

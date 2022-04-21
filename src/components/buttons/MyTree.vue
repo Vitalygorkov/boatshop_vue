@@ -1,24 +1,35 @@
 <template>
-  <div class="tree">
-    до
     <!-- https://www.digitalocean.com/community/tutorials/vuejs-recursive-components -->
-    <ul>
-      <li v-for="category in treeData" v-if="category.level ==0" :key="category.id">{{category.name}}
+    <nav class="menu">
+    <ul class="menu__list">
+        <li v-for="category in treeData" v-if="category.level ==0" :key="category.id"><a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)">{{category.name}}</a>
         <my-node-tree :node="treeData" :parent="category.id"></my-node-tree>
-      </li>
+        </li>
     </ul>
-    <!-- {{treeData}} -->
-    после
-  </div>
+    </nav>
 </template>
 
 <script>
 import MyNodeTree from './MyNodeTree';
-
+import {mapActions} from 'vuex'
 export default {
+  data() {
+    return {
+      listOne: false,
+    }
+  },
   props: {
     treeData: Array
   },
+  	methods: { 
+	...mapActions(['CHANGE_LAST_CATEGORY','LAST_CATEGORY']),
+	changeLastCategory(category, istrue) {
+    console.log(istrue)
+    if (istrue) {
+      		this.CHANGE_LAST_CATEGORY(category)
+    }
+	},
+	},
   components: {
     MyNodeTree
   }
@@ -26,8 +37,51 @@ export default {
 </script>
 
 <style>
-.tree-list ul {
-  padding-left: 16px;
-  margin: 6px 0;
+.menu{
+  width: 100%;
 }
+.menu a {
+    text-decoration: none;
+    color: #000;
+}
+.menu li{
+  position: relative;
+  list-style: none;
+}
+.menu li:hover{
+  transition: 0.4s;
+  background-color: rgb(214, 202, 202);
+}
+.menu__list{
+  display: flex;
+  justify-content: space-between;
+}
+.menu__list > li{
+  padding: 15px;
+} 
+.menu__list>li:hover .sub-menu__list{
+  display: block;
+}
+.sub-menu__list{
+  display: none;
+  min-width: 250px;
+  position: absolute;
+  left: -20px;
+  top: 46px;
+  background-color: #fff;
+}
+.sub-menu__list>li:hover .sub-sub-menu__list{
+  display: block;
+}
+.sub-sub-menu__list{
+  display: none;
+  min-width: 220px;
+  position: absolute;
+  top: -38px;
+  left: 90%;
+  z-index: 11;
+}
+ /* li > ul {
+  display: none;
+} */
 </style>

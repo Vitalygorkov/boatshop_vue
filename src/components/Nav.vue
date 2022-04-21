@@ -7,7 +7,7 @@
 				<h2>Доставка лодок во все регионы россии</h2>
 			</div>
 			<div class="bloki1-sub2">
-				<h3>Email:9039274690@mail.ru</h3>
+				<h3>Email:clients@neptun55.ru</h3>
 			</div>
 			<div class="bloki1-sub3">
 				<img src="..\src\assets\img\phone-call.png">
@@ -65,15 +65,13 @@
 		</div>
 
 		<div class="bloki3">
-			<div class="header-list">
-				<div class="category_parent" v-for="category in GET_CATEGORIES" v-if="category.level ==0" :key="category.id" @click="changeLastCategory(category.id)">{{ category.name }}
-				</div>				
-			</div>
+				<my-tree :tree-data="GET_CATEGORIES"></my-tree>
+				<!-- <div class="category_parent" v-for="category in GET_CATEGORIES" v-if="category.level ==0" :key="category.id" @click="changeLastCategory(category.id)">{{ category.name }} -->
+				<!-- </div>				 -->
 		</div>
-		<tree :tree-data="tree"></tree>
-		<my-tree :tree-data="GET_CATEGORIES"></my-tree>
+		
 
-	
+		<!-- <my-tree :tree-data="GET_CATEGORIES"></my-tree> -->
 	</div>
 <!-- https://www.digitalocean.com/community/tutorials/vuejs-recursive-components -->
 	<!-- <ul>
@@ -101,29 +99,14 @@
 </template>
 <script>
 import {mapGetters, mapActions} from 'vuex'
-import Tree from "../components/buttons/Tree";
 import MyTree from './buttons/MyTree';
 export default {
 		data() {
-			return {
-				tree: {
-				label: "A cool folder",
-				children: [
-					{
-					label: "A cool sub-folder 1",
-					children: [
-						{ label: "A cool sub-sub-folder 1" },
-						{ label: "A cool sub-sub-folder 2" }
-					]
-					},
-					{ label: "This one is not that cool" }
-				]
-				}				
+			return {			
 			}
 		},
 
 	components: {
-		Tree,
 		MyTree
 	},
     computed: {
@@ -266,24 +249,6 @@ body{
     font-weight: 900;   
 }
 
-.header-list{
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	padding: 18px;
-}
-.header-list a{
-    text-decoration: none;
-    color: black;
-}
-.category_parent{
-	padding: 8px;
-}
-.category_parent:hover{
-	background: #A4E2FD;
-}
 
   .d7 {background: #F4FBFF;}
   .d7:after {content:""; clear:both; display:table}
