@@ -20,11 +20,15 @@
 		<div class="bloki2">
 
 			<div class="bloki2-sub1">
+				<router-link :to="{ name: 'home' }">
 				<img class="img-logo" src="..\src\assets\img\neptfoto (2).png" alt="neptfoto">
+				</router-link>
 			</div>
 
 			<div class="bloki2-sub1">
+				<router-link :to="{ name: 'home' }">
 				<img src="..\src\assets\img\nept55text.png">
+				</router-link>
 			</div>
 
 			<div class="d7">

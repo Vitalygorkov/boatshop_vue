@@ -5,12 +5,13 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    backendUrl: "https://neptun55.ru/api/v1",
-    mediaUrl: "https://neptun55.ru/media",
+    backendUrl: "http://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1",
+    mediaUrl: "http://ovz2.vet-omsk.me2jm.vps.myjino.ru/media",
     products: [],
     categories: [],
     filtersProductSet: {},
     last_category: [],
+    heart_products: [],
   },
   mutations: {
     UPDATE_PRODUCTS(state, products) {
@@ -31,14 +32,16 @@ const store = new Vuex.Store({
   actions: {
     async FETCH_PRODUCTS(ctx) {
       const res = await fetch(
-        'https://neptun55.ru/api/v1/product/'
+        `${this.state.backendUrl}/product/`
+        // 'https://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1/product/'
       )
       const products = await res.json()
       ctx.commit('UPDATE_PRODUCTS', products)
     },
     async FETCH_CATEGORIES(ctx) {
       const res = await fetch(
-        'https://neptun55.ru/api/v1/category/'
+        `${this.state.backendUrl}/category/`
+        // 'https://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1/category/'
       )
       console.log('Запрос категорий')
       const categories = await res.json()
@@ -48,12 +51,14 @@ const store = new Vuex.Store({
       console.log(params)
       var Set = this.filtersProductSet
       var obj = Object.assign({Set}, params);
-      console.log(obj)
       context.commit('CHANGE_FILTERS_PRODUCTS_SET', obj)
     },
     async CHANGE_LAST_CATEGORY(context, params) {
+      context.commit('UPDATE_LAST_CATEGORY', params)
+    },
+    async ADD_HEART_PRODUCTS(context, params) {
       console.log("Last_category")
-      console.log(params)
+      // console.log(params)
       context.commit('UPDATE_LAST_CATEGORY', params)
     }
 
@@ -67,6 +72,9 @@ const store = new Vuex.Store({
     },
     GET_PRODUCTS: state => {
       return state.products
+    },
+    GET_HEART_PRODUCTS: state => {
+      return state.heart_products
     },
     GET_CATEGORIES: state => {
       return state.categories

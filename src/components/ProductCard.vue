@@ -5,10 +5,20 @@
             <img src="..\src\assets\img\like.png">
         </a>
     </div>
-    <a :href="product.product_abs_url"><img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image"></a>
+      <router-link :to="{ name: 'productpage', params:{ id: product.id } }">
+    <!-- <a :href="product.product_abs_url"></a> -->
+      <a :href="product.product_abs_url">
+      <img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image">
+      </a>
+      </router-link>
     <div class="card-body">
         <div class="card-title card-sale">
-            <a :href="product.product_abs_url">{{ product.name }}</a>
+            <!-- <a :href="product.product_abs_url"></a> -->
+              <router-link :to="{ name: 'productpage', params:{ id: product.id } }">
+              <a :href="product.product_abs_url"> 
+              {{ product.name }}
+              </a>
+              </router-link>
         </div>
         <div class="card-prise">
             {{ product.price }} руб.
@@ -142,6 +152,7 @@ export default {
     border-radius: 30px;
     opacity: 0;
     transition: opacity .5s ease-in;
+    z-index: 2;
   }
   .card:hover{
     box-shadow: 0 0 5px rgb(155, 205, 214);

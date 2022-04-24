@@ -62,7 +62,7 @@ export default {
           this.showForm = !this.showForm
         },
       setRangeSlider() {
-        console.log('сработал рейнжслайдер')
+        
         if (this.local_min > this.local_max) {
           let temp = this.local_max;
           this.local_max = this.local_min;
@@ -104,11 +104,11 @@ img{
   flex-direction: row;
   justify-content: space-between;
   padding: 9px;
-  background-color: #e1f6fc;
+  background-color: #dadada;
   width: 100%;
 }
 .accordion_title:hover {
-  background-color: rgb(201, 216, 218);
+  background-color: #ccc;
 }
 /* .accordion {
   background-color: #dadada;
@@ -135,7 +135,7 @@ img{
   font-family: Montserrat, Helvetica, sans-serif;
   font-size: 14px;
   padding: 0 10px;
-  background-color: #e1f6fc;
+  background-color: #dadada;
   /* overflow: hidden; */
 }
 .panel_on {

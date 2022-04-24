@@ -2,7 +2,12 @@
     <!-- https://www.digitalocean.com/community/tutorials/vuejs-recursive-components -->
     <nav class="menu">
     <ul class="menu__list">
-        <li v-for="category in treeData" v-if="category.level ==0" :key="category.id"><a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)">{{category.name}}</a>
+        <li v-for="category in treeData" v-if="category.level ==0" :key="category.id">
+          <!-- <a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)"> -->
+          <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)">
+          {{category.name}}
+          </router-link>
+          <!-- </a> -->
         <my-node-tree :node="treeData" :parent="category.id"></my-node-tree>
         </li>
     </ul>
