@@ -13,7 +13,7 @@
                 type="range"
                 :min="min_value"
                 :max="max_value"
-                step="100"
+                :step="step"
                 v-model.number="local_min"
                 @change="setRangeSlider"
             > 
@@ -21,7 +21,7 @@
                 type="range"
                 :min="min_value"
                 :max="max_value"
-                step="100"
+                :step="step"
                 v-model.number="local_max"
                 @change="setRangeSlider"
             >
@@ -40,7 +40,7 @@
 
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions,mapGetters} from 'vuex'
 export default {
     data() {
         return {
@@ -53,25 +53,38 @@ export default {
       title: String,
       min_value: Number,
       max_value: Number,
+      step: Number,
       unitType: String,
       parametr: String,
+    },
+    computed: {
+      ...mapGetters(['GET_FILTER_PRODUCTS_SET']),
+      setfilter(){
+        var  par = this.parametr
+
+      var min = this.local_min
+      var max = this.local_max
+      var obj = {[par]:{min: min, max: max}}
+
+      return obj
+      }
     },
     methods: {
       ...mapActions(['FILTERS_PRODUCTS_SET']),
       toggleShowForm() {
           this.showForm = !this.showForm
         },
+
       setRangeSlider() {
-        console.log('сработал рейнжслайдер')
         if (this.local_min > this.local_max) {
           let temp = this.local_max;
           this.local_max = this.local_min;
           this.local_min = temp;
 
-          this.FILTERS_PRODUCTS_SET({"min_price": this.local_min, "max_price": this.local_max})
+          this.FILTERS_PRODUCTS_SET(this.setfilter)
         }
         else {
-          this.FILTERS_PRODUCTS_SET({"min_price": this.local_min, "max_price": this.local_max})
+          this.FILTERS_PRODUCTS_SET(this.setfilter)
         }
       
       },
@@ -79,6 +92,18 @@ export default {
       //   this.filter_products_by_price();
       // }
     },
+    watch: {
+      GET_FILTER_PRODUCTS_SET() {
+        console.log('сработал GET_FILTER_PRODUCTS_SET в аккордионе') 
+        if(Object.keys(this.GET_FILTER_PRODUCTS_SET).length == 0){
+          console.log('сработал GET_FILTER_PRODUCTS_SET в аккордионе++')
+            this.showForm = true
+            this.local_min = 0
+            this.local_max = this.max_value
+        }
+
+      }
+    }, 
     
 }
 

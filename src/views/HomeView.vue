@@ -2,13 +2,15 @@
 <div class="home">
   <div class="categories_path">
     <router-link :to="{ name: 'home' }"><div class="category_path">Главная</div></router-link>
-    <div v-for="category in GET_CATEGORIES" v-if="category.id == LAST_CATEGORY" :key="category.id" class="category_path">{{category.name}}</div>
+    <!-- <div v-for="category in GET_CATEGORIES" v-if="category.id == this.$route.params.id" :key="category.id" class="category_path">{{category.name}}</div>  -->
   </div>
   <div class="filter_and_results">
-    <filter-menu :category="this.$route.params.id" :tree_id="this.$route.params.tree_id" :parent="this.$route.params.parent"/>
+    <filter-menu :category="this.$route.params.id" :tree_id="this.$route.params.tree_id" :parent="this.$route.params.parent" :products="this.categorizedsProducts" />
     <div class="block-results">
       <!-- wqw{{categorizedProducts(2)}} dsada -->
-      Категория: {{this.$route.params.id}} lk: {{LAST_CATEGORY}} убрать LAST_CATEGORY
+      Категория: {{this.$route.params.id}}
+      Фильтр: {{GET_FILTER_PRODUCTS_SET}}
+      ТОваров: {{this.filteredProducts.length}}
       <div class="resultproducts">
         <div v-for="product in paginatedProducts" :key="product.name">
           <product-card :product="product"/>
@@ -52,12 +54,13 @@ export default {
       productsPerPage: 10,
       pageNumber: 1,
       category: {id: this.$route.params.id, tree_id: this.$route.params.tree_id},
+      categorizedsProducts: [],
       filteredProducts: [],
       
     }
   },
   methods: { 
-    ...mapActions(['FETCH_PRODUCTS']),
+    ...mapActions(['FILTERS_PRODUCTS_SET']),
     filterProducts() {
       // console.log('функция filter products')
       // console.log(this.filteredProducts)
@@ -72,24 +75,34 @@ export default {
       //   return item.category == lastcategory
       //   })
       // }
+      // if(filterset) {
+      //   console.log('Иф выполнился')
+      //   console.log(Object.keys(filterset).length)
+      // }
+      // console.log(filterset)
+      // if (Object.keys(this.filterset).length == 0){
+      //   console.log('фильтр 0')
+      //   return
+      // }
+      this.categorizedProducts()
+      if(Object.keys(filterset).length) {
       this.filteredProducts = this.filteredProducts.filter(function(item) {
         // console.log('перед ретерном')
-        // console.log(min,max)
-        // console.log('функция фильтра по цене')
-        return item.price >= filterset.min_price && item.price <= filterset.max_price && item.category == lastcategory
-      })
+        return item.price >= filterset.price.min && item.price <= filterset.price.max
+        })
+      }
+      return this.filteredProducts
     },
-    categorizedProducts(lastcategory){
+    pagefirst(){
+    this.pageNumber= 1
+    },
+    categorizedProducts(){
       this.filteredProducts = [...this.GET_PRODUCTS]
       // console.log(lastcategory)
       console.log('категоризироввнные продукты')
       // console.log(this.filteredProducts)
       let category = this.$route.params.id
-      let parent = this.$route.params.parent
       let categories = getcatschildren(this.GET_CATEGORIES, category)
-      categories.push(category)
-
-
       function getcatschildren(object, catparent, arr=[]){
         getChildren(object,catparent)
             function getChildren(obj, parent,){
@@ -100,96 +113,82 @@ export default {
                   getChildren(obj,obj[i].id)
               }
             }
-          
         }
+      arr.push(catparent)
       return arr
       }
-
       this.filteredProducts = this.filteredProducts.filter(function(item){
         if (categories.some(elem => elem == item.category)){
           return item.category
         }
-        
       })
-
-      // this.filteredProducts = this.filteredProducts.filter(function(item) {
-
-      //   // console.log(item.category == 13)
-      //   return  item.category == category
-      // })
-      // if (this.filteredProducts.length == 0) {
-      //         this.filteredProducts = this.filteredProducts.filter(function(item) {
-      //           console.log("if выполняеся")
-      //   // console.log(item.category == 13)
-      //   return  item.category == parent
-      // })
-      // } else {return []}
-
+      this.categorizedsProducts = [...this.filteredProducts]
       return this.filteredProducts
     },
     pageClick(page) {
       this.pageNumber = page
     },
   },
-    computed: {
-    ...mapGetters(['GET_PRODUCTS','GET_FILTER_PRODUCTS_SET','LAST_CATEGORY','GET_CATEGORIES']),
-    pages () {
-      return Math.ceil(this.FilterProductsSet.length/10)
-    },
-    // 1 actoin
-    paginatedProducts() {
-      let from = (this.pageNumber - 1)*this.productsPerPage
-      let to = from + this.productsPerPage
-      return this.FilterProductsSet.slice(from,to)
-    },
-    // 2 actoin
-    FilterProductsSet() {
-      // console.log(this.filteredProducts.length)
-      if (this.filteredProducts.length) {
-        // console.log(this.filteredProducts[0])
-        return this.filteredProducts
-      } else {
-        // console.log(typeof this.filteredProducts[0])
-        // this.filteredProducts = [...this.GET_PRODUCTS]
-        return this.filteredProducts
-      }
+  computed: {
+  ...mapGetters(['GET_PRODUCTS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES']),
+  pages () {
+    return Math.ceil(this.FilterProductsSet.length/10)
+  },
+  // 1 actoin
+  paginatedProducts() {
+    let from = (this.pageNumber - 1)*this.productsPerPage
+    let to = from + this.productsPerPage
+    return this.FilterProductsSet.slice(from,to)
+  },
+  // 2 actoin
+  FilterProductsSet() {
+    // console.log(this.filteredProducts.length)
+    if (this.filteredProducts.length) {
+      // console.log(this.filteredProducts[0])
+      return this.filteredProducts
+    } else if (this.$route.params.id) {
+      return this.filteredProducts
+    } else {
+      // console.log(typeof this.filteredProducts[0])
+      this.filteredProducts = [...this.GET_PRODUCTS]
+      return this.filteredProducts
+    }
 
-      // if (this.filteredProducts.length) {
-      //   return this.filteredProducts
-      // } else {
-      //   return this.GET_FILTER_PRODUCTS
-      // }
-    },
-    // PriceSet() {
-    //   this.minPrice = this.getFilterPrice[0]
-    //   this.maxPrice = this.getFilterPrice[1]
-    //   return this.getFilterPrice
-      // return getFilterPrice
+    // if (this.filteredProducts.length) {
+    //   return this.filteredProducts
+    // } else {
+    //   return this.GET_FILTER_PRODUCTS
     // }
   },
+  // PriceSet() {
+  //   this.minPrice = this.getFilterPrice[0]
+  //   this.maxPrice = this.getFilterPrice[1]
+  //   return this.getFilterPrice
+    // return getFilterPrice
+  // }
+  },
   watch: {
-    // GET_FILTER_PRODUCTS_SET() {
-    //   console.log('сработал GET_FILTER_PRODUCTS_SET') 
-    //   this.filterProducts()   
-    // },
-    LAST_CATEGORY() {
-      console.log('сработал LAST_CATEGORY')
-      this.pageNumber = 1
-      this.categorizedProducts(this.LAST_CATEGORY)
-      // this.filterProducts()   
-    }, 
+    GET_FILTER_PRODUCTS_SET() {
+      console.log('сработал GET_FILTER_PRODUCTS_SET') 
+      this.filterProducts() 
+    },   
     '$route.params.id': {
       handler: function() {
+      this.pagefirst()
+      this.FILTERS_PRODUCTS_SET({reset: true})
       this.categorizedProducts(this.$route.params.id)
       }
     },
     deep: true,
     immediate: true
   },
+
   mounted() {
-    this.FETCH_PRODUCTS();
-    this.filterProducts();
-    },
+    this.pagefirst()
+    this.FILTERS_PRODUCTS_SET({reset: true})
+    this.categorizedProducts(this.$route.params.id)
+    // this.FETCH_PRODUCTS();
+  },
 
   // когда переписал на это глючило через пару перезагрузок сервера
   // methods: { ...mapActions(['fetchProducts','reset_filter_products','filter_products_by_price']),

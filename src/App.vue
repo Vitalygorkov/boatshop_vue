@@ -26,7 +26,7 @@
 
       },
       methods: { 
-        ...mapActions(['FETCH_CATEGORIES']),
+        ...mapActions(['FETCH_CATEGORIES', 'FETCH_PRODUCTS']),
         // async loadListCategory() {
         //   this.listCategory = await fetch(
         //     `${this.GET_SERVER_URL}/category`
@@ -41,6 +41,9 @@
       //     ).then(response => response.json())
       //   }
       // },
+      mounted() {
+        this.FETCH_PRODUCTS();
+      },
 
     }
 </script>

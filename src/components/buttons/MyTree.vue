@@ -4,7 +4,7 @@
     <ul class="menu__list">
         <li v-for="category in treeData" v-if="category.level ==0" :key="category.id">
           <!-- <a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)"> -->
-          <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)">
+          <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" @mouseover="listOne = true" @mouseleave="listOne = false">
           {{category.name}}
           </router-link>
           <!-- </a> -->
@@ -27,13 +27,13 @@ export default {
     treeData: Array
   },
   	methods: { 
-	...mapActions(['CHANGE_LAST_CATEGORY','LAST_CATEGORY']),
-	changeLastCategory(category, istrue) {
-    console.log(istrue)
-    if (istrue) {
-      		this.CHANGE_LAST_CATEGORY(category)
-    }
-	},
+	...mapActions(['CHANGE_LAST_CATEGORY']),
+	// changeLastCategory(category, istrue) {
+  //   console.log(istrue)
+  //   if (istrue) {
+  //     		this.CHANGE_LAST_CATEGORY(category)
+  //   }
+	// },
 	},
   components: {
     MyNodeTree

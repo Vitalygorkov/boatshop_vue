@@ -10,7 +10,7 @@ const store = new Vuex.Store({
     products: [],
     categories: [],
     filtersProductSet: {},
-    last_category: [],
+    // last_category: [],
     heart_products: [],
   },
   mutations: {
@@ -20,9 +20,9 @@ const store = new Vuex.Store({
     UPDATE_CATEGORIES(state, categories) {
       state.categories = categories
     },
-    UPDATE_LAST_CATEGORY(state, last_category) {
-      state.last_category = last_category
-    },
+    // UPDATE_LAST_CATEGORY(state, last_category) {
+    //   state.last_category = last_category
+    // },
     CHANGE_FILTERS_PRODUCTS_SET(state, filtersProductSet) {
       state.filtersProductSet = filtersProductSet
     }
@@ -32,7 +32,7 @@ const store = new Vuex.Store({
   actions: {
     async FETCH_PRODUCTS(ctx) {
       const res = await fetch(
-        `${this.state.backendUrl}/product/`
+        `${this.state.backendUrl}/products/`
         // 'https://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1/product/'
       )
       const products = await res.json()
@@ -48,17 +48,17 @@ const store = new Vuex.Store({
       ctx.commit('UPDATE_CATEGORIES', categories)
     },
     async FILTERS_PRODUCTS_SET(context, params) {
-      console.log(params)
-      var Set = this.filtersProductSet
-      var obj = Object.assign({Set}, params);
+      var Set = this.state.filtersProductSet
+      var obj = Object.assign({},Set, params);
+      if(params.reset){
+        obj = {}
+      }
       context.commit('CHANGE_FILTERS_PRODUCTS_SET', obj)
     },
-    async CHANGE_LAST_CATEGORY(context, params) {
-      context.commit('UPDATE_LAST_CATEGORY', params)
-    },
+    // async CHANGE_LAST_CATEGORY(context, params) {
+    //   context.commit('UPDATE_LAST_CATEGORY', params)
+    // },
     async ADD_HEART_PRODUCTS(context, params) {
-      console.log("Last_category")
-      // console.log(params)
       context.commit('UPDATE_LAST_CATEGORY', params)
     }
 
@@ -79,9 +79,9 @@ const store = new Vuex.Store({
     GET_CATEGORIES: state => {
       return state.categories
     },
-    LAST_CATEGORY: state => {
-      return state.last_category
-    },
+    // LAST_CATEGORY: state => {
+    //   return state.last_category
+    // },
     GET_FILTER_PRODUCTS_SET: state => {
       return state.filtersProductSet
     },

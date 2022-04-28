@@ -136,9 +136,9 @@ export default {
 
 	methods: { 
 	...mapActions(['FETCH_CATEGORIES','CHANGE_LAST_CATEGORY','LAST_CATEGORY']),
-	changeLastCategory(category) {
-		this.CHANGE_LAST_CATEGORY(category)
-	},
+	// changeLastCategory(category) {
+	// 	this.CHANGE_LAST_CATEGORY(category)
+	// },
 	},
 	  mounted() {
     this.FETCH_CATEGORIES();
