@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button @click="toggleShowForm" class="accordion">{{ title }}<img v-bind:class="{ img_turn: showForm }" src="./..\..\assets\img\arrow.png"></button>
+    <button @click="toggleShowForm" class="accordion">{{ title }}<img v-bind:class="{ img_turn: showForm }" src="../../assets/img/arrow.png"></button>
       <div class="panel" v-bind:class="{ panel_on: showForm }">
           {{ content }}
       </div>

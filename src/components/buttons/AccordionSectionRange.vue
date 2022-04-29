@@ -4,7 +4,7 @@
     <div>
       {{ title }}
     </div>
-      <img v-bind:class="{ img_turn: showForm }" src="./..\..\assets\img\arrow.png">
+      <img v-bind:class="{ img_turn: showForm }" src="../../assets/img/arrow.png">
   </div>
     <div v-bind:class="{ panel_on: showForm }" class="panel">
         <div class="slider">
