@@ -21,13 +21,13 @@
 
 			<div class="bloki2-sub1">
 				<router-link :to="{ name: 'home' }">
-				<img class="img-logo" src="~..\src\assets\img\neptfoto (2).png" alt="neptfoto">
+				<img class="img-logo" src="./..\assets\img\neptfoto (2).png" alt="neptfoto">
 				</router-link>
 			</div>
 
 			<div class="bloki2-sub1">
 				<router-link :to="{ name: 'home' }">
-				<img src="..\src\assets\img\nept55text.png">
+				<img src="./..\assets\img\nept55text.png">
 				</router-link>
 			</div>
 
@@ -40,7 +40,7 @@
 
 			<div class="bloki2-sub2">
 				<div class="bloki2-icon">
-					<a href="#"><img src="..\src\assets\img\sravni.png"></a>
+					<a href="#"><img src="./..\assets\img\sravni.png"></a>
 				</div>
 				<div class="bloki2-text">
 					<a href="#">СРАВНИТЬ</a>
@@ -49,7 +49,7 @@
 
 			<div class="bloki2-sub2">
 				<div class="bloki2-icon">
-					<a href="#"><img src="..\src\assets\img\like.png"></a>
+					<a href="#"><img src="./..\assets\img\like.png"></a>
 				</div>
 				<div class="bloki2-text">
 					<a href="#">ИЗБРАННОЕ</a>
@@ -58,7 +58,7 @@
 
 			<div class="bloki2-sub2">
 				<div class="bloki2-icon">
-					<a href="#"><img src="..\src\assets\img\shopping.png"></a>
+					<a href="#"><img src="./..\assets\img\shopping.png"></a>
 				</div>
 				<div class="bloki2-text">
 					<a href="#">КОРЗИНА</a>
