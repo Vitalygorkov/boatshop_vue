@@ -10,7 +10,7 @@
 				<h3>Email:clients@neptun55.ru</h3>
 			</div>
 			<div class="bloki1-sub3">
-				<img src="./..\assets\img\phone-call.png">
+				<img src="..\src\assets\img\phone-call.png">
 				<a href="tel:+79039274690">
 				<h3>+79039274690</h3>
 				</a>
