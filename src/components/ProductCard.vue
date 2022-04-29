@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-heart">
         <a href="#">
-            <img src="./..\assets\img\like.png">
+            <img src="../assets/img/like.png">
         </a>
     </div>
       <router-link :to="{ name: 'productpage', params:{ id: product.id } }">
