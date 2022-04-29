@@ -10,7 +10,7 @@
 				<h3>Email:clients@neptun55.ru</h3>
 			</div>
 			<div class="bloki1-sub3">
-				<img src="src\assets\img\phone-call.png">
+				<img src="../assets/img/phone-call.png">
 				<a href="tel:+79039274690">
 				<h3>+79039274690</h3>
 				</a>
@@ -21,7 +21,7 @@
 
 			<div class="bloki2-sub1">
 				<router-link :to="{ name: 'home' }">
-				<img class="img-logo" src="./..\assets\img\neptfoto.png" alt="neptfoto">
+				<img class="img-logo" src="../assets/img/neptfoto.png" alt="neptfoto">
 				</router-link>
 			</div>
 
