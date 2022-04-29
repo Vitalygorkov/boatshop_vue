@@ -21,7 +21,7 @@
 
 			<div class="bloki2-sub1">
 				<router-link :to="{ name: 'home' }">
-				<img class="img-logo" src="./..\assets\img\neptfoto (2).png" alt="neptfoto">
+				<img class="img-logo" src="./../\assets\img\neptfoto (2).png" alt="neptfoto">
 				</router-link>
 			</div>
 
