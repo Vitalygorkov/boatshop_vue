@@ -80,7 +80,7 @@ export default {
     height: 100px;
     border: none;
     background: url('/src/assets/img/angle-left-solid.svg') 0 0 / 100% no-repeat;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 .next{
     position: absolute;
