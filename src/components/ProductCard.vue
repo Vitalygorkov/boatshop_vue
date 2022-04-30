@@ -7,9 +7,7 @@
     </div>
       <router-link :to="{ name: 'productpage', params:{ id: product.id } }">
     <!-- <a :href="product.product_abs_url"></a> -->
-      <a :href="product.product_abs_url">
       <img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image">
-      </a>
       </router-link>
     <div class="card-body">
         <div class="card-title card-sale">

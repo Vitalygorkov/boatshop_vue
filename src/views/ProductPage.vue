@@ -71,7 +71,12 @@ export default {
       const res = await fetch(`${this.GET_SERVER_URL}/product/${this.$route.params.id}`)
       const prod = await res.json()
       this.product= prod
+      document.title = `Нептун 55 ${prod.name}`
      },
+    // created(){
+    //   prod = this.product
+    //   document.title = `Нептун 55 ${prod.name}`
+    // },
 }
 
 

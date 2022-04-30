@@ -5,12 +5,13 @@
     <!-- <div v-for="category in GET_CATEGORIES" v-if="category.id == this.$route.params.id" :key="category.id" class="category_path">{{category.name}}</div>  -->
   </div>
   <div class="filter_and_results">
-    <filter-menu :category="this.$route.params.id" :tree_id="this.$route.params.tree_id" :parent="this.$route.params.parent" :products="this.categorizedsProducts" />
+    <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="this.$route.params.tree_id" :parent="this.$route.params.parent" :products="this.categorizedsProducts" />
     <div class="block-results">
       <!-- wqw{{categorizedProducts(2)}} dsada -->
-      Категория: {{this.$route.params.id}}
+      Категория: {{parseInt(this.$route.params.id)}} name {{this.current_category(parseInt(this.$route.params.id))}}
       Фильтр: {{GET_FILTER_PRODUCTS_SET}}
       ТОваров: {{this.filteredProducts.length}}
+
       <div class="resultproducts">
         <div v-for="product in paginatedProducts" :key="product.name">
           <product-card :product="product"/>
@@ -53,14 +54,14 @@ export default {
     return {
       productsPerPage: 10,
       pageNumber: 1,
-      category: {id: this.$route.params.id, tree_id: this.$route.params.tree_id},
+      category: {id: parseInt(this.$route.params.id), tree_id: parseInt(this.$route.params.tree_id)},
       categorizedsProducts: [],
       filteredProducts: [],
       
     }
   },
   methods: { 
-    ...mapActions(['FILTERS_PRODUCTS_SET']),
+    ...mapActions(['FETCH_PRODUCTS','FILTERS_PRODUCTS_SET']),
     filterProducts() {
       // console.log('функция filter products')
       // console.log(this.filteredProducts)
@@ -101,7 +102,7 @@ export default {
       // console.log(lastcategory)
       console.log('категоризироввнные продукты')
       // console.log(this.filteredProducts)
-      let category = this.$route.params.id
+      let category = parseInt(this.$route.params.id)
       let categories = getcatschildren(this.GET_CATEGORIES, category)
       function getcatschildren(object, catparent, arr=[]){
         getChildren(object,catparent)
@@ -128,9 +129,28 @@ export default {
     pageClick(page) {
       this.pageNumber = page
     },
+    current_category(id){
+      if(id){
+        console.log(this.GET_CATEGORIES)
+        const result = this.GET_CATEGORIES.filter(function(item) {
+            return item.id == id
+            })
+        // const result = this.GET_CATEGORIES.filter(item => item.name == id);
+        console.log(id)
+        console.log(result)
+        // console.log(result[0].name)
+        if(result[0] !== undefined){
+          return result[0].name
+        }
+        
+      }else {
+        return ''
+      }
+    },
   },
   computed: {
   ...mapGetters(['GET_PRODUCTS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES']),
+
   pages () {
     return Math.ceil(this.FilterProductsSet.length/10)
   },
@@ -146,7 +166,7 @@ export default {
     if (this.filteredProducts.length) {
       // console.log(this.filteredProducts[0])
       return this.filteredProducts
-    } else if (this.$route.params.id) {
+    } else if (parseInt(this.$route.params.id)) {
       return this.filteredProducts
     } else {
       // console.log(typeof this.filteredProducts[0])
@@ -176,7 +196,9 @@ export default {
       handler: function() {
       this.pagefirst()
       this.FILTERS_PRODUCTS_SET({reset: true})
-      this.categorizedProducts(this.$route.params.id)
+      this.categorizedProducts(parseInt(this.$route.params.id))
+      console.log('watch')
+      document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
       }
     },
     deep: true,
@@ -184,9 +206,13 @@ export default {
   },
 
   mounted() {
+    console.log(this.filteredProducts)
     this.pagefirst()
     this.FILTERS_PRODUCTS_SET({reset: true})
-    this.categorizedProducts(this.$route.params.id)
+    this.categorizedProducts(parseInt(this.$route.params.id))
+    console.log(this.filteredProducts)
+    console.log('mounted')
+    document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
     // this.FETCH_PRODUCTS();
   },
 
@@ -208,6 +234,12 @@ export default {
     ProductCard,
     FilterMenu
   },
+  	async created(){
+      await this.FETCH_PRODUCTS()
+      this.categorizedProducts(parseInt(this.$route.params.id))
+      console.log('created')
+		  document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
+	},
   // created() {
     // this.loadListProducts()
   // },

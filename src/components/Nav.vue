@@ -143,6 +143,9 @@ export default {
 	  mounted() {
     this.FETCH_CATEGORIES();
     },
+	// created(){
+	// 	document.title = 'Нептун 55'
+	// },
 }
 
 
