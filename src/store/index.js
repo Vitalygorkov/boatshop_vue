@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    backendUrl: "https://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1",
-    mediaUrl: "https://ovz2.vet-omsk.me2jm.vps.myjino.ru/media",
+    backendUrl: "https://vitgo.ru/api/v1",
+    mediaUrl: "https://vitgo.ru/media",
     // backendUrl: "http://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1",
     // mediaUrl: "http://ovz2.vet-omsk.me2jm.vps.myjino.ru/media",
     products: [],
