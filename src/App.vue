@@ -2,6 +2,7 @@
   <div id="app">
     <Nav/>
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
@@ -11,13 +12,14 @@
 <script>
     import {mapGetters, mapActions} from 'vuex'
     import Nav from "./components/Nav";
+    import Footer from "./components/Footer";
     export default {
       // data() {
       //   return {
       //     listCategory: []
       //   }
       // },
-      components: {Nav},
+      components: {Nav, Footer},
       // created() {
       //   this.loadListCategory()
       // },
