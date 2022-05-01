@@ -61,30 +61,10 @@ export default {
     }
   },
   methods: { 
-    ...mapActions(['FETCH_PRODUCTS','FILTERS_PRODUCTS_SET']),
+    ...mapActions(['FETCH_PRODUCTS', 'FETCH_BOATS','FILTERS_PRODUCTS_SET']),
     filterProducts() {
-      // console.log('функция filter products')
-      // console.log(this.filteredProducts)
-      // this.filteredProducts = [...this.GET_PRODUCTS]
       console.log('копирование объектов')
-      // console.log(this.filteredProducts)
       let filterset = this.GET_FILTER_PRODUCTS_SET
-      // if (lastcategory) {
-      // this.filteredProducts = this.filteredProducts.filter(
-      //   function(item){
-      //   console.log('функция фильтра по категории')
-      //   return item.category == lastcategory
-      //   })
-      // }
-      // if(filterset) {
-      //   console.log('Иф выполнился')
-      //   console.log(Object.keys(filterset).length)
-      // }
-      // console.log(filterset)
-      // if (Object.keys(this.filterset).length == 0){
-      //   console.log('фильтр 0')
-      //   return
-      // }
       this.categorizedProducts()
       if(Object.keys(filterset).length) {
       this.filteredProducts = this.filteredProducts.filter(function(item) {
@@ -98,26 +78,33 @@ export default {
     this.pageNumber= 1
     },
     categorizedProducts(){
-      this.filteredProducts = [...this.GET_PRODUCTS]
+      let category = parseInt(this.$route.params.id)
+      if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == category)) {
+        console.log('выполнено условие категории лодок')
+        this.filteredProducts = [...this.GET_BOATS]
+        console.log(this.filterProducts)
+      } else {
+        this.filteredProducts = [...this.GET_PRODUCTS]
+      }
       // console.log(lastcategory)
       console.log('категоризироввнные продукты')
       // console.log(this.filteredProducts)
-      let category = parseInt(this.$route.params.id)
-      let categories = getcatschildren(this.GET_CATEGORIES, category)
-      function getcatschildren(object, catparent, arr=[]){
-        getChildren(object,catparent)
-            function getChildren(obj, parent,){
-              for(let i = 0; i < obj.length; i += 1){
-                if(obj[i].parent == parent){
-                  // console.log(obj[i].name)
-                  arr.push(obj[i].id)
-                  getChildren(obj,obj[i].id)
-              }
-            }
-        }
-      arr.push(catparent)
-      return arr
-      }
+      
+      let categories = this.getcatschildren(this.GET_CATEGORIES, category)
+      // function getcatschildren(object, catparent, arr=[]){
+      //   getChildren(object,catparent)
+      //       function getChildren(obj, parent,){
+      //         for(let i = 0; i < obj.length; i += 1){
+      //           if(obj[i].parent == parent){
+      //             // console.log(obj[i].name)
+      //             arr.push(obj[i].id)
+      //             getChildren(obj,obj[i].id)
+      //         }
+      //       }
+      //   }
+      //   arr.push(catparent)
+      //   return arr
+      // }
       this.filteredProducts = this.filteredProducts.filter(function(item){
         if (categories.some(elem => elem == item.category)){
           return item.category
@@ -125,6 +112,20 @@ export default {
       })
       this.categorizedsProducts = [...this.filteredProducts]
       return this.filteredProducts
+    },
+    getcatschildren(object, catparent, arr=[]){
+      getChildren(object,catparent)
+          function getChildren(obj, parent,){
+            for(let i = 0; i < obj.length; i += 1){
+              if(obj[i].parent == parent){
+                // console.log(obj[i].name)
+                arr.push(obj[i].id)
+                getChildren(obj,obj[i].id)
+            }
+          }
+      }
+      arr.push(catparent)
+      return arr
     },
     pageClick(page) {
       this.pageNumber = page
@@ -149,7 +150,7 @@ export default {
     },
   },
   computed: {
-  ...mapGetters(['GET_PRODUCTS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES']),
+  ...mapGetters(['GET_PRODUCTS', 'GET_BOATS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES']),
 
   pages () {
     return Math.ceil(this.FilterProductsSet.length/10)
@@ -236,6 +237,7 @@ export default {
   },
   	async created(){
       await this.FETCH_PRODUCTS()
+      await this.FETCH_BOATS()
       this.categorizedProducts(parseInt(this.$route.params.id))
       console.log('created')
 		  document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`

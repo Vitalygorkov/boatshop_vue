@@ -15,7 +15,7 @@
       <img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image">
       </router-link>
     <div class="card-body">
-        <div class="card-title card-sale">
+        <div class="card-title" v-bind:class="{ cardsale: product.sale !== 0 }">
             <!-- <a :href="product.product_abs_url"></a> -->
               <router-link :to="{ name: 'productpage', params:{ id: product.id } }">
               <a :href="product.product_abs_url"> 
@@ -24,31 +24,32 @@
               </router-link>
         </div>
         <div class="card-prise">
-            {{ product.price }} руб.
+            {{ product.price *(100-product.sale)/100 }} руб.
         </div>
         <div class="card-discount">
-            <span class="card-discount-price">1500 руб.</span>
-            <span class="card-discount-size">7%</span>
+            <span v-if="product.sale !== 0" class="card-discount-price">{{product.price*0.01*product.sale}} Руб.</span>
+            <span v-if="product.sale !== 0" class="card-discount-size">{{product.sale}}%</span>
         </div>
-        <div class="card-xarakteristiki card-brona">
+        <!-- <div class="card-xarakteristiki card-brona"> card brona это желтая эмблема акция -->
+          <div class="card-xarakteristiki" v-bind:class="{ cardbrona: product.sale !== 0 }">
             <a href="#">ХАРАКТЕРИСТИКИ</a>  
         </div>
-        <div class="tabs_parametr">
+        <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="tabs_parametr">
             <div class="tab_parametr">
                 <div class="name_parametr">Длина</div>
-                <div class="number_parametr">2800</div>
+                <div class="number_parametr">{{product.length}}</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Ширина</div>
-                <div class="number">120</div>
+                <div class="number">{{product.width}}</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Диаметр баллонов</div>
-                <div class="number">36</div>
+                <div class="number">{{product.cylinder_diameter}}</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Вес лодки</div>
-                <div class="number">30</div>
+                <div class="number">{{product.boat_weight}}</div>
             </div>
           </div>
     </div>
@@ -64,10 +65,24 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
     props: ['product'],
     computed: {
-    ...mapGetters(['GET_MEDIA_URL',]),
-
+    ...mapGetters(['GET_MEDIA_URL','GET_CATEGORIES']),
     },
     methods: {
+      getcatschildren(object, catparent, arr=[]){
+          getChildren(object,catparent)
+              function getChildren(obj, parent,){
+              for(let i = 0; i < obj.length; i += 1){
+                  if(obj[i].parent == parent){
+                  // console.log(obj[i].name)
+                  arr.push(obj[i].id)
+                  getChildren(obj,obj[i].id)
+                }
+              }
+          }
+          arr.push(catparent)
+          return arr
+      },
+
         // geturl(category) {
         //     // let url = 'https://neptun55.ru/media'+ category
         //     this.GET_CATEGORIES.forEach(element => {
@@ -100,11 +115,6 @@ export default {
     overflow: hidden;
     font-family: montserrat;
   }
-  .card a{
-    
-  }
-  
-
   .card-image{
     width: 100%;
     max-height: 250px;
@@ -129,7 +139,7 @@ export default {
   .card-title a:hover{
     color: red;
   }
-  .card-sale::before{
+  .cardsale::before{
     content: 'SALE';
     background: red;
     color: white;
@@ -143,7 +153,6 @@ export default {
     padding: 4px 4px 4px 4px;
   }
   .card-discount{
-    font-size: ;
     margin-top: 4px;
   }
   .card-discount-price{
@@ -174,7 +183,7 @@ export default {
   .card-xarakteristiki a:hover{
     color: rgb(136, 0, 255);
   }
-  .card-brona::before{
+  .cardbrona::before{
     content: 'АКЦИЯ';
     font-style: italic;
     background: #fffc00;
@@ -272,7 +281,7 @@ export default {
   .card-title a:hover{
     color: red;
   }
-  .card-sale::before{
+  .cardsale::before{
     content: 'SALE';
     background: red;
     color: white;

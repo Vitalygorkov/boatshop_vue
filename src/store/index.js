@@ -9,6 +9,8 @@ const store = new Vuex.Store({
     mediaUrl: "https://vitgo.ru/media",
     // backendUrl: "http://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1",
     // mediaUrl: "http://ovz2.vet-omsk.me2jm.vps.myjino.ru/media",
+    cart_products: [],
+    boats: [],
     products: [],
     categories: [],
     filtersProductSet: {},
@@ -18,6 +20,12 @@ const store = new Vuex.Store({
   mutations: {
     UPDATE_PRODUCTS(state, products) {
       state.products = products
+    },
+    UPDATE_BOATS(state, boats) {
+      state.boats = boats
+    },
+    UPDATE_CART_PRODUCTS(state, cart_products) {
+      state.cart_products = cart_products
     },
     UPDATE_CATEGORIES(state, categories) {
       state.categories = categories
@@ -35,15 +43,20 @@ const store = new Vuex.Store({
     async FETCH_PRODUCTS(ctx) {
       const res = await fetch(
         `${this.state.backendUrl}/products/`
-        // 'https://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1/product/'
       )
       const products = await res.json()
       ctx.commit('UPDATE_PRODUCTS', products)
     },
+    async FETCH_BOATS(ctx) {
+      const res = await fetch(
+        `${this.state.backendUrl}/boats/`
+      )
+      const boats = await res.json()
+      ctx.commit('UPDATE_BOATS', boats)
+    },
     async FETCH_CATEGORIES(ctx) {
       const res = await fetch(
         `${this.state.backendUrl}/category/`
-        // 'https://ovz2.vet-omsk.me2jm.vps.myjino.ru/api/v1/category/'
       )
       console.log('Запрос категорий')
       const categories = await res.json()
@@ -57,6 +70,9 @@ const store = new Vuex.Store({
       }
       context.commit('CHANGE_FILTERS_PRODUCTS_SET', obj)
     },
+    // Добавил мутацию для корзины, нужно добавить экшн и геттер
+
+
     // async CHANGE_LAST_CATEGORY(context, params) {
     //   context.commit('UPDATE_LAST_CATEGORY', params)
     // },
@@ -74,6 +90,9 @@ const store = new Vuex.Store({
     },
     GET_PRODUCTS: state => {
       return state.products
+    },
+    GET_BOATS: state => {
+      return state.boats
     },
     GET_HEART_PRODUCTS: state => {
       return state.heart_products

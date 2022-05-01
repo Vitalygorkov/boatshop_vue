@@ -27,7 +27,7 @@ export default {
     treeData: Array
   },
   	methods: { 
-	...mapActions(['CHANGE_LAST_CATEGORY']),
+	// ...mapActions(['CHANGE_LAST_CATEGORY']),
 	// changeLastCategory(category, istrue) {
   //   console.log(istrue)
   //   if (istrue) {
