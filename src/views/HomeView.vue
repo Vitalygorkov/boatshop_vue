@@ -8,14 +8,19 @@
     <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="this.$route.params.tree_id" :parent="this.$route.params.parent" :products="this.categorizedsProducts" />
     <div class="block-results">
       <!-- wqw{{categorizedProducts(2)}} dsada -->
+      
       Категория: {{parseInt(this.$route.params.id)}} name {{this.current_category(parseInt(this.$route.params.id))}}
       Фильтр: {{GET_FILTER_PRODUCTS_SET}}
       ТОваров: {{this.filteredProducts.length}}
-
+      
       <div class="resultproducts">
-        <div v-for="product in paginatedProducts" :key="product.name">
+        <transition-group name="fade">
+        <div class="fade-item" v-for="product in paginatedProducts" :key="product.name">
+          
           <product-card :product="product"/>
+          
         </div>
+        </transition-group>
 
         <!-- <br><p>Несортированные блоки:</p><br>
 
@@ -28,8 +33,8 @@
           <product-card :product="product"/> -->
           
         <!-- </div> -->
-        </div>
-      
+      </div>
+
       <div class="pagination_box">
         <div class="page" v-for="page in pages" :key="page" @click="pageClick(page)">{{page}}</div>
       </div>
@@ -258,6 +263,22 @@ export default {
 }
 </script>
 <style>
+.fade-item{
+  display: inline-block;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-to{
+  opacity: 1;
+}
+.fade-enter-active{
+  transition: opacity .8s;
+}
+/* .fade-leave-active {
+  transition: opacity .5s;
+} */
+
 .home{
   display: flex;
   flex-direction: column;

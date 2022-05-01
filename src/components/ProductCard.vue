@@ -37,19 +37,19 @@
         <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="tabs_parametr">
             <div class="tab_parametr">
                 <div class="name_parametr">Длина</div>
-                <div class="number_parametr">{{product.length}}</div>
+                <div class="number_parametr">{{product.length}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Ширина</div>
-                <div class="number">{{product.width}}</div>
+                <div class="number">{{product.width}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Диаметр баллонов</div>
-                <div class="number">{{product.cylinder_diameter}}</div>
+                <div class="number">{{product.cylinder_diameter}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Вес лодки</div>
-                <div class="number">{{product.boat_weight}}</div>
+                <div class="number">{{product.boat_weight}} КГ</div>
             </div>
           </div>
     </div>
