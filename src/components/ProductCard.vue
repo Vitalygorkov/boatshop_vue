@@ -73,7 +73,6 @@ export default {
               function getChildren(obj, parent,){
               for(let i = 0; i < obj.length; i += 1){
                   if(obj[i].parent == parent){
-                  // console.log(obj[i].name)
                   arr.push(obj[i].id)
                   getChildren(obj,obj[i].id)
                 }
