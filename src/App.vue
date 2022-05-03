@@ -1,8 +1,12 @@
 <template>
   <div id="app">
+    <keep-alive>
     <Nav/>
+    </keep-alive>
     <router-view/>
+    <keep-alive>
     <Footer/>
+    </keep-alive>
   </div>
 </template>
 

@@ -45,7 +45,7 @@ export default {
     data() {
         return {
             showForm: true,
-            local_min: 0,
+            local_min: this.min_value,
             local_max: this.max_value,
         }
     },
@@ -96,9 +96,9 @@ export default {
       GET_FILTER_PRODUCTS_SET() {
         console.log('сработал GET_FILTER_PRODUCTS_SET в аккордионе') 
         if(Object.keys(this.GET_FILTER_PRODUCTS_SET).length == 0){
-          console.log('сработал GET_FILTER_PRODUCTS_SET в аккордионе++')
+          console.log('сработал GET_FILTER_PRODUCTS_SET значение 0')
             this.showForm = true
-            this.local_min = 0
+            this.local_min = this.min_value
             this.local_max = this.max_value
         }
 

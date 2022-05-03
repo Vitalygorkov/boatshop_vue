@@ -13,7 +13,8 @@ const store = new Vuex.Store({
     boats: [],
     products: [],
     categories: [],
-    filtersProductSet: {},
+    filtersProductSet: {}, 
+    // { "price": { "min": 0, "max": 129120 }, "length": { "min": 0, "max": 550 }, "width": { "min": 0, "max": 185 }, "cockpit_length": { "min": 0, "max": 438 }}
     // last_category: [],
     heart_products: [],
   },
