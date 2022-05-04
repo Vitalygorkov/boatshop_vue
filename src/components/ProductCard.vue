@@ -10,14 +10,14 @@
             <img src="../assets/img/sravni.png">
         </a>
     </div>
-      <router-link :to="{ name: 'productpage', params:{ id: product.id } }">
+      <router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
     <!-- <a :href="product.product_abs_url"></a> -->
       <img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image">
       </router-link>
     <div class="card-body">
         <div class="card-title" v-bind:class="{ cardsale: product.sale !== 0 }">
             <!-- <a :href="product.product_abs_url"></a> -->
-              <router-link :to="{ name: 'productpage', params:{ id: product.id } }">
+              <router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
               <a :href="product.product_abs_url"> 
               {{ product.name }}
               </a>
@@ -63,7 +63,9 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 export default {
-    props: ['product'],
+    props:{
+      product: [],
+    },
     computed: {
     ...mapGetters(['GET_MEDIA_URL','GET_CATEGORIES']),
     },

@@ -5,7 +5,7 @@
     <!-- <div v-for="category in GET_CATEGORIES" v-if="category.id == this.$route.params.id" :key="category.id" class="category_path">{{category.name}}</div>  -->
   </div>
   <div class="filter_and_results">
-    <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="this.$route.params.tree_id" :parent="this.$route.params.parent" :products="this.categorizedProducts" />
+    <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="this.$route.params.tree_id" :parent="this.$route.params.parent" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
       <div class="resultproducts">
         <transition-group name="fade">
@@ -95,77 +95,77 @@ export default {
         // фильтруем по длинне кокпита
         if (Object.hasOwn(filterset, 'cockpit_length')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by cockpit_length')
           return item.cockpit_length >= filterset.cockpit_length.min && item.cockpit_length <= filterset.cockpit_length.max
           })
         }
         // фильтруем по ширине кокпита
         if (Object.hasOwn(filterset, 'cockpit_width')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
-          return item.cockpit_length >= filterset.cockpit_length.min && item.cockpit_length <= filterset.cockpit_length.max
+          console.log('filter by cockpit_width')
+          return item.cockpit_width >= filterset.cockpit_width.min && item.cockpit_width <= filterset.cockpit_width.max
           })
         }
         // фильтруем по диаметру борта
         if (Object.hasOwn(filterset, 'cylinder_diameter')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by cylinder_diameter')
           return item.cylinder_diameter >= filterset.cylinder_diameter.min && item.cylinder_diameter <= filterset.cylinder_diameter.max
           })
         }
           // фильтруем по load_capacity
         if (Object.hasOwn(filterset, 'load_capacity')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by load_capacity')
           return item.load_capacity >= filterset.load_capacity.min && item.load_capacity <= filterset.load_capacity.max
           })
         }
             // фильтруем по boat_weight
         if (Object.hasOwn(filterset, 'boat_weight')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by boat_weight')
           return item.boat_weight >= filterset.boat_weight.min && item.boat_weight <= filterset.boat_weight.max
           })
         }
             // фильтруем по complete_set_weight
         if (Object.hasOwn(filterset, 'complete_set_weight')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by complete_set_weight')
           return item.complete_set_weight >= filterset.complete_set_weight.min && item.complete_set_weight <= filterset.complete_set_weight.max
           })
         }
                     // фильтруем по maximum_motor_power
         if (Object.hasOwn(filterset, 'maximum_motor_power')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by maximum_motor_power')
           return item.maximum_motor_power >= filterset.maximum_motor_power.min && item.maximum_motor_power <= filterset.maximum_motor_power.max
           })
         }
                // фильтруем по maximum_motor_power
         if (Object.hasOwn(filterset, 'fabric_thickness_side')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by fabric_thickness_side')
           return item.fabric_thickness_side >= filterset.fabric_thickness_side.min && item.fabric_thickness_side <= filterset.fabric_thickness_side.max
           })
         }
                // фильтруем по fabric_thickness_bottom
         if (Object.hasOwn(filterset, 'fabric_thickness_bottom')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by fabric_thickness_bottom')
           return item.fabric_thickness_bottom >= filterset.fabric_thickness_bottom.min && item.fabric_thickness_bottom <= filterset.fabric_thickness_bottom.max
           })
         }
                  // фильтруем по inflatable_compartments
         if (Object.hasOwn(filterset, 'inflatable_compartments')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by inflatable_compartments')
           return item.inflatable_compartments >= filterset.inflatable_compartments.min && item.inflatable_compartments <= filterset.inflatable_compartments.max
           })
         }
                    // фильтруем по passenger_capacity
         if (Object.hasOwn(filterset, 'passenger_capacity')){
         filter_Products = filter_Products.filter(function(item) {
-          console.log('filter by width')
+          console.log('filter by passenger_capacity')
           return item.passenger_capacity >= filterset.passenger_capacity.min && item.passenger_capacity <= filterset.passenger_capacity.max
           })
         }

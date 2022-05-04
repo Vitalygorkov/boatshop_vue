@@ -30,8 +30,19 @@ export default {
 </script>
 <style scoped>
 img{
-    width: 400px;
+    width: 600px;
     /* max-height: 100px; */
 }
+@media all and (max-width: 780px) {
+        img{
+        width: 480px;
+        }
 
+}
+@media all and (max-width: 480px) {
+        img{
+        width: 380px;
+        }
+
+}
 </style>

@@ -1,13 +1,13 @@
 <template>
 <div class="wrapper">
+    <button class="prev" @click="prevSlide">Prev</button>
+    <button class="next" @click="nextSlide">Next</button>
     <div class="carusel" :style="{ 'margin-left': '-' + (100 * currentSLideIndex) + '%' }">
         <carusel-item
         v-for="item in carusel_data"
         :item_data="item"
         />
     </div>
-    <button class="prev" @click="prevSlide">Prev</button>
-    <button class="next" @click="nextSlide">Next</button>{{this.currentSLideIndex}}
 </div>
 </template>
 
@@ -54,27 +54,64 @@ export default {
 
 </script>
 <style scoped>
+@media all and (min-width: 780px) {
+    .next{
+    left: 510px
+    }
+}
+
+@media all and (max-width: 780px) {
+    .wrapper{
+    max-width: 480px;
+    max-height: 480px;
+    }
+    .carusel{  
+    max-width: 480px;
+    max-height: 480px; 
+    }
+    .next{
+    left: 389px;
+    }
+
+}
+@media all and (max-width: 480px) {
+    .wrapper{
+    max-width: 380px;
+    max-height: 380px;
+    }
+    .carusel{  
+    max-width: 380px;
+    max-height: 380px; 
+    }
+    .next{
+        left: 290px;
+    }
+
+}
 .wrapper{
-    width: 400px;
-    height: 400px;
+    position: relative;
+    width: 600px;
+    height: 600px;
     /* max-height: 300px; */
     overflow: hidden;
+    z-index: 1;
 }
-.carusel{  
-    width: 400px;
-    height: 400px; 
+.carusel{
+    position: relative;
+    width: 600px;
+    height: 600px; 
     display: flex;
     transition: all ease 0.5s;
-    z-index: 0;
+    z-index: 1;
 }
 .prev{
     /* position: absolute;
     margin-right: 400px; */
 
-    position: absolute;
+    position: relative;
     top: 50%;
-    margin: 125px 0px 0px 0px;
-    z-index: 1;
+    /* margin: 125px 0px 0px 0px; */
+    z-index: 2;
     font-size: 0;
     width: 45px;
     height: 100px;
@@ -83,10 +120,16 @@ export default {
     opacity: 0.5;
 }
 .next{
-    position: absolute;
+    position: relative;
     top: 50%;
-    margin: 125px 0px 0px 355px;
-    z-index: 1;
+    /* left: 510px; */
+
+    /* margin-left: 600px; */
+    /* top: 50%;
+    margin-top: 25%;
+    margin-left: 55%; */
+    /* margin: 0 0px 0px 555px; */
+    z-index: 2;
     font-size: 0;
     width: 45px;
     height: 100px;  
@@ -94,4 +137,18 @@ export default {
     background: url('/src/assets/img/angle-right-solid.svg') 0 0 / 100% no-repeat;
     opacity: 0.5;
 }
+/* .next{
+    position: static;
+    top: 50%;
+    margin-top: 25%;
+    margin-left: 55%;
+    /* margin: 0 0px 0px 555px; */
+    /* z-index: 2;
+    font-size: 0;
+    width: 45px;
+    height: 100px;  
+    border: none;
+    background: url('/src/assets/img/angle-right-solid.svg') 0 0 / 100% no-repeat;
+    opacity: 0.5;
+} */ 
 </style>

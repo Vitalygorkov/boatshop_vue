@@ -1,7 +1,7 @@
 <template>
   <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category)" class="search-menu-box">
       <div @click="sbros" class="sbros">x Сбросить фильтр</div>
-      {{getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category)}}
+        <h3>Найдено товаров: {{this.prod_count}}</h3>
         <accordion-section-range parametr="price" title="Цена" :min_value="getmin('price')" :max_value="getmax('price')" :step="100" unitType="Руб"/>
         <accordion-section-range parametr="length" title="Длина" :min_value="getmin('length')" :max_value="getmax('length')" :step="1" unitType="СМ"/>
         <accordion-section-range parametr="width" title="Ширина" :min_value="getmin('width')" :max_value="getmax('width')" :step="1" unitType="СМ"/>
@@ -19,9 +19,12 @@
 
   </div>
   <div v-else class="search-menu-box">
-      <div @click="sbros" class="sbros">x Сбросить фильтр</div>
-      {{getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category)}}
-      {{category}} {{tree_id}} {{parent}}
+      <!-- <div class="filter_panel"> -->
+        <div>
+            <!-- Пиксели{{handleScroll}} -->
+        <h3>Найдено товаров: {{this.prod_count}}</h3>
+        <div @click="sbros" class="sbros">x Сбросить фильтр</div>
+      </div>
         <accordion-section-range parametr="price" title="Цена" :min_value="getmin('price')" :max_value="getmax('price')" unitType="Руб"/>
   </div>
 
@@ -49,6 +52,7 @@ export default {
       tree_id: Number,
       parent: Number,
       products: Array,
+      prod_count: Number,
     },
     methods: {
         ...mapActions(['FILTERS_PRODUCTS_SET']),
@@ -71,15 +75,11 @@ export default {
             return arr
         },
         getmax(param_name){
-            console.log('getmaxpricfuncttoin')
-            console.log(param_name)
             let max = Math.max.apply(Math, this.products.map(function(o) { 
                 return o[param_name]; }))
             return max
         },
         getmin(param_name){
-            console.log('getmincfuncttoin')
-            console.log(param_name)
             let min = Math.min.apply(Math, this.products.map(function(o) { 
                 return o[param_name]; }))
             return min
@@ -91,6 +91,14 @@ export default {
         //     let min = Math.min.apply(Math, this.products.map(function(o) { return o.price; }))
         //     return min
         // }
+        handleScroll() {
+            if (window.scrollY > 50) {
+                return true
+            }else{
+                return false
+            }
+            
+        }
     },
     computed: {
     ...mapGetters(['GET_CATEGORIES','GET_PRODUCTS']),
@@ -114,6 +122,10 @@ export default {
     background-color: white;
     display: block;
     min-width: 230px;
+}
+.filter_panel{
+    position: fixed;
+    top:40px;
 }
 .sbros{
     display: flex;
