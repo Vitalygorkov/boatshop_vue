@@ -32,6 +32,8 @@
         <div class="range-values">
           <div>От: {{ local_min }} {{ unitType }}</div> 
           <div>До: {{ local_max }} {{ unitType }}</div>
+            <!-- {{getmax(this.parametr)}}
+            {{getmax(this.parametr)}} -->
         </div>
     </div>
 
@@ -47,18 +49,23 @@ export default {
             showForm: true,
             local_min: this.min_value,
             local_max: this.max_value,
+            min_value: 0,
+            max_value: 10000,
+            // min_value: this.getmin(this.parametr),
+            // max_value: this.getmax(this.parametr),
         }
     },
     props: {
       title: String,
-      min_value: Number,
-      max_value: Number,
+      // min_value: Number,
+      // max_value: Number,
       step: Number,
       unitType: String,
       parametr: String,
+      products: Array,
     },
     computed: {
-      ...mapGetters(['GET_FILTER_PRODUCTS_SET']),
+      ...mapGetters(['GET_FILTER_PRODUCTS_SET','GET_CATEGORIES','GET_PRODUCTS']),
       setfilter(){
         var  par = this.parametr
 
@@ -73,6 +80,9 @@ export default {
       ...mapActions(['FILTERS_PRODUCTS_SET']),
       toggleShowForm() {
           this.showForm = !this.showForm
+          this.min_value = this.getmin(this.parametr)
+          this.max_value = this.getmax(this.parametr)
+          
         },
 
       setRangeSlider() {
@@ -88,15 +98,32 @@ export default {
         }
       
       },
+      getmax(param_name){
+        if (this.showForm == false){
+          console.log(this.products)
+          let max = Math.max.apply(Math, this.products.map(function(o) { 
+              return o[param_name]; }))
+          return max
+        }
+
+      },
+      getmin(param_name){
+        if (this.showForm == false){
+          console.log(this.products)
+          let min = Math.min.apply(Math, this.products.map(function(o) { 
+              return o[param_name]; }))
+          return min
+        }
+      },
       // mounted() {
       //   this.filter_products_by_price();
       // }
     },
     watch: {
       GET_FILTER_PRODUCTS_SET() {
-        console.log('сработал GET_FILTER_PRODUCTS_SET в аккордионе') 
+        // console.log('сработал GET_FILTER_PRODUCTS_SET в аккордионе') 
         if(Object.keys(this.GET_FILTER_PRODUCTS_SET).length == 0){
-          console.log('сработал GET_FILTER_PRODUCTS_SET значение 0')
+          // console.log('сработал GET_FILTER_PRODUCTS_SET значение 0')
             this.showForm = true
             this.local_min = this.min_value
             this.local_max = this.max_value
