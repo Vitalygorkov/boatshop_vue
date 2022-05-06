@@ -141,7 +141,7 @@ export default {
 	// },
 	},
 	  mounted() {
-    this.FETCH_CATEGORIES();
+    // this.FETCH_CATEGORIES();
     },
 	// created(){
 	// 	document.title = 'Нептун 55'
@@ -162,7 +162,7 @@ body{
 }
 .obshii{
     width: 100%;
-    min-height: 227px;
+    min-height: 185px;
 
 }
 .bloki1{
@@ -247,7 +247,7 @@ body{
 }
 
 .bloki3{
-    width: 100%;
+    width: 90%;
     height: 45px;
     display: flex;
     flex-direction: row;

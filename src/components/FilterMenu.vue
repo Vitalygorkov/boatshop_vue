@@ -1,4 +1,5 @@
 <template>
+<div v-if="products.length !==0">
   <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category)" class="search-menu-box">
       <div @click="sbros" class="sbros">x Сбросить фильтр</div>
         <h3>Найдено товаров: {{this.prod_count}}</h3>
@@ -21,13 +22,13 @@
   <div v-else class="search-menu-box">
       <!-- <div class="filter_panel"> -->
         <div>
-            <!-- Пиксели{{handleScroll}} -->
         <h3>Найдено товаров: {{this.prod_count}}</h3>
+        <!-- categorizedProducts: {{products.length}} -->
         <div @click="sbros" class="sbros">x Сбросить фильтр</div>
       </div>
-        <accordion-section-range parametr="price" title="Цена" :min_value="getmin('price')" :max_value="getmax('price')" unitType="Руб"/>
+        <accordion-section-range parametr="price" title="Цена" unitType="Руб" :min_value="getmin('price')" :max_value="getmax('price')" :step="100" :products="products"/>
   </div>
-
+</div>
 
 </template>
 
@@ -41,9 +42,8 @@ export default {
     name: 'SearchMenu',
     data() {
         return {
-            title: "Пр заголовок",
-            title2: "2Пр заголовок2",
-            content: "Пр контент",
+            prod_prop: false,
+
             
             }
     },
@@ -75,14 +75,24 @@ export default {
             return arr
         },
         getmax(param_name){
+            if(this.products.length !== 0){
             let max = Math.max.apply(Math, this.products.map(function(o) { 
                 return o[param_name]; }))
             return max
+            }
+
         },
         getmin(param_name){
+            if(this.products.length !== 0){
             let min = Math.min.apply(Math, this.products.map(function(o) { 
                 return o[param_name]; }))
             return min
+            }
+            // // console.log(this.products)
+            // let min = Math.min.apply(Math, this.products.map(function(o) { 
+            
+            //     return o[param_name]; }))
+            // return min
         },
         // getminprice(){
         //     // console.log('getminprice функция')
@@ -91,18 +101,17 @@ export default {
         //     let min = Math.min.apply(Math, this.products.map(function(o) { return o.price; }))
         //     return min
         // }
-        handleScroll() {
-            if (window.scrollY > 50) {
-                return true
-            }else{
-                return false
-            }
-            
-        }
+
     },
     computed: {
     ...mapGetters(['GET_CATEGORIES','GET_PRODUCTS']),
 
+    },
+    watch: {
+      products(){
+        console.log('Вотчер мин макс аккордион')
+        
+      }
     },
     components: {
         AccordionSection,

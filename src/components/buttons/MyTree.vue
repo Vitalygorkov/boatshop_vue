@@ -62,7 +62,7 @@ export default {
   justify-content: space-between;
 }
 .menu__list > li{
-  padding: 15px;
+  padding: 10px;
 } 
 .menu__list>li:hover .sub-menu__list{
   display: block;

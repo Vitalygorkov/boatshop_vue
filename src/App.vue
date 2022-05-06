@@ -48,6 +48,11 @@
       //   }
       // },
       mounted() {
+        // this.FETCH_CATEGORIES();
+        // this.FETCH_PRODUCTS();
+      },
+      created() {
+        this.FETCH_CATEGORIES();
         this.FETCH_PRODUCTS();
       },
 
