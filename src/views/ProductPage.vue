@@ -7,7 +7,85 @@
       <carusel :carusel_data="product.prodimg"/>
     </div>
 
-    <div class="characteristics">
+    <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="characteristics">
+      <div class="chars">
+        <div class="char_name">Производитель:</div>
+        <div class="char_data" v-if="product.manufacturer">{{product.manufacturer.name}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Цвет:</div>
+        <div class="char_data" v-if="product.color">{{product.color.name}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Длина:</div>
+        <div class="char_data">{{product.length}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Ширина:</div>
+        <div class="char_data">{{product.width}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Длина кокпита:</div>
+        <div class="char_data">{{product.cockpit_length}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Ширина кокпита:</div>
+        <div class="char_data">{{product.cockpit_width}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Диаметр баллонов:</div>
+        <div class="char_data">{{product.cylinder_diameter}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Плотность ткани борта:</div>
+        <div class="char_data">{{product.fabric_thickness_side}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Плотность ткани дна:</div>
+        <div class="char_data">{{product.fabric_thickness_bottom}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Количество надувных отсеков:</div>
+        <div class="char_data">{{product.inflatable_compartments}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Грузоподъемность:</div>
+        <div class="char_data">{{product.load_capacity}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Пассажировместимость:</div>
+        <div class="char_data">{{product.passenger_capacity}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Максимальная мощность мотора:</div>
+        <div class="char_data">{{product.maximum_motor_power}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Вес лодки:</div>
+        <div class="char_data">{{product.boat_weight}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Вес полного комплекта:</div>
+        <div class="char_data">{{product.complete_set_weight}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Фальшборт:</div>
+        <div class="char_data">{{product.bulwark}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Киль:</div>
+        <div class="char_data">{{product.keel}}</div>
+      </div>
+      <div class="chars">
+        <div class="char_name">Габариты упаковки:</div>
+        <div class="char_data">{{product.upak}}</div>
+      </div>
+      <h3>ЦЕНА: {{product.price}}</h3>
+          <div class="card-shopping">
+             <a href="#">В КОРЗИНУ</a>
+          </div>
+    </div>
+        <div v-else class="characteristics">
       <div class="chars">
         <div class="char_name">Производитель</div>
         <div class="char_data" v-if="product.manufacturer">{{product.manufacturer.name}}</div>

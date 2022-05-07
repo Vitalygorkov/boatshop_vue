@@ -3,7 +3,7 @@
   <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category)" class="search-menu-box">
       <div @click="sbros" class="sbros">x Сбросить фильтр</div>
         <h3>Найдено товаров: {{this.prod_count}}</h3>
-        <accordion-section-range parametr="price" title="Цена" :min_value="getmin('price')" :max_value="getmax('price')" :step="100" unitType="Руб"/>
+        <accordion-section-range parametr="price" title="Цена" :min_value="getmin('price')" :max_value="getmax('price')" :step="1" unitType="Руб"/>
         <accordion-section-range parametr="length" title="Длина" :min_value="getmin('length')" :max_value="getmax('length')" :step="1" unitType="СМ"/>
         <accordion-section-range parametr="width" title="Ширина" :min_value="getmin('width')" :max_value="getmax('width')" :step="1" unitType="СМ"/>
         <accordion-section-range parametr="cockpit_length" title="Длина кокпита" :min_value="getmin('cockpit_length')" :max_value="getmax('cockpit_length')" :step="1" unitType="СМ"/>
@@ -26,7 +26,7 @@
         <!-- categorizedProducts: {{products.length}} -->
         <div @click="sbros" class="sbros">x Сбросить фильтр</div>
       </div>
-        <accordion-section-range parametr="price" title="Цена" unitType="Руб" :min_value="getmin('price')" :max_value="getmax('price')" :step="100" :products="products"/>
+        <accordion-section-range parametr="price" title="Цена" unitType="Руб" :min_value="getmin('price')" :max_value="getmax('price')" :step="1" :products="products"/>
   </div>
 </div>
 

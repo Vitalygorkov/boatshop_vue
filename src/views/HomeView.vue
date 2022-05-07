@@ -16,10 +16,11 @@
     <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
       <div class="tags_box">
-        <div v-for="category_tag in cats_tags" :key="category_tag.id">
-          {{category_tag.name}}hgjhgjh
+        <div class="tags_item" v-for="category_tag in cats_tags" :key="category_tag.id">
+        <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }">
+          {{category_tag.name}}
+        </router-link>
         </div>
-        
       </div>
       <div class="resultproducts">
         <transition-group name="fade">
@@ -274,19 +275,11 @@ export default {
     },
     getcats_tags(object, cats, arr=[]){
       let cat = parseInt(cats)
-      console.log('function getcats _tags////')
-      console.log(cat)
-      console.log(object)
       let parents = [...this.getcatsparent(object,cat)]
-      console.log(parents)
-      console.log(parents[0])
-
-
       let childrens = [...this.getcatschildren_obj(object, parents[0].id)]
-      console.log('finc get cat tags')
-      console.log(childrens)
-      this.cats_tags = [...arr]
-      return arr
+      childrens.pop()
+      this.cats_tags = childrens
+      return childrens  
     },
     pageClick(page) {
       this.pageNumber = page
@@ -357,6 +350,8 @@ export default {
     await this.FETCH_BOATS()
     this.get_categorizedProducts(parseInt(this.$route.params.id))
     this.get_paginatedProducts()
+    this.getcats_tags(this.GET_CATEGORIES,this.$route.params.id)
+
     // console.log('created')
 
     document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
@@ -368,6 +363,7 @@ export default {
       this.FILTERS_PRODUCTS_SET({reset: true})
       this.get_categorizedProducts()
       this.get_paginatedProducts()
+      this.getcats_tags(this.GET_CATEGORIES,this.$route.params.id)
       // console.log('watch')
       document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
       }
@@ -436,6 +432,21 @@ export default {
   display: flex;
   flex-direction: column;
   background: white;
+}
+.tags_box{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.tags_item{
+  background-color: #A4E2FD;
+  border-radius: 5px;
+  padding: 5px;
+}
+.tags_item a{
+  text-decoration: none;
+  color: rgb(20, 20, 20);
 }
 .resultproducts{
   display: flex;
