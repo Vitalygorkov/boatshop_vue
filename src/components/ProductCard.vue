@@ -31,9 +31,6 @@
             <span v-if="product.sale !== 0" class="card-discount-size">{{product.sale}}%</span>
         </div>
         <!-- <div class="card-xarakteristiki card-brona"> card brona это желтая эмблема акция -->
-          <div class="card-xarakteristiki" v-bind:class="{ cardbrona: product.sale !== 0 }">
-            <a href="#">ХАРАКТЕРИСТИКИ</a>  
-        </div>
         <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="tabs_parametr">
             <div class="tab_parametr">
                 <div class="name_parametr">Длина</div>
@@ -50,6 +47,9 @@
             <div class="tab_parametr">
                 <div class="name">Вес лодки</div>
                 <div class="number">{{product.boat_weight}} КГ</div>
+            </div>
+            <div class="card-xarakteristiki" v-bind:class="{ cardbrona: product.sale !== 0 }">
+              <a href="#">ХАРАКТЕРИСТИКИ</a>  
             </div>
           </div>
     </div>
@@ -168,7 +168,7 @@ export default {
   }
   .card-xarakteristiki{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding-top: 10px;
     padding-left: 25px;
     padding-right: 25px;

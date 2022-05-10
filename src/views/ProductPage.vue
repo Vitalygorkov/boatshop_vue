@@ -70,11 +70,11 @@
       </div>
       <div class="chars">
         <div class="char_name">Фальшборт:</div>
-        <div class="char_data">{{product.bulwark}}</div>
+        <div class="char_data">{{product.bulwark | yesno}}</div>
       </div>
       <div class="chars">
         <div class="char_name">Киль:</div>
-        <div class="char_data">{{product.keel}}</div>
+        <div class="char_data">{{product.keel | yesno}}</div>
       </div>
       <div class="chars">
         <div class="char_name">Габариты упаковки:</div>

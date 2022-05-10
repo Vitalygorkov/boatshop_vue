@@ -3,20 +3,43 @@
   <div class="categories_path">
     <div class="category_path"><router-link :to="{ name: 'home' }">Главная</router-link></div>
 
-    <div v-for="category_path in getcatsparent(this.GET_CATEGORIES,this.$route.params.id)" :key="category_path.id" class="category_path">
+    <div v-for="category_path in getcatsparent(this.GET_CATEGORIES, this.category.id)" :key="category_path.id" class="category_path">
       <img src="../assets/img/arrow-right-solid.svg">
       <router-link :to="{ name: 'categorypage', params: {id: category_path.id, tree_id: category_path.tree_id} }">
         {{category_path.name}}
       </router-link>
     </div>
+
             <!-- {{getcatsparent(this.GET_CATEGORIES,this.$route.params.id)}} -->
     <!-- <div v-for="category in GET_CATEGORIES" v-if="category.id == this.$route.params.id" :key="category.id" class="category_path">{{category.name}}</div>  -->
   </div>
   <div class="filter_and_results">
     <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
+      <!-- <radio-box title="Сортировка:" v-on:CheckedRadioBox="CheckedRadioBox"/> -->
+      <div class="sort_box">
+        <div>Сортировать по: </div>
+        <div class="sort_item">
+          <sort-button v-bind:class="{ sort_item_active: 'name_up' == sort_by || 'name_down' == sort_by  }" title="наименованию" up="name_up" down="name_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'name_up', sort_reverse_img: this.sort_by == 'name_down'}" src="../assets/img/sort.svg">
+        </div>
+        <div class="sort_item">
+                  <sort-button class="sort_item" v-bind:class="{ sort_item_active: 'price_up' == sort_by || 'price_down' == sort_by}" title="цене" up="price_up" down="price_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'price_up', sort_reverse_img: this.sort_by == 'price_down'}" src="../assets/img/sort.svg">
+        </div>
+        <div class="sort_item">
+                  <sort-button class="sort_item" v-bind:class="{ sort_item_active: 'length_up' == sort_by || 'length_down' == sort_by}" title="длине" up="length_up" down="length_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'length_up', sort_reverse_img: this.sort_by == 'length_down' }" src="../assets/img/sort.svg">
+        </div>
+        <div class="sort_item">
+          <sort-button class="sort_item" v-bind:class="{ sort_item_active: 'weight_up' == sort_by || 'weight_down' == sort_by}" title="весу" up="weight_up" down="weight_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'weight_up', sort_reverse_img: this.sort_by == 'weight_down'}" src="../assets/img/sort.svg">
+        </div>
+        <!-- {{this.$emit('CheckedButton')}} -->
+        <!-- <div class="sort_item" @click="sort_active = !sort_active">наименованию <img v-bind:class="{ sort_active_img: sort_active}" src="../assets/img/sort.svg"></div>
+        <div class="sort_item">цене <img v-bind:class="{ sort_active_img: sort_active}" src="../assets/img/sort.svg"></div>
+        <div class="sort_item">длине <img v-bind:class="{ sort_active_img: sort_active}" src="../assets/img/sort.svg"></div>
+        <div class="sort_item">весу <img v-bind:class="{ sort_active_img: sort_active}" src="../assets/img/sort.svg"></div> -->
+      
+      </div>
       <div class="tags_box">
-        <div class="tags_item" v-for="category_tag in cats_tags" :key="category_tag.id">
+        <div  v-bind:class="{ tags_item_active: category.id == category_tag.id}" class="tags_item" v-for="category_tag in cats_tags" :key="category_tag.id">
         <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }">
           {{category_tag.name}}
         </router-link>
@@ -31,8 +54,11 @@
       </div>
 
       <div class="pagination_box">
-        <div class="page" v-for="page in pages" :key="page" @click="pageClick(page)">{{page}}</div>
-      </div>
+        <div class="more" @click="pageMore()">Показать еще</div>
+        <div class="pagination">
+          <div class="page" v-bind:class="{ pageactive: pageNumber == page }" v-for="page in pages" :key="page" @click="pageClick(page)">{{page}}</div>
+        </div>
+     </div>
     </div>
   </div>
 </div>
@@ -41,26 +67,78 @@
 <script>
 import FilterMenu from "../components/FilterMenu"
 import ProductCard from "../components/ProductCard"
+import SortButton from "../components/buttons/SortButton"
 import {mapGetters, mapActions} from 'vuex'
+
 
 export default {
   name: 'HomeView',
   data() {
     return {
       productsPerPage: 9,
+      morePageNumber: 1,
       pageNumber: 1,
       category: {id: parseInt(this.$route.params.id), tree_id: parseInt(this.$route.params.tree_id)},
       categorizedProducts: [],
       filteredProducts: [],
       cats_tags: [],
       paginatedProducts: [],
+      sort_by: 'name_down',
       
     }
   },
   methods: { 
     ...mapActions(['FETCH_CATEGORIES', 'FETCH_PRODUCTS', 'FETCH_BOATS','FILTERS_PRODUCTS_SET']),
+    CheckedButton(checked){
+      this.sort_by = checked
+      console.log('сработал емит')
+      console.log(this.sort_by)
+      console.log(this.CheckedEmit)
+    },
+    // CheckedRadioBox(checked){
+    //   console.log('сработал емит')
+    //   console.log(checked)
+    //   if (checked == "По возрастанию цены") {
+    //     console.log('По возрастанию цены')
+    //     this.sort_by = "ascending_price"
+    //   } else if (checked == "По убыванию цены") {
+    //     console.log('По убыванию цены')
+    //     this.sort_by = "descending_price"
+    //   }else if (checked == "По алфавиту") {
+    //     console.log('По алфавиту')
+    //     this.sort_by = "alphabet"
+    //   }
+    // },
+    sort_filtered_products(sort_by) {
+      if (sort_by == 'name_up') {
+        console.log('сортировка по возрастанию имени')
+        console.log(this.filteredProducts)
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.name > b.name ? 1 : -1);
+        console.log(this.filteredProducts)
+      }else if (sort_by == 'name_down'){
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.name > b.name ? -1 : 1);
+      }else if (sort_by == 'price_up'){
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.price > b.price ? 1 : -1);
+      }else if (sort_by == 'price_down'){
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.price > b.price ? -1 : 1);
+      }else if (sort_by == 'length_up'){
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.length > b.length ? 1 : -1);
+      }else if (sort_by == 'length_down'){
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.length > b.length ? -1 : 1);
+      }else if (sort_by == 'weight_up'){
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.length > b.length ? 1 : -1);
+      }else if (sort_by == 'weight_down'){
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.length > b.length ? -1 : 1);
+      }
+
+
+
+
+
+    },
+
     get_paginatedProducts() {
-      console.log('get_paginatedProducts')
+      // console.log('get_paginatedProducts')
       let from = (this.pageNumber - 1)*this.productsPerPage
       let to = from + this.productsPerPage
       // console.log(this.filteredProducts)
@@ -68,12 +146,15 @@ export default {
         let products = [...this.GET_PRODUCTS]
         this.categorizedProducts = [...this.GET_PRODUCTS]
         this.filteredProducts = [...this.GET_PRODUCTS]
+        this.sort_filtered_products(this.sort_by) 
         console.log(this.filteredProducts)
-        this.paginatedProducts = [...products.slice(from,to)]
+        this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
         return products.slice(from,to)
+      }else{
+        this.sort_filtered_products(this.sort_by)
+        this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
+        return this.filteredProducts.slice(from,to)
       }
-      this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
-      return this.filteredProducts.slice(from,to)
     },
     get_filterProducts() {
       // console.log('копирование объектов')
@@ -244,8 +325,8 @@ export default {
       // Получаем объекты дочерних категорий
     getcatschildren_obj(object, cats, arr=[]){
       let catparent = parseInt(cats)
-      console.log('function getcatschildren!!')
-      console.log(catparent)
+      // console.log('function getcatschildren!!')
+      // console.log(catparent)
       getChildren(object,catparent)
           function getChildren(obj, parent,){
             for(let i = 0; i < obj.length; i += 1){
@@ -270,12 +351,14 @@ export default {
             }
           }
       }
+      console.log('getcatsparent')
       arr.reverse()
       return arr
     },
     getcats_tags(object, cats, arr=[]){
       let cat = parseInt(cats)
       let parents = [...this.getcatsparent(object,cat)]
+      // console.log(parents)
       let childrens = [...this.getcatschildren_obj(object, parents[0].id)]
       childrens.pop()
       this.cats_tags = childrens
@@ -283,7 +366,48 @@ export default {
     },
     pageClick(page) {
       this.pageNumber = page
+      this.morePageNumber = page
       this.get_paginatedProducts()
+    },
+
+    pageMore () {
+    // let from = (page - 1)*this.productsPerPage
+    // let to = from + this.productsPerPage
+    // if (this.filteredProducts.length/)
+    console.log(this.morePageNumber)
+    console.log(this.pages)
+    let page = this.morePageNumber
+
+
+
+    
+    if (page== 0) {
+      this.morePageNumber +=1
+      console.log('page 1 if: '+ this.morePageNumber)
+      page = this.morePageNumber + this.pageNumber
+      this.pageNumber +=1
+    }else if (this.pages>this.morePageNumber) {
+      this.morePageNumber +=1
+      this.pageNumber +=1
+      page = this.morePageNumber
+      console.log('page 2 if: '+ this.morePageNumber)
+    }
+    console.log(page)
+    console.log('get more pages')
+    let from = (page-1)*this.productsPerPage
+    let to = from + this.productsPerPage
+    console.log(this.filteredProducts.slice(from,to))
+    // this.paginatedProducts= (this.paginatedProducts.push(this.filteredProducts.slice(from,to)))
+    let arr1 = [...this.paginatedProducts]
+    let arr = []
+    arr = this.filteredProducts.slice(from,to)
+    for (var i = 0; i < arr.length; i++) {
+      arr1.push(arr[i])
+    }
+    const uniqueArr = arr1.filter((x, i, a) => a.indexOf(x) == i)
+    this.paginatedProducts = uniqueArr
+
+    console.log(this.paginatedProducts)
     },
     current_category(id){
       if(id){
@@ -336,44 +460,48 @@ export default {
     // this.get_categorizedProducts()
     // this.getcats_tags(this.GET_CATEGORIES,this.$route.params.id)
     // console.log('mounted')
-    document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
+    document.title = `Нептун 55 ${this.current_category(this.category.id)}`
   },
 
   components: {
     ProductCard,
-    FilterMenu
+    FilterMenu,
+    SortButton,
   },
   async created(){
     // await this.FETCH_CATEGORIES()
     // this.getcatschildren_obj(this.GET_CATEGORIES,this.$route.params.id)
     await this.FETCH_PRODUCTS()
     await this.FETCH_BOATS()
-    this.get_categorizedProducts(parseInt(this.$route.params.id))
+    this.get_categorizedProducts(this.category.id)
     this.get_paginatedProducts()
-    this.getcats_tags(this.GET_CATEGORIES,this.$route.params.id)
+    this.getcats_tags(this.GET_CATEGORIES,this.category.id)
 
     // console.log('created')
 
-    document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
+    document.title = `Нептун 55 ${this.current_category(this.category.id)}`
 	},
   watch: { 
     '$route.params.id': {
       handler: function() {
+      this.category = {id: parseInt(this.$route.params.id), tree_id: parseInt(this.$route.params.tree_id)},
       this.pagefirst()
       this.FILTERS_PRODUCTS_SET({reset: true})
       this.get_categorizedProducts()
       this.get_paginatedProducts()
-      this.getcats_tags(this.GET_CATEGORIES,this.$route.params.id)
-      // console.log('watch')
-      document.title = `Нептун 55 ${this.current_category(parseInt(this.$route.params.id))}`
+      this.getcats_tags(this.GET_CATEGORIES,this.category.id)
+      console.log('watch')
+      document.title = `Нептун 55 ${this.current_category(this.category.id)}`
       }
     },
     GET_FILTER_PRODUCTS_SET() {
-      console.log('сработал GET_FILTER_PRODUCTS_SET') 
+      console.log('сработал GET_FILTER_PRODUCTS_SET')
       this.pagefirst()
       this.get_filterProducts() 
       this.get_paginatedProducts()
-      
+    },
+    sort_by(){
+      this.get_paginatedProducts()
     },  
     deep: true,
     immediate: true
@@ -429,25 +557,75 @@ export default {
   text-decoration: none;
 }
 .block-results{
+  width: 100%;
   display: flex;
   flex-direction: column;
   background: white;
 }
+.sort_box{
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sort_item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.sort_item_active{
+  background-color: #A4E2FD;
+  border-radius: 5px;
+  padding: 5px;
+}
+.sort_img{
+  display: none;
+} 
+.sort_active_img{
+  display:inline-block;
+  width: 17px;
+  height: 17px;
+  transition: 0.25s;
+}
+.sort_reverse_img{
+  display:inline-block;
+  width: 17px;
+  height: 17px;
+  transform: scale(1, -1);
+  transition: 0.25s;
+}
+
 .tags_box{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: left;
   flex-wrap: wrap;
 }
 .tags_item{
+  background-color: white;
+  border-radius: 5px;
+  margin-left: 15px;
+  padding: 5px;
+}
+.tags_item:hover{
   background-color: #A4E2FD;
   border-radius: 5px;
+  margin-left: 15px;
+  padding: 5px;
+}
+.tags_item_active{
+  background-color: #A4E2FD;
+  border-radius: 5px;
+  margin-left: 15px;
   padding: 5px;
 }
 .tags_item a{
   text-decoration: none;
   color: rgb(20, 20, 20);
 }
+
 .resultproducts{
   display: flex;
   flex-direction: row;
@@ -456,8 +634,28 @@ export default {
 }
 .pagination_box{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.pagination{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.more{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 25px;
+  border: solid 1px #e7e7e7;
+}
+.more:hover {
+  background: #aeaeae;
+  cursor: pointer;
+  color: #ffffff;
 }
 .page{
   padding: 8px;
@@ -465,6 +663,11 @@ export default {
   border: solid 1px #e7e7e7;
 }
 .page:hover {
+  background: #aeaeae;
+  cursor: pointer;
+  color: #ffffff;
+}
+.pageactive {
   background: #aeaeae;
   cursor: pointer;
   color: #ffffff;

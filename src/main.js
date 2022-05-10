@@ -7,6 +7,10 @@ import ToggleButton from 'vue-js-toggle-button'
 
 Vue.use(ToggleButton)
 Vue.config.productionTip = false
+// Добавил фильтр для вывода true false
+Vue.filter('yesno', function (value) {
+  return value ? 'Да' : 'Нет';
+})
 
 new Vue({
   router,

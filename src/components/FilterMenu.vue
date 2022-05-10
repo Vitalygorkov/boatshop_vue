@@ -1,6 +1,6 @@
 <template>
-<div v-if="products.length !==0">
-  <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category)" class="search-menu-box">
+<div class="filter_box" v-if="products.length !==0">
+  <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category) " class="search-menu-box">
       <div @click="sbros" class="sbros">x Сбросить фильтр</div>
         <h3>Найдено товаров: {{this.prod_count}}</h3>
         <accordion-section-range parametr="price" title="Цена" :min_value="getmin('price')" :max_value="getmax('price')" :step="1" unitType="Руб"/>
@@ -28,6 +28,9 @@
       </div>
         <accordion-section-range parametr="price" title="Цена" unitType="Руб" :min_value="getmin('price')" :max_value="getmax('price')" :step="1" :products="products"/>
   </div>
+</div>
+<div class="filter_box" v-else>
+<div @click="sbros" class="sbros">x Сбросить фильтр</div>
 </div>
 
 </template>
@@ -109,7 +112,7 @@ export default {
     },
     watch: {
       products(){
-        console.log('Вотчер мин макс аккордион')
+        // console.log('Вотчер мин макс аккордион')
         
       }
     },
@@ -125,6 +128,9 @@ export default {
 
 </script>
 <style>
+.filter_box{
+    min-height: 300px;
+}
 .search-menu-box{
     display: flex;
     justify-content: center;

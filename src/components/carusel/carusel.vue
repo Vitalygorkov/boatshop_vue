@@ -116,8 +116,8 @@ export default {
     width: 45px;
     height: 100px;
     border: none;
-    background: url('/src/assets/img/angle-left-solid.svg') 0 0 / 100% no-repeat;
-    opacity: 0.5;
+    background: white url('/src/assets/img/angle-left-solid.svg') 0 0 / 100% no-repeat;
+    opacity: 0.6;
 }
 .next{
     position: relative;
@@ -134,8 +134,9 @@ export default {
     width: 45px;
     height: 100px;  
     border: none;
-    background: url('/src/assets/img/angle-right-solid.svg') 0 0 / 100% no-repeat;
-    opacity: 0.5;
+    /* background-color: white; */
+    background: white url('/src/assets/img/angle-right-solid.svg') 0 0 / 100% no-repeat;
+    opacity: 0.6;
 }
 /* .next{
     position: static;
