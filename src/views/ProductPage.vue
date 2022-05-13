@@ -81,9 +81,14 @@
         <div class="char_data">{{product.upak}}</div>
       </div>
       <h3>ЦЕНА: {{product.price}}</h3>
-          <div class="card-shopping">
+        <router-link :to="{ name: 'contactformpage'}">
+        <div class="card-shopping">
+            КУПИТЬ
+        </div>
+        </router-link>
+          <!-- <div class="card-shopping">
              <a href="#">В КОРЗИНУ</a>
-          </div>
+          </div> -->
     </div>
         <div v-else class="characteristics">
       <div class="chars">
