@@ -32,10 +32,21 @@
 			</div>
 
 			<div class="d7">
-				<form>
-					<input type="text" placeholder="Искать здесь...">
+				<form>		
+					<input @mouseover="visible = false" @mouseleave="visible = true" type="text" placeholder="Искать здесь..." v-model="searchstring">
 					<button type="submit"></button>
 				</form>
+				<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }">
+					<div v-for="product in searchproducts">
+					<router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
+						<div class="sitem" @click="visible = true">
+							<div class="sphoto"><img :src="GET_MEDIA_URL+product.image.split('media')[1]"></div>
+							<div>{{product.name}}</div>
+						</div>
+					</router-link>
+					</div>
+				</div>
+
 			</div>
 
 			<div class="bloki2-sub2">
@@ -106,7 +117,10 @@ import {mapGetters, mapActions} from 'vuex'
 import MyTree from './buttons/MyTree';
 export default {
 		data() {
-			return {			
+			return {
+				searchstring: '',
+				searchproducts: [],
+				visible: true,			
 			}
 		},
 
@@ -114,7 +128,7 @@ export default {
 		MyTree
 	},
     computed: {
-    ...mapGetters(['GET_CATEGORIES',]),
+    ...mapGetters(['GET_CATEGORIES','GET_PRODUCTS','GET_MEDIA_URL']),
 	// gettree() {
 	// console.log('tree')
 	// this.tree = this.GET_CATEGORIES
@@ -136,6 +150,15 @@ export default {
 
 	methods: { 
 	...mapActions(['FETCH_CATEGORIES','CHANGE_LAST_CATEGORY','LAST_CATEGORY']),
+	searchbyproducts(value){
+		if (value != ''){
+		this.searchproducts = this.GET_PRODUCTS.filter(function(item){
+		return item.name.toLowerCase().includes(value.toLowerCase())
+		})
+		}else{
+			this.searchproducts = []
+		}
+	},
 	// changeLastCategory(category) {
 	// 	this.CHANGE_LAST_CATEGORY(category)
 	// },
@@ -146,6 +169,12 @@ export default {
 	// created(){
 	// 	document.title = 'Нептун 55'
 	// },
+	watch: {
+		searchstring(){
+			console.log('Вотчер поиска')
+			this.searchbyproducts(this.searchstring)
+		}
+	},
 }
 
 
@@ -162,7 +191,7 @@ body{
 }
 .obshii{
     width: 100%;
-    min-height: 185px;
+    min-height: 155px;
 
 }
 .bloki1{
@@ -296,6 +325,39 @@ body{
     font-family: FontAwesome;
     color: #324b4e;
   }
+.search_box{
+	background-color: white;
+	position: absolute;
+	margin-top: 45px;
+	max-width: 600px;
+	max-height: 400px;
+	overflow: scroll;
+	z-index: 5;
+
+
+}
+.search_box a{
+	text-decoration: none;
+}
+.search_box.visible{
+	display: none;
+}
+.sitem{
+	display: flex;
+	flex-direction: row;
+	text-decoration: none;
+}
+.sitem:hover{
+	background-color: #e1f6fc;
+}
+.sphoto{
+	/* width: 27px;
+	height: 27px; */
+}
+.sphoto img{
+	max-width: 50px;
+	max-height: 50px;
+}
 @media all and (max-width: 1030px) {
 	.bloki2-sub1{
 		display: none;

@@ -18,56 +18,117 @@
         <div class="card-title" v-bind:class="{ cardsale: product.sale !== 0 }">
             <!-- <a :href="product.product_abs_url"></a> -->
               <router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
-              <a :href="product.product_abs_url"> 
               {{ product.name }}
-              </a>
               </router-link>
         </div>
         <div class="card-prise">
-            {{ product.price *(100-product.sale)/100 }} руб.
+            {{ Math.round(product.price *(100-product.sale)/100) }} руб.
         </div>
         <div class="card-discount">
-            <span v-if="product.sale !== 0" class="card-discount-price">{{product.price*0.01*product.sale}} Руб.</span>
+            <span v-if="product.sale !== 0" class="card-discount-price">{{Math.round(product.price*0.01*product.sale)}} Руб.</span>
             <span v-if="product.sale !== 0" class="card-discount-size">{{product.sale}}%</span>
         </div>
         <!-- <div class="card-xarakteristiki card-brona"> card brona это желтая эмблема акция -->
         <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="tabs_parametr">
             <div class="tab_parametr">
                 <div class="name_parametr">Длина</div>
-                <div class="number_parametr">{{product.length}} СМ</div>
+                <div class="number_parametr">{{product_boat.length}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Ширина</div>
-                <div class="number">{{product.width}} СМ</div>
+                <div class="number">{{product_boat.width}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Диаметр баллонов</div>
-                <div class="number">{{product.cylinder_diameter}} СМ</div>
+                <div class="number">{{product_boat.cylinder_diameter}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Вес лодки</div>
-                <div class="number">{{product.boat_weight}} КГ</div>
+                <div class="number">{{product_boat.boat_weight}} КГ</div>
             </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                <div class="name_parametr">Производитель</div>
+                <div class="number_parametr">{{product_boat.manufacturer.name}}</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Длина кокпита</div>
+                  <div class="number">{{product_boat.cockpit_length}} СМ</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Ширина кокпита</div>
+                  <div class="number">{{product_boat.cockpit_width}} СМ</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Плотность ткани дна</div>
+                  <div class="number">{{product_boat.fabric_thickness_bottom}} г/м<span style="vertical-align:super">2</span></div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Плотность ткани борта</div>
+                  <div class="number">{{product_boat.fabric_thickness_side}} г/м<span style="vertical-align:super">2</span></div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Количество надувных отсеков</div>
+                  <div class="number">{{product_boat.inflatable_compartments}} ШТ</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Пассажировместимость</div>
+                  <div class="number">{{product_boat.passenger_capacity}} ЧЕЛ</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Максимальная мощность мотора</div>
+                  <div class="number">{{product_boat.maximum_motor_power}} Л/С</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Грузоподъемность</div>
+                  <div class="number">{{product_boat.load_capacity}} КГ</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Вес полного комплекта</div>
+                  <div class="number">{{product_boat.complete_set_weight}} КГ</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Фальшборт</div>
+                  <div class="number">{{product_boat.bulwark | yesno}}</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Киль</div>
+                  <div class="number">{{product_boat.bulwark | yesno}}</div>
+            </div>
+            <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
+                  <div class="name">Габариты упаковки</div>
+                  <div class="number">{{product_boat.upak}}</div>
+            </div>
+
+
             <div class="card-xarakteristiki" v-bind:class="{ cardbrona: product.sale !== 0 }">
-              <a href="#">ХАРАКТЕРИСТИКИ</a>  
+              <!-- <a href="#">Все характеристики</a> -->
+              <button class="charbutton" @click="ShowCharacteristics = !ShowCharacteristics">Все характеристики</button>
             </div>
+
           </div>
     </div>
+    <router-link :to="{ name: 'contactformpage'}">
     <div class="card-shopping">
-        <a href="#">В КОРЗИНУ</a>
+        КУПИТЬ
     </div>
-
+    </router-link>
 </div>   
 </template>
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
 export default {
+    data() {
+        return {
+            ShowCharacteristics: true,
+            product_boat: [],
+        }
+    },
     props:{
       product: [],
     },
     computed: {
-    ...mapGetters(['GET_MEDIA_URL','GET_CATEGORIES']),
+    ...mapGetters(['GET_MEDIA_URL','GET_CATEGORIES','GET_BOATS']),
     },
     methods: {
       getcatschildren(object, catparent, arr=[]){
@@ -97,11 +158,70 @@ export default {
             
         // }
     },
+    mounted() {
+      // if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == this.product_prop.category) && this.product_prop.length == undefined){
+      //     console.log('запрос лодок')
+      //     console.log(this.product)
+      //     let id = this.product_prop.id
+      //     let boat = this.GET_BOATS.filter(function(item) {return item.id == id})
+      //     this.product = boat
+      // }else{
+      //   // this.product = this.product_prop
+      //   console.log(this.product)
+      // }
+      // this.product = this.product_prop
+      // console.log(this.product)
+    },
+    created(){
+      this.product_boat = this.product
+      // console.log(this.product)
+      if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == this.product.category) && this.product.length == undefined){
+          // console.log('запрос лодок')
+          // console.log(this.product)
+          let id = this.product.id
+          let boat = this.GET_BOATS.filter(function(item) {return item.id == id})
+          this.product_boat = boat[0]
+          // console.log(this.product)
+          // console.log(this.product_boat)
+      }else{
+        // this.product = this.product_prop
+        // console.log(this.product)
+      }
+    },
 }
 
 
 </script>
 <style>
+.charbutton {
+  background-color: white;
+  /* color: #444; */
+  cursor: pointer;
+  /* padding: 12px; */
+  width: 100%;
+  text-align: center;
+  border: none;
+  /* outline: none; */
+  transition: 0.4s;
+  color: #2a5fc1;
+}
+.tab_parametr_hide{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.tab_parametr_hide_on{
+    display: none;
+}
+.panel { 
+  padding: 0 18px;
+  background-color: #dadada;
+  overflow: hidden;
+}
+.panel.panel_on {
+  display: none;
+}
+
   .card{
     display: flex;
     flex-direction: column;
@@ -109,7 +229,7 @@ export default {
     position: relative;
 
     max-width: 350px;
-    max-height: 600px;
+    max-height: 800px;
     margin: 8px;
     background: white;
     border-radius: 5px;
@@ -175,15 +295,7 @@ export default {
     font-size: 15px;
 
   }
-  .card-xarakteristiki a{
-    text-decoration: none;
-    color: #2a5fc1;
-    margin-top: 4px;
-    background: #ecf6fb;
-  }
-  .card-xarakteristiki a:hover{
-    color: rgb(136, 0, 255);
-  }
+
   .cardbrona::before{
     content: 'АКЦИЯ';
     font-style: italic;

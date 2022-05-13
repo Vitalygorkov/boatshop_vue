@@ -108,6 +108,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     background: #c2f3f9;
+    flex-wrap: wrap;
   }
   .footer-container ul{
     list-style-type: none;

@@ -155,6 +155,21 @@ export default {
 
 </script>
 <style scoped>
+/* исправление для мозиллы */
+/* @supports (-moz-appearance:none) {
+    .range-slider input[type=range]{
+    position: relative;
+    left: 0;
+    bottom: 0;
+    }
+} */
+/* @-moz-document url-prefix() {
+    .range-slider input[type=range]{
+    position: relative;
+    left: 0;
+    bottom: 0;
+    }
+} */
 /* Style the buttons that are used to open and close the accordion panel */
 img{
   /* display: none; */
@@ -278,11 +293,14 @@ input[type=range].styled-slider::-moz-range-thumb {
 }
 
 input[type=range].styled-slider::-moz-range-track {
+  position: relative;
   height: max(calc(0.5em - 2px - 2px),0px);
   border: 2px solid #B2B2B2;
   border-radius: 0.5em;
   background: #efefef;
   box-shadow: none;
+  z-index: -1;
+  visibility: hidden;
 }
 
 input[type=range].styled-slider::-moz-range-thumb:hover {
@@ -301,6 +319,10 @@ input[type=range].styled-slider::-moz-range-thumb:active {
 input[type=range].styled-slider:active::-moz-range-track {
   background: #f5f5f5;
   border-color: #c1c1c1;
+}
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
 }
 
 /*ms*/

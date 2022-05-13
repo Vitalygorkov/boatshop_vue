@@ -111,10 +111,10 @@ export default {
     // },
     sort_filtered_products(sort_by) {
       if (sort_by == 'name_up') {
-        console.log('сортировка по возрастанию имени')
-        console.log(this.filteredProducts)
+        // console.log('сортировка по возрастанию имени')
+        // console.log(this.filteredProducts)
         this.filteredProducts = this.filteredProducts.sort((a, b) => a.name > b.name ? 1 : -1);
-        console.log(this.filteredProducts)
+        // console.log(this.filteredProducts)
       }else if (sort_by == 'name_down'){
         this.filteredProducts = this.filteredProducts.sort((a, b) => a.name > b.name ? -1 : 1);
       }else if (sort_by == 'price_up'){
@@ -147,7 +147,7 @@ export default {
         this.categorizedProducts = [...this.GET_PRODUCTS]
         this.filteredProducts = [...this.GET_PRODUCTS]
         this.sort_filtered_products(this.sort_by) 
-        console.log(this.filteredProducts)
+        // console.log(this.filteredProducts)
         this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
         return products.slice(from,to)
       }else{
@@ -288,7 +288,7 @@ export default {
     },
     get_categorizedProducts(){
       let category = parseInt(this.$route.params.id)
-      console.log(category)
+      // console.log(category)
       if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == category)) {
         // console.log('выполнено условие категории лодок')
         this.categorizedProducts = [...this.GET_BOATS]
@@ -351,18 +351,25 @@ export default {
             }
           }
       }
-      console.log('getcatsparent')
+      // console.log('getcatsparent')
       arr.reverse()
       return arr
     },
     getcats_tags(object, cats, arr=[]){
       let cat = parseInt(cats)
+      // console.log(cat)
+      if (cat) {
+      // console.log('getcats_tags if')
       let parents = [...this.getcatsparent(object,cat)]
       // console.log(parents)
       let childrens = [...this.getcatschildren_obj(object, parents[0].id)]
       childrens.pop()
       this.cats_tags = childrens
-      return childrens  
+      return childrens
+      }else{
+      // console.log('getcats_tags else')
+      return ['']}
+        
     },
     pageClick(page) {
       this.pageNumber = page
@@ -374,8 +381,8 @@ export default {
     // let from = (page - 1)*this.productsPerPage
     // let to = from + this.productsPerPage
     // if (this.filteredProducts.length/)
-    console.log(this.morePageNumber)
-    console.log(this.pages)
+    // console.log(this.morePageNumber)
+    // console.log(this.pages)
     let page = this.morePageNumber
 
 
@@ -383,20 +390,20 @@ export default {
     
     if (page== 0) {
       this.morePageNumber +=1
-      console.log('page 1 if: '+ this.morePageNumber)
+      // console.log('page 1 if: '+ this.morePageNumber)
       page = this.morePageNumber + this.pageNumber
       this.pageNumber +=1
     }else if (this.pages>this.morePageNumber) {
       this.morePageNumber +=1
       this.pageNumber +=1
       page = this.morePageNumber
-      console.log('page 2 if: '+ this.morePageNumber)
+      // console.log('page 2 if: '+ this.morePageNumber)
     }
-    console.log(page)
-    console.log('get more pages')
+    // console.log(page)
+    // console.log('get more pages')
     let from = (page-1)*this.productsPerPage
     let to = from + this.productsPerPage
-    console.log(this.filteredProducts.slice(from,to))
+    // console.log(this.filteredProducts.slice(from,to))
     // this.paginatedProducts= (this.paginatedProducts.push(this.filteredProducts.slice(from,to)))
     let arr1 = [...this.paginatedProducts]
     let arr = []
@@ -407,7 +414,7 @@ export default {
     const uniqueArr = arr1.filter((x, i, a) => a.indexOf(x) == i)
     this.paginatedProducts = uniqueArr
 
-    console.log(this.paginatedProducts)
+    // console.log(this.paginatedProducts)
     },
     current_category(id){
       if(id){
@@ -454,7 +461,6 @@ export default {
   // },
   },
   mounted() {
-
     this.pagefirst()
     // this.FILTERS_PRODUCTS_SET({reset: true})
     // this.get_categorizedProducts()
@@ -490,12 +496,12 @@ export default {
       this.get_categorizedProducts()
       this.get_paginatedProducts()
       this.getcats_tags(this.GET_CATEGORIES,this.category.id)
-      console.log('watch')
+      // console.log('watch')
       document.title = `Нептун 55 ${this.current_category(this.category.id)}`
       }
     },
     GET_FILTER_PRODUCTS_SET() {
-      console.log('сработал GET_FILTER_PRODUCTS_SET')
+      // console.log('сработал GET_FILTER_PRODUCTS_SET')
       this.pagefirst()
       this.get_filterProducts() 
       this.get_paginatedProducts()
@@ -567,6 +573,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 }
 .sort_item{
   display: flex;

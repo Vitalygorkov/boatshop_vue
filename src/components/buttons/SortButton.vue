@@ -58,6 +58,7 @@ export default {
   margin-left: 10px;
   display: flex;
   flex-direction: row;
+  cursor: pointer;
   align-items: center;
 }
 /* .sort_item img{

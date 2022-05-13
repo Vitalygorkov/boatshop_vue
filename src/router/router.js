@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductPage from '../views/ProductPage.vue'
+import ContactView from '../views/ContactView.vue'
 
 
 Vue.use(VueRouter)
@@ -22,6 +23,11 @@ const routes = [
     name: 'categorypage',
     component: HomeView
   },  
+  {
+    path: '/contactform/',
+    name: 'contactformpage',
+    component: ContactView
+  }, 
   {
     path: '/about',
     name: 'about',
