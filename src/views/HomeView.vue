@@ -9,9 +9,6 @@
         {{category_path.name}}
       </router-link>
     </div>
-
-            <!-- {{getcatsparent(this.GET_CATEGORIES,this.$route.params.id)}} -->
-    <!-- <div v-for="category in GET_CATEGORIES" v-if="category.id == this.$route.params.id" :key="category.id" class="category_path">{{category.name}}</div>  -->
   </div>
   <div class="filter_and_results">
     <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
