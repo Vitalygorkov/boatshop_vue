@@ -22,10 +22,10 @@
         <div class="sort_item">
                   <sort-button class="sort_item" v-bind:class="{ sort_item_active: 'price_up' == sort_by || 'price_down' == sort_by}" title="цене" up="price_up" down="price_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'price_up', sort_reverse_img: this.sort_by == 'price_down'}" src="../assets/img/sort.svg">
         </div>
-        <div class="sort_item">
+        <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category.id)" class="sort_item">
                   <sort-button class="sort_item" v-bind:class="{ sort_item_active: 'length_up' == sort_by || 'length_down' == sort_by}" title="длине" up="length_up" down="length_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'length_up', sort_reverse_img: this.sort_by == 'length_down' }" src="../assets/img/sort.svg">
         </div>
-        <div class="sort_item">
+        <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == category.id)" class="sort_item">
           <sort-button class="sort_item" v-bind:class="{ sort_item_active: 'weight_up' == sort_by || 'weight_down' == sort_by}" title="весу" up="weight_up" down="weight_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'weight_up', sort_reverse_img: this.sort_by == 'weight_down'}" src="../assets/img/sort.svg">
         </div>
         <!-- {{this.$emit('CheckedButton')}} -->
@@ -123,9 +123,9 @@ export default {
       }else if (sort_by == 'length_down'){
         this.filteredProducts = this.filteredProducts.sort((a, b) => a.length > b.length ? -1 : 1);
       }else if (sort_by == 'weight_up'){
-        this.filteredProducts = this.filteredProducts.sort((a, b) => a.length > b.length ? 1 : -1);
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.boat_weight > b.boat_weight ? 1 : -1);
       }else if (sort_by == 'weight_down'){
-        this.filteredProducts = this.filteredProducts.sort((a, b) => a.length > b.length ? -1 : 1);
+        this.filteredProducts = this.filteredProducts.sort((a, b) => a.boat_weight > b.boat_weight ? -1 : 1);
       }
 
 
@@ -504,6 +504,8 @@ export default {
       this.get_paginatedProducts()
     },
     sort_by(){
+      this.pagefirst()
+      this.get_filterProducts() 
       this.get_paginatedProducts()
     },  
     deep: true,
