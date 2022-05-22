@@ -22,7 +22,7 @@
   <div v-else class="search-menu-box">
       <!-- <div class="filter_panel"> -->
         <div>
-        <h3>Найдено товаров: {{this.prod_count}}</h3>
+        <!-- <h3>Найдено товаров: {{this.prod_count}}</h3> -->
         <!-- categorizedProducts: {{products.length}} -->
         <div @click="sbros" class="sbros">x Сбросить фильтр</div>
       </div>

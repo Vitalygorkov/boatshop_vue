@@ -1,11 +1,11 @@
 <template>
 <div class="card">
-    <div @click="" class="card-heart">
+    <div class="card-heart" v-bind:class="{ card_sravni_active: GET_HEART_PRODUCTS.includes(product.id) }" @click="ADD_HEART_PRODUCTS(product.id)">
         <!-- <a href="#"> -->
             <img src="../assets/img/like.png">
         <!-- </a> -->
     </div>
-    <div @click="ADD_COMPARE_PRODUCTS(product.id)" class="card-sravni">
+    <div class="card-sravni" v-bind:class="{ card_sravni_active: GET_COMPARE_PRODUCTS.includes(product.id) }" @click="ADD_COMPARE_PRODUCTS(product.id)" >
         <!-- <a href="#"> -->
             <img src="../assets/img/sravni.png">
         <!-- </a> -->
@@ -128,10 +128,10 @@ export default {
       product: [],
     },
     computed: {
-    ...mapGetters(['GET_MEDIA_URL','GET_CATEGORIES','GET_BOATS']),
+    ...mapGetters(['GET_MEDIA_URL','GET_CATEGORIES','GET_BOATS','GET_COMPARE_PRODUCTS','GET_HEART_PRODUCTS']),
     },
     methods: {
-      ...mapActions(['ADD_COMPARE_PRODUCTS',]),
+      ...mapActions(['ADD_COMPARE_PRODUCTS', 'ADD_HEART_PRODUCTS']),
       getcatschildren(object, catparent, arr=[]){
         // console.log(object)
           getChildren(object,catparent)
@@ -337,8 +337,13 @@ export default {
     padding: 5px;
     border-radius: 30px;
     opacity: 0;
-    transition: opacity .5s ease-in;
+    transition: opacity .5s ease-in-out;
     z-index: 1;
+  }
+  .card_sravni_active{
+    background-color: #0ab3fc;
+    transition: 0.3s ease-in-out;
+    opacity: 1;
   }
   .card-sravni:hover{
     box-shadow: 0 0 5px rgb(166, 234, 246);

@@ -15,6 +15,7 @@
   <div class="filter_and_results">
     <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
+      <h3>Найдено товаров: {{this.filteredProducts.length}}</h3>
       <!-- <radio-box title="Сортировка:" v-on:CheckedRadioBox="CheckedRadioBox"/> -->
       <div class="sort_box">
 <!-- {{GET_FILTER_PRODUCTS_SET}}         -->
@@ -497,7 +498,7 @@ export default {
       console.log(this.$route.name)
         if (this.$route.name === 'categorypage') {
           this.FILTERS_PRODUCTS_SET({reset: true})
-          console.log('watcher homeviews выполняется')
+          console.log('watcher homeviews выполняется if')
           // this.SEARCH_PRODUCTS_SET({})
           this.category = {id: parseInt(this.$route.params.id), tree_id: parseInt(this.$route.params.tree_id)},
           this.pagefirst()
@@ -506,11 +507,15 @@ export default {
           this.getcats_tags(this.GET_CATEGORIES,this.category.id)
           this.get_paginatedProducts()  
           // console.log('watch')
-          document.title = `Нептун 55 ${this.current_category(this.category.id)}`
+          // Лодки: купить по выгодным ценам в магазине 
+          document.title = `Лодки ПВХ, ${this.current_category(this.category.id)} купить по выгодным ценам в магазине Нептун 55`
         }else if(this.$route.name === 'home') {
+          console.log('watcher homeviews выполняется else')
+          this.FILTERS_PRODUCTS_SET({reset: true})
           this.pagefirst()
           this.get_categorizedProducts()
           this.get_paginatedProducts()  
+          document.title = `Лодки: купить по выгодным ценам в магазине Нептун 55`
         }
       }
     },

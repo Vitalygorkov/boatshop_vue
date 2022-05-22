@@ -32,10 +32,12 @@
 			</div>
 			<div class="search_form">
 				<div class="d7">
-					<form @submit.prevent="search_go">		
-						<input @mouseover="visible = false" @mouseleave="visible = true" type="text" placeholder="Искать здесь..." v-model="searchstring" >
-						<img @mouseover="visible = false" class="searchicon" v-on:click="search_go" src="../assets/img/searchicon.png">
-						<button type="submit" v-on:click="search_go"></button>
+					<form @submit.prevent="search_go">	
+						 <!-- @mouseover="visible = false" @mouseleave="visible = true"	 -->
+						<input type="text" placeholder="Искать здесь..." v-model="searchstring" >
+						<!-- @mouseover="visible = false" -->
+						<img class="searchicon" v-on:click="search_go, visible = true" src="../assets/img/searchicon.png">
+						<button type="submit" v-on:click="search_go, visible = true"></button>
 						<!-- <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }"></router-link> -->
 					</form>
 					<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }" ref="nav_search">
@@ -54,8 +56,11 @@
 			</div>
 			<div class="cart_compare_heart">
 				<div class="bloki2-sub2">
-					<div class="bloki2-icon">
-						<a href="#"><img src="../assets/img/sravni.png"></a>
+					<div  class="bloki2_icon_count">
+						<div v-if="GET_COMPARE_PRODUCTS.length" class="count_products">{{GET_COMPARE_PRODUCTS.length}}</div>
+						<div class="bloki2-icon">
+							<a href="#"><img src="../assets/img/sravni.png"></a>
+						</div>
 					</div>
 					<div class="bloki2-text">
 						<a href="#">СРАВНИТЬ</a>
@@ -63,8 +68,11 @@
 				</div>
 
 				<div class="bloki2-sub2">
-					<div class="bloki2-icon">
-						<a href="#"><img src="../assets/img/like.png"></a>
+					<div  class="bloki2_icon_count">
+						<div v-if="GET_HEART_PRODUCTS.length" class="count_products">{{GET_HEART_PRODUCTS.length}}</div>
+						<div class="bloki2-icon">
+							<a href="#"><img src="../assets/img/like.png"></a>
+						</div>
 					</div>
 					<div class="bloki2-text">
 						<a href="#">ИЗБРАННОЕ</a>
@@ -134,7 +142,7 @@ export default {
 		MyTree
 	},
     computed: {
-    ...mapGetters(['GET_CATEGORIES','GET_PRODUCTS','GET_MEDIA_URL']),
+    ...mapGetters(['GET_CATEGORIES','GET_PRODUCTS','GET_MEDIA_URL','GET_COMPARE_PRODUCTS','GET_HEART_PRODUCTS']),
 	// gettree() {
 	// console.log('tree')
 	// this.tree = this.GET_CATEGORIES
@@ -163,6 +171,7 @@ export default {
 		})
 		}else{
 		    console.log('строка поиска пустая')
+			this.visible = true
 			// this.searchproducts = []
 		}
 	},
@@ -173,12 +182,14 @@ export default {
 	search_go(){
 		if (this.$route.name == 'category' || this.$route.name == 'home') {
 			console.log('search go if',this.$route.name)
-
+			this.visible = true	
 			// console.log(this.$router.name)
+			console.log(this.searchproducts)
 			this.SEARCH_PRODUCTS_SET(this.searchproducts)
 			this.searchstring = ''
 		}else{
 			console.log('search go else',this.$route.name)
+			this.visible = true	
 			// console.log(this.$router.name)
 			this.SEARCH_PRODUCTS_SET(this.searchproducts)
 			this.$router.push({ name: 'home' })
@@ -293,14 +304,30 @@ body{
     margin-right: 10px;
 
 }
+.count_products{
+	position: relative;
+	top: -2px;
+	left: 3px;
+	color: #fff;
+	background: rgb(253, 51, 51);
+	text-align: center;
+	border-radius: 15px;
+	width: 20px;
+    height: 20px;
+}
+.bloki2_icon_count{
+	display: flex;
+	flex-direction: row;
+}
 .bloki2-icon{
-    opacity: 0.5; 
-    margin: auto;
+    /* opacity: 0.5;  */
+    /* margin: auto; */
 }
 .bloki2-icon img{
 	max-width: 100%;
 }
 .bloki2-icon a{
+	opacity: 0.5; 
     margin: auto;
 }
 .bloki2-text{
@@ -329,14 +356,14 @@ body{
 }
 
   .search_form{
-	  width: 320px;
+	  width: 330px;
   }
   .d7{
 	  margin-left: 20px;
 	  display: flex;
 	  background: #F4FBFF;
 	  justify-content: left;
-	  width: 320px;
+	  width: 325px;
 	}
   .d7:after {content:""; clear:both; display:table}
   .d7 form {

@@ -20,6 +20,9 @@ const store = new Vuex.Store({
     compare_products: [],
   },
   mutations: {
+    UPDATE_HEART_PRODUCTS(state, heart_products) {
+      state.heart_products = heart_products
+    },
     UPDATE_COMPARE_PRODUCTS(state, compare_products) {
       state.compare_products = compare_products
     },
@@ -114,8 +117,31 @@ const store = new Vuex.Store({
     },
     ADD_COMPARE_PRODUCTS(context, params) {
       let cp = [...this.state.compare_products]
-      console.log(params)
-      context.commit('UPDATE_COMPARE_PRODUCTS', params)
+      if(cp.includes(params)){
+        if(cp.length == 1){
+          cp = []
+        }else{
+          let item = cp.indexOf(params)
+          cp.splice(item, 1)
+        }
+      }else{
+        cp.push(params)
+      } 
+      context.commit('UPDATE_COMPARE_PRODUCTS', cp)
+    },
+    ADD_HEART_PRODUCTS(context, params) {
+      let cp = [...this.state.heart_products]
+      if(cp.includes(params)){
+        if(cp.length == 1){
+          cp = []
+        }else{
+          let item = cp.indexOf(params)
+          cp.splice(item, 1)
+        }
+      }else{
+        cp.push(params)
+      } 
+      context.commit('UPDATE_HEART_PRODUCTS', cp)
     },
 
   },

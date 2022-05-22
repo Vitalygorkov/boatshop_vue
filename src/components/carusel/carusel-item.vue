@@ -41,7 +41,7 @@ img{
 }
 @media all and (max-width: 480px) {
         img{
-        width: 380px;
+        width: 300px;
         }
 
 }

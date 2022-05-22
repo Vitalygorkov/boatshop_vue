@@ -1,5 +1,9 @@
 <template>
+
 <div class="ProductPage">
+  <div class="categories_path_box">
+  <div class="category_path"><router-link :to="{ name: 'home' }">Главная</router-link></div>
+  </div>
   <h1>{{product.name}}</h1>
 
   <div class="topblok">
@@ -236,7 +240,7 @@ export default {
         console.log(this.product)
         console.log('Запрос товара, категория товаров')
       }
-      document.title = `Нептун 55 ${this.product.name}`
+      document.title = `Купить лодки и аксессуары:${this.product.name} в магазине Нептун 55`
     },
     watch: {
       '$route.params.id':{
@@ -275,7 +279,7 @@ export default {
               console.log(this.product)
               console.log('Запрос товара, категория товаров')
             }
-            document.title = `Нептун 55 ${this.product.name}`
+            document.title = `Купить лодки и аксессуары:${this.product.name} в магазине Нептун 55`
           }
         },
       },
@@ -332,6 +336,12 @@ export default {
       flex-direction: column;
     }
 
+}
+.category_path{
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 .ProductPage{
   display: flex;

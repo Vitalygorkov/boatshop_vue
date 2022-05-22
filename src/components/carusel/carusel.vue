@@ -76,15 +76,18 @@ export default {
 }
 @media all and (max-width: 480px) {
     .wrapper{
-    max-width: 380px;
-    max-height: 380px;
+    max-width: 300px;
+    max-height: 300px;
     }
     .carusel{  
-    max-width: 380px;
-    max-height: 380px; 
+    max-width: 300px;
+    max-height: 300px; 
     }
     .next{
-        left: 290px;
+        left: 200px;
+    }
+    .prev{
+        left: 10px;
     }
 
 }
