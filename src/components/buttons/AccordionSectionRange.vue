@@ -134,8 +134,8 @@ export default {
     watch: {
       GET_FILTER_PRODUCTS_SET() {
         // console.log('сработал GET_FILTER_PRODUCTS_SET в аккордионе') 
-        if(Object.keys(this.GET_FILTER_PRODUCTS_SET).length == 0){
-          // console.log('сработал GET_FILTER_PRODUCTS_SET значение 0')
+        if(Object.keys(this.GET_FILTER_PRODUCTS_SET).length == 1 && this.GET_FILTER_PRODUCTS_SET.manufacturer == 'reset'){
+          // console.log('сработал GET_FILTER_PRODUCTS_SET выполнено условие сброса')
             this.showForm = true
             this.local_min = this.min_value
             this.local_max = this.max_value

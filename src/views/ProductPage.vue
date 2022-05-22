@@ -202,9 +202,10 @@ export default {
     //     console.log('Запрос товара, категория товаров')
     //   }
     //   document.title = `Нептун 55 ${this.product.name}`
-     },
+    },
     async created(){
-      
+
+      console.log('product page created')
       console.log(this.$route.params.id)
       console.log(this.$route.params.category)
       if (this.$route.params.category == undefined){
@@ -239,41 +240,81 @@ export default {
     },
     watch: {
       '$route.params.id':{
-        immediate: true,
-        async handler(id) {
-          console.log(this.$route.params.id)
-          console.log(this.$route.params.category)
-          if (this.$route.params.category == undefined){
-            const res = await fetch(`${this.GET_SERVER_URL}/product/${this.$route.params.id}`)
-            const prod = await res.json()
-            this.product = prod
-            console.log(this.product)
-            // this.product= prod
-            console.log('Запрос товара, товар не передан')
-            if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == prod.category)) {
-              const res = await fetch(`${this.GET_SERVER_URL}/boat/${this.$route.params.id}`)
+        // immediate: true,
+        handler: async function() {
+          console.log('watcher productpage')
+          if (this.$route.name === 'productpage') {
+            console.log('watcher productpage выполняется')
+            console.log(this.$route.name)
+            console.log(this.$route.params.category)
+            if (this.$route.params.category == undefined){
+              const res = await fetch(`${this.GET_SERVER_URL}/product/${this.$route.params.id}`)
               const prod = await res.json()
               this.product = prod
-              console.log(prod)
+              console.log(this.product)
+              // this.product= prod
+              console.log('Запрос товара, товар не передан')
+              if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == prod.category)) {
+                const res = await fetch(`${this.GET_SERVER_URL}/boat/${this.$route.params.id}`)
+                const prod = await res.json()
+                this.product = prod
+                console.log(prod)
+                console.log(this.product)
+                console.log('Запрос товара, категория лодок')
+              }
+            } else if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == this.$route.params.category)) {
+              const res = await fetch(`${this.GET_SERVER_URL}/boat/${this.$route.params.id}`)
+              const prod = await res.json()
+              this.product= prod
               console.log(this.product)
               console.log('Запрос товара, категория лодок')
+            } else {
+              const res = await fetch(`${this.GET_SERVER_URL}/product/${this.$route.params.id}`)
+              const prod = await res.json()
+              this.product= prod
+              console.log(this.product)
+              console.log('Запрос товара, категория товаров')
             }
-          } else if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == this.$route.params.category)) {
-            const res = await fetch(`${this.GET_SERVER_URL}/boat/${this.$route.params.id}`)
-            const prod = await res.json()
-            this.product= prod
-            console.log(this.product)
-            console.log('Запрос товара, категория лодок')
-          } else {
-            const res = await fetch(`${this.GET_SERVER_URL}/product/${this.$route.params.id}`)
-            const prod = await res.json()
-            this.product= prod
-            console.log(this.product)
-            console.log('Запрос товара, категория товаров')
+            document.title = `Нептун 55 ${this.product.name}`
           }
-          document.title = `Нептун 55 ${this.product.name}`
         },
       },
+      // '$route.params.id':{
+      //   immediate: true,
+      //   async handler(id) {
+      //     console.log(this.$route.params.id)
+      //     console.log(this.$route.params.category)
+      //     if (this.$route.params.category == undefined){
+      //       const res = await fetch(`${this.GET_SERVER_URL}/product/${this.$route.params.id}`)
+      //       const prod = await res.json()
+      //       this.product = prod
+      //       console.log(this.product)
+      //       // this.product= prod
+      //       console.log('Запрос товара, товар не передан')
+      //       if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == prod.category)) {
+      //         const res = await fetch(`${this.GET_SERVER_URL}/boat/${this.$route.params.id}`)
+      //         const prod = await res.json()
+      //         this.product = prod
+      //         console.log(prod)
+      //         console.log(this.product)
+      //         console.log('Запрос товара, категория лодок')
+      //       }
+      //     } else if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == this.$route.params.category)) {
+      //       const res = await fetch(`${this.GET_SERVER_URL}/boat/${this.$route.params.id}`)
+      //       const prod = await res.json()
+      //       this.product= prod
+      //       console.log(this.product)
+      //       console.log('Запрос товара, категория лодок')
+      //     } else {
+      //       const res = await fetch(`${this.GET_SERVER_URL}/product/${this.$route.params.id}`)
+      //       const prod = await res.json()
+      //       this.product= prod
+      //       console.log(this.product)
+      //       console.log('Запрос товара, категория товаров')
+      //     }
+      //     document.title = `Нептун 55 ${this.product.name}`
+      //   },
+      // },
     },
 }
 

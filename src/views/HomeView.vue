@@ -1,13 +1,15 @@
 <template>
 <div class="home">
-  <div class="categories_path">
+  <div class="categories_path_box">
     <div class="category_path"><router-link :to="{ name: 'home' }">Главная</router-link></div>
-
-    <div v-for="category_path in getcatsparent(this.GET_CATEGORIES, this.category.id)" :key="category_path.id" class="category_path">
-      <img src="../assets/img/arrow-right-solid.svg">
-      <router-link :to="{ name: 'categorypage', params: {id: category_path.id, tree_id: category_path.tree_id} }">
-        {{category_path.name}}
-      </router-link>
+    <div class="categories_path" v-if="this.$route.name == 'categorypage'">
+      <div v-for="category_path in getcatsparent(this.GET_CATEGORIES, this.category.id)" :key="category_path.id" class="category_path">
+        <img src="../assets/img/arrow-right-solid.svg">
+        <router-link :to="{ name: 'categorypage', params: {id: category_path.id, tree_id: category_path.tree_id} }">
+        <!-- {{ this.category.id }} -->
+          {{category_path.name}}
+        </router-link>
+      </div>
     </div>
   </div>
   <div class="filter_and_results">
@@ -15,6 +17,7 @@
     <div class="block-results">
       <!-- <radio-box title="Сортировка:" v-on:CheckedRadioBox="CheckedRadioBox"/> -->
       <div class="sort_box">
+<!-- {{GET_FILTER_PRODUCTS_SET}}         -->
         <div>Сортировать по: </div>
         <div class="sort_item">
           <sort-button v-bind:class="{ sort_item_active: 'name_up' == sort_by || 'name_down' == sort_by  }" title="наименованию" up="name_up" down="name_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'name_up', sort_reverse_img: this.sort_by == 'name_down'}" src="../assets/img/sort.svg">
@@ -84,28 +87,18 @@ export default {
       
     }
   },
+  // props: {
+  // searchproducts: Array,
+  // },
   methods: { 
-    ...mapActions(['FETCH_CATEGORIES', 'FETCH_PRODUCTS', 'FETCH_BOATS','FILTERS_PRODUCTS_SET']),
+    ...mapActions(['FETCH_CATEGORIES', 'FETCH_PRODUCTS', 'FETCH_BOATS','FILTERS_PRODUCTS_SET', 'SEARCH_PRODUCTS_SET']),
     CheckedButton(checked){
       this.sort_by = checked
       console.log('сработал емит')
       console.log(this.sort_by)
       console.log(this.CheckedEmit)
     },
-    // CheckedRadioBox(checked){
-    //   console.log('сработал емит')
-    //   console.log(checked)
-    //   if (checked == "По возрастанию цены") {
-    //     console.log('По возрастанию цены')
-    //     this.sort_by = "ascending_price"
-    //   } else if (checked == "По убыванию цены") {
-    //     console.log('По убыванию цены')
-    //     this.sort_by = "descending_price"
-    //   }else if (checked == "По алфавиту") {
-    //     console.log('По алфавиту')
-    //     this.sort_by = "alphabet"
-    //   }
-    // },
+
     sort_filtered_products(sort_by) {
       if (sort_by == 'name_up') {
         // console.log('сортировка по возрастанию имени')
@@ -138,9 +131,20 @@ export default {
       // console.log('get_paginatedProducts')
       let from = (this.pageNumber - 1)*this.productsPerPage
       let to = from + this.productsPerPage
-      // console.log(this.filteredProducts)
-      if (this.filteredProducts.length == 0 && this.$route.params.id == undefined) {
+      console.log(this.GET_SEARCHPRODUCTS)
+      if (this.GET_SEARCHPRODUCTS.length) {
+        this.filteredProducts = [...this.GET_SEARCHPRODUCTS]
+        console.log(this.sort_by)
+        this.sort_filtered_products(this.sort_by) 
+        // console.log(this.filteredProducts)
+        this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
+        console.log(this.filteredProducts)
+        console.log('if in get paginated products')
+        return this.filteredProducts.slice(from,to)
+      }else if (this.filteredProducts.length == 0 && this.$route.params.id == undefined) {
         let products = [...this.GET_PRODUCTS]
+        console.log('else if in get paginated products')
+        console.log(this.filteredProducts)
         this.categorizedProducts = [...this.GET_PRODUCTS]
         this.filteredProducts = [...this.GET_PRODUCTS]
         this.sort_filtered_products(this.sort_by) 
@@ -148,6 +152,7 @@ export default {
         this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
         return products.slice(from,to)
       }else{
+        console.log('else in get paginated products')
         this.sort_filtered_products(this.sort_by)
         this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
         return this.filteredProducts.slice(from,to)
@@ -170,13 +175,25 @@ export default {
         // иначе фильтруем по всем параметрам лодки
       }else if(Object.keys(filterset).length) {  
         console.log('Лодки фсе фильтры')
+        // фильтруем по производителю
+        if (Object.hasOwn(filterset, 'manufacturer')){
+          if (filterset.manufacturer[0] == 'reset' && filterset.manufacturer.length == 1) {
+            console.log('Фильтр по производителю в лодках')
+
+          }else{
+          filter_Products = filter_Products.filter(function(item) {
+          console.log('Фильтр по производителю в лодках else')
+
+          return filterset.manufacturer.includes(item.manufacturer.id)
+          })
+          }
+        }
         // фильтруем по цене
         if (Object.hasOwn(filterset, 'price')){
         filter_Products = filter_Products.filter(function(item) {
           console.log('filter by price')
 
           return item.price >= filterset.price.min && item.price <= filterset.price.max 
-          // && item.length >= filterset.length.min && item.length <= filterset.length.max && item.width >= filterset.width.min && item.width <= filterset.width.max
           })
         }
         // фильтруем по длинне
@@ -284,24 +301,25 @@ export default {
     this.pageNumber= 1
     },
     get_categorizedProducts(){
-      let category = parseInt(this.$route.params.id)
-      // console.log(category)
-      if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == category)) {
-        // console.log('выполнено условие категории лодок')
-        this.categorizedProducts = [...this.GET_BOATS]
-      } else {
-        this.categorizedProducts = [...this.GET_PRODUCTS]
+      console.log('get_categorized products')
+    let category = parseInt(this.$route.params.id)
+    // console.log(category)
+    if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == category)) {
+      console.log('выполнено условие категории лодок')
+      this.categorizedProducts = [...this.GET_BOATS]
+    } else {
+      this.categorizedProducts = [...this.GET_PRODUCTS]
+    }
+    console.log('категоризироввнные продукты')
+    let categories = this.getcatschildren(this.GET_CATEGORIES, category)
+    this.categorizedProducts = this.categorizedProducts.filter(function(item){
+      if (categories.some(elem => elem == item.category)){
+        return item.category
       }
-      // console.log('категоризироввнные продукты')
-      let categories = this.getcatschildren(this.GET_CATEGORIES, category)
-      this.categorizedProducts = this.categorizedProducts.filter(function(item){
-        if (categories.some(elem => elem == item.category)){
-          return item.category
-        }
-      })
-      // this.categorizedProducts = [...this.filteredProducts]
-      this.filteredProducts = [...this.categorizedProducts]
-      return this.categorizedProducts
+    })
+    // this.categorizedProducts = [...this.filteredProducts]
+    this.filteredProducts = [...this.categorizedProducts]
+    return this.categorizedProducts
     },
     // Получаем айдишки дочерних категорий
     getcatschildren(object, cats, arr=[]){
@@ -323,7 +341,7 @@ export default {
     getcatschildren_obj(object, cats, arr=[]){
       let catparent = parseInt(cats)
       // console.log('function getcatschildren!!')
-      // console.log(catparent)
+      console.log(catparent)
       getChildren(object,catparent)
           function getChildren(obj, parent,){
             for(let i = 0; i < obj.length; i += 1){
@@ -348,17 +366,14 @@ export default {
             }
           }
       }
-      // console.log('getcatsparent')
       arr.reverse()
       return arr
     },
     getcats_tags(object, cats, arr=[]){
       let cat = parseInt(cats)
-      // console.log(cat)
       if (cat) {
       // console.log('getcats_tags if')
       let parents = [...this.getcatsparent(object,cat)]
-      // console.log(parents)
       let childrens = [...this.getcatschildren_obj(object, parents[0].id)]
       childrens.pop()
       this.cats_tags = childrens
@@ -428,42 +443,29 @@ export default {
     },
   },
   computed: {
-  ...mapGetters(['GET_PRODUCTS', 'GET_BOATS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES']),
+  ...mapGetters(['GET_PRODUCTS', 'GET_BOATS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES', 'GET_SEARCHPRODUCTS']),
 
   pages () {
     return Math.ceil(this.filteredProducts.length/this.productsPerPage)
   },
-  // 1 actoin
-  // paginatedProducts() {
-  //   let from = (this.pageNumber - 1)*this.productsPerPage
-  //   let to = from + this.productsPerPage
-  //   if (this.get_filterProducts().length == 0 && this.$route.params.id == undefined) {
-  //     // && this.$route.params.id == NaN)
-  //     console.log(this.$route.params.id)
-  //     let products = [...this.GET_PRODUCTS]
-  //     return products.slice(from,to)
-  //   }
-  //   return this.get_filterProducts().slice(from,to)
-  // },
-  // 2 actoin отключил
-  // FilterProductsSet() {
-  //   if (this.filteredProducts.length) {
-  //     return this.filteredProducts
-  //   } else if (parseInt(this.$route.params.id)) {
-  //     return this.filteredProducts
-  //   } else {
-  //     this.filteredProducts = [...this.GET_PRODUCTS]
-  //     return this.filteredProducts
-  //   }
-  // },
   },
   mounted() {
+    console.log('mounted homeview')
     this.pagefirst()
+    this.get_categorizedProducts(this.category.id)
+    this.get_paginatedProducts()
+    // if (this.GET_CATEGORIES){
+    //   console.log('маунтинг тегов')
+    //   this.getcats_tags(this.GET_CATEGORIES,this.category.id)
+    // }
+
+
+    
     // this.FILTERS_PRODUCTS_SET({reset: true})
     // this.get_categorizedProducts()
     // this.getcats_tags(this.GET_CATEGORIES,this.$route.params.id)
-    // console.log('mounted')
-    document.title = `Нептун 55 ${this.current_category(this.category.id)}`
+    console.log('mounted')
+    // document.title = `Нептун 55 ${this.current_category(this.category.id)}`
   },
 
   components: {
@@ -471,45 +473,96 @@ export default {
     FilterMenu,
     SortButton,
   },
-  async created(){
-    // await this.FETCH_CATEGORIES()
-    // this.getcatschildren_obj(this.GET_CATEGORIES,this.$route.params.id)
-    await this.FETCH_PRODUCTS()
-    await this.FETCH_BOATS()
-    this.get_categorizedProducts(this.category.id)
-    this.get_paginatedProducts()
-    this.getcats_tags(this.GET_CATEGORIES,this.category.id)
+  created(){
+    // this.get_categorizedProducts(this.category.id)
+    // this.get_paginatedProducts()
+    // this.getcats_tags(this.GET_CATEGORIES,this.category.id)
 
-    // console.log('created')
+
+
+    // this.FETCH_CATEGORIES()
+    // this.getcatschildren_obj(this.GET_CATEGORIES,this.$route.params.id)
+    console.log('home created')
+    // await this.FETCH_PRODUCTS()
+    // await this.FETCH_BOATS()
+
 
     document.title = `Нептун 55 ${this.current_category(this.category.id)}`
 	},
   watch: { 
     '$route.params.id': {
+      // deep: true,
+      // immediate: true,
       handler: function() {
-      this.category = {id: parseInt(this.$route.params.id), tree_id: parseInt(this.$route.params.tree_id)},
-      this.pagefirst()
-      this.FILTERS_PRODUCTS_SET({reset: true})
-      this.get_categorizedProducts()
-      this.get_paginatedProducts()
-      this.getcats_tags(this.GET_CATEGORIES,this.category.id)
-      // console.log('watch')
-      document.title = `Нептун 55 ${this.current_category(this.category.id)}`
+      console.log(this.$route.name)
+        if (this.$route.name === 'categorypage') {
+          this.FILTERS_PRODUCTS_SET({reset: true})
+          console.log('watcher homeviews выполняется')
+          // this.SEARCH_PRODUCTS_SET({})
+          this.category = {id: parseInt(this.$route.params.id), tree_id: parseInt(this.$route.params.tree_id)},
+          this.pagefirst()
+          // this.FILTERS_PRODUCTS_SET({reset: true})
+          this.get_categorizedProducts()
+          this.getcats_tags(this.GET_CATEGORIES,this.category.id)
+          this.get_paginatedProducts()  
+          // console.log('watch')
+          document.title = `Нептун 55 ${this.current_category(this.category.id)}`
+        }
       }
     },
+    GET_SEARCHPRODUCTS() {
+      console.log('вотчер продуктов поиска')
+      console.log(this.GET_SEARCHPRODUCTS)
+      if(this.GET_SEARCHPRODUCTS.length){
+        console.log('вотчер продуктов поиска выполняется')
+        this.filteredProducts = [...this.GET_SEARCHPRODUCTS]
+        this.SEARCH_PRODUCTS_SET({})
+        this.get_paginatedProducts()
+      }
+    },
+    // '$route.params.searchproducts': {
+    //   handler: function() {
+    //   if(this.$route.params.searchproducts.length){
+    //     console.log(this.$route.params.searchproducts.length)
+    //     console.log(this.$route.params.searchproducts)
+    //     this.pagefirst()
+    //     this.filteredProducts = [...this.$route.params.searchproducts]
+    //     console.log(this.filteredProducts)
+    //     this.get_paginatedProducts()
+    //     console.log(this.filteredProducts)
+    //     // console.log('watch')
+    //     document.title = `Нептун 55: Поиск товаров`
+    //   }
+    //   }
+    // },
     GET_FILTER_PRODUCTS_SET() {
-      // console.log('сработал GET_FILTER_PRODUCTS_SET')
-      this.pagefirst()
-      this.get_filterProducts() 
+        console.log('вотчер по геттеру filterproductset')
+        console.log(this.GET_FILTER_PRODUCTS_SET) 
+        this.pagefirst()
+        this.get_filterProducts()
+        this.get_paginatedProducts()
+
+      // было до добавления фильтра по производителям
+      // if (this.GET_FILTER_PRODUCTS_SET != {}){
+      //    console.log(this.GET_FILTER_PRODUCTS_SET) 
+      //   this.pagefirst()
+      //   this.get_filterProducts()
+      //   this.get_paginatedProducts()
+      // }
+    },
+    GET_CATEGORIES(){
+      console.log('wotcher tags')
+      this.getcats_tags(this.GET_CATEGORIES,this.category.id)
+    },
+    GET_PRODUCTS(){
+      this.get_categorizedProducts()
+      // this.get_filterProducts()
       this.get_paginatedProducts()
     },
     sort_by(){
       this.pagefirst()
-      this.get_filterProducts() 
       this.get_paginatedProducts()
     },  
-    deep: true,
-    immediate: true
   },
 }
 </script>
@@ -538,18 +591,35 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.categories_path{
+.categories_path_box{
   display: flex;
   /* position: relative; */
   /* z-index: 0; */
   padding: 15px;
   flex-direction: row;
+  flex-wrap: wrap;
   font-size: 20px;
   font-weight: 900;
   margin-left: 20px;
 }
+.categories_path{
+  display: flex;
+  /* position: relative; */
+  /* z-index: 0; */
+  /* padding: 15px; */
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 20px;
+  font-weight: 900;
+  margin-left: 20px;
+  padding: 0;
+  margin-left: 0;
+}
 .category_path{
   padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 .category_path img{
   position: relative;
@@ -559,6 +629,7 @@ export default {
   /* height: 10px; */
 }
 .category_path a{
+  margin-left: 3px;
   text-decoration: none;
 }
 .block-results{
@@ -677,5 +748,13 @@ export default {
   background: #aeaeae;
   cursor: pointer;
   color: #ffffff;
+}
+@media all and (max-width: 720px) {
+    /* .categories_path{
+    padding: 0;
+    margin-left: 0;
+  } */
+
+
 }
 </style>

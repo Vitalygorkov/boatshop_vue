@@ -1,14 +1,14 @@
 <template>
 <div class="card">
-    <div class="card-heart">
-        <a href="#">
+    <div @click="" class="card-heart">
+        <!-- <a href="#"> -->
             <img src="../assets/img/like.png">
-        </a>
+        <!-- </a> -->
     </div>
-    <div class="card-sravni">
-        <a href="#">
+    <div @click="ADD_COMPARE_PRODUCTS(product.id)" class="card-sravni">
+        <!-- <a href="#"> -->
             <img src="../assets/img/sravni.png">
-        </a>
+        <!-- </a> -->
     </div>
       <router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
     <!-- <a :href="product.product_abs_url"></a> -->
@@ -32,59 +32,59 @@
         <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="tabs_parametr">
             <div class="tab_parametr">
                 <div class="name_parametr">Длина</div>
-                <div class="number_parametr">{{product_boat.length}} СМ</div>
+                <div v-if="product_boat.length" class="number_parametr">{{product_boat.length}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Ширина</div>
-                <div class="number">{{product_boat.width}} СМ</div>
+                <div v-if="product_boat.width" class="number">{{product_boat.width}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Диаметр баллонов</div>
-                <div class="number">{{product_boat.cylinder_diameter}} СМ</div>
+                <div v-if="product_boat.cylinder_diameter" class="number">{{product_boat.cylinder_diameter}} СМ</div>
             </div>
             <div class="tab_parametr">
                 <div class="name">Вес лодки</div>
-                <div class="number">{{product_boat.boat_weight}} КГ</div>
+                <div v-if="product_boat.boat_weight" class="number">{{product_boat.boat_weight}} КГ</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                 <div class="name_parametr">Производитель</div>
-                <div class="number_parametr">{{product_boat.manufacturer.name}}</div>
+                <div v-if="product_boat.manufacturer" class="number_parametr">{{product_boat.manufacturer.name}}</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Длина кокпита</div>
-                  <div class="number">{{product_boat.cockpit_length}} СМ</div>
+                  <div v-if="product_boat.cockpit_length" class="number">{{product_boat.cockpit_length}} СМ</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Ширина кокпита</div>
-                  <div class="number">{{product_boat.cockpit_width}} СМ</div>
+                  <div v-if="product_boat.cockpit_width" class="number">{{product_boat.cockpit_width}} СМ</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Плотность ткани дна</div>
-                  <div class="number">{{product_boat.fabric_thickness_bottom}} г/м<span style="vertical-align:super">2</span></div>
+                  <div v-if="product_boat.fabric_thickness_bottom" class="number">{{product_boat.fabric_thickness_bottom}} г/м<span style="vertical-align:super">2</span></div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Плотность ткани борта</div>
-                  <div class="number">{{product_boat.fabric_thickness_side}} г/м<span style="vertical-align:super">2</span></div>
+                  <div v-if="product_boat.fabric_thickness_side" class="number">{{product_boat.fabric_thickness_side}} г/м<span style="vertical-align:super">2</span></div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Количество надувных отсеков</div>
-                  <div class="number">{{product_boat.inflatable_compartments}} ШТ</div>
+                  <div v-if="product_boat.inflatable_compartments" class="number">{{product_boat.inflatable_compartments}} ШТ</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Пассажировместимость</div>
-                  <div class="number">{{product_boat.passenger_capacity}} ЧЕЛ</div>
+                  <div v-if="product_boat.passenger_capacity" class="number">{{product_boat.passenger_capacity}} ЧЕЛ</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Максимальная мощность мотора</div>
-                  <div class="number">{{product_boat.maximum_motor_power}} Л/С</div>
+                  <div v-if="product_boat.maximum_motor_power" class="number">{{product_boat.maximum_motor_power}} Л/С</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Грузоподъемность</div>
-                  <div class="number">{{product_boat.load_capacity}} КГ</div>
+                  <div v-if="product_boat.load_capacity" class="number">{{product_boat.load_capacity}} КГ</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Вес полного комплекта</div>
-                  <div class="number">{{product_boat.complete_set_weight}} КГ</div>
+                  <div v-if="product_boat.complete_set_weight" class="number">{{product_boat.complete_set_weight}} КГ</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Фальшборт</div>
@@ -92,11 +92,11 @@
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Киль</div>
-                  <div class="number">{{product_boat.bulwark | yesno}}</div>
+                  <div class="number">{{product_boat.keel | yesno}}</div>
             </div>
             <div class="tab_parametr_hide" v-bind:class="{ tab_parametr_hide_on: ShowCharacteristics }">
                   <div class="name">Габариты упаковки</div>
-                  <div class="number">{{product_boat.upak}}</div>
+                  <div v-if="product_boat.upak" class="number">{{product_boat.upak}}</div>
             </div>
 
 
@@ -131,7 +131,9 @@ export default {
     ...mapGetters(['GET_MEDIA_URL','GET_CATEGORIES','GET_BOATS']),
     },
     methods: {
+      ...mapActions(['ADD_COMPARE_PRODUCTS',]),
       getcatschildren(object, catparent, arr=[]){
+        // console.log(object)
           getChildren(object,catparent)
               function getChildren(obj, parent,){
               for(let i = 0; i < obj.length; i += 1){
@@ -173,16 +175,21 @@ export default {
       // console.log(this.product)
     },
     created(){
-      this.product_boat = this.product
+      // this.product_boat = Object.assign({}, this.product)
       // console.log(this.product)
-      if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == this.product.category) && this.product.length == undefined){
+      // console.log(this.product.category)
+      // console.log(this.GET_CATEGORIES)
+      if (this.getcatschildren(this.GET_CATEGORIES, 1).some(elem => elem == this.product.category) || this.product.length == undefined){
           // console.log('запрос лодок')
+          // console.log(this.product)
           // console.log(this.product)
           let id = this.product.id
           let boat = this.GET_BOATS.filter(function(item) {return item.id == id})
           this.product_boat = boat[0]
-          // console.log(this.product)
           // console.log(this.product_boat)
+          // console.log(this.GET_BOATS)
+          // console.log(this.product)
+          // console.log(boat[0])
       }else{
         // this.product = this.product_prop
         // console.log(this.product)

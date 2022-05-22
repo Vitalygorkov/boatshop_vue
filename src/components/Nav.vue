@@ -32,16 +32,19 @@
 			</div>
 
 			<div class="d7">
-				<form>		
-					<input @mouseover="visible = false" @mouseleave="visible = true" type="text" placeholder="Искать здесь..." v-model="searchstring">
-					<button type="submit"></button>
+				<form @submit.prevent="search_go">		
+					<input @mouseover="visible = false" @mouseleave="visible = true" type="text" placeholder="Искать здесь..." v-model="searchstring" >
+					<img @mouseover="visible = false" class="searchicon" v-on:click="search_go" src="../assets/img/searchicon.png">
+					<button type="submit" v-on:click="search_go"></button>
+					<!-- <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }"></router-link> -->
 				</form>
-				<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }">
+				<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }" ref="nav_search">
 					<div v-for="product in searchproducts">
 					<router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
 						<div class="sitem" @click="visible = true">
 							<div class="sphoto"><img :src="GET_MEDIA_URL+product.image.split('media')[1]"></div>
 							<div>{{product.name}}</div>
+							<div class="sitem_price"><h4>{{product.price}} Руб.</h4></div>
 						</div>
 					</router-link>
 					</div>
@@ -80,7 +83,7 @@
 		</div>
 
 		<div class="bloki3">
-				<my-tree :tree-data="GET_CATEGORIES"></my-tree>
+				<my-tree :tree-data="GET_CATEGORIES" ></my-tree>
 				<!-- <div class="category_parent" v-for="category in GET_CATEGORIES" v-if="category.level ==0" :key="category.id" @click="changeLastCategory(category.id)">{{ category.name }} -->
 				<!-- </div>				 -->
 		</div>
@@ -120,7 +123,8 @@ export default {
 			return {
 				searchstring: '',
 				searchproducts: [],
-				visible: true,			
+				visible: true,
+				show: true,			
 			}
 		},
 
@@ -149,28 +153,56 @@ export default {
     },
 
 	methods: { 
-	...mapActions(['FETCH_CATEGORIES','CHANGE_LAST_CATEGORY','LAST_CATEGORY']),
+	...mapActions(['FETCH_CATEGORIES','CHANGE_LAST_CATEGORY','LAST_CATEGORY','SEARCH_PRODUCTS_SET']),
 	searchbyproducts(value){
 		if (value != ''){
 		this.searchproducts = this.GET_PRODUCTS.filter(function(item){
 		return item.name.toLowerCase().includes(value.toLowerCase())
 		})
 		}else{
-			this.searchproducts = []
+		    console.log('строка поиска пустая')
+			// this.searchproducts = []
+		}
+	},
+	// show_menu_func(show_menu){
+	// 	console.log(show_menu)
+	// 	this.show = show_menu
+	// },
+	search_go(){
+		if (this.$route.name == 'category' || this.$route.name == 'home') {
+			console.log('search go if',this.$route.name)
+
+			// console.log(this.$router.name)
+			this.SEARCH_PRODUCTS_SET(this.searchproducts)
+			this.searchstring = ''
+		}else{
+			console.log('search go else',this.$route.name)
+			// console.log(this.$router.name)
+			this.SEARCH_PRODUCTS_SET(this.searchproducts)
+			this.$router.push({ name: 'home' })
+			this.searchstring = ''
 		}
 	},
 	// changeLastCategory(category) {
 	// 	this.CHANGE_LAST_CATEGORY(category)
 	// },
 	},
-	  mounted() {
-    // this.FETCH_CATEGORIES();
+	mounted() {
+		// клик вне элемента поиска
+		// let vm = this;
+		// document.addEventListener('click', function (item) {
+		// 	if (item.target != vm.$refs['nav_search']) {
+		// 		console.log('клик вне')
+		// 		vm.visible = true
+		// 	}
+		// })
     },
 	// created(){
 	// 	document.title = 'Нептун 55'
 	// },
 	watch: {
 		searchstring(){
+			this.visible = false
 			console.log('Вотчер поиска')
 			this.searchbyproducts(this.searchstring)
 		}
@@ -286,7 +318,12 @@ body{
 }
 
 
-  .d7 {background: #F4FBFF;}
+  .d7 {
+	  display: flex;
+	  background: #F4FBFF;
+	  justify-content: left;
+	  width: 330px;
+	  }
   .d7:after {content:""; clear:both; display:table}
   .d7 form {
     width: auto;
@@ -294,7 +331,7 @@ body{
     margin-right: 30px;
   }
   .d7 input {
-    width: 250px;
+    width: 240px;
     height: 42px;
     padding-left: 15px;
     border-radius: 42px;
@@ -309,7 +346,7 @@ body{
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   }
   .d7 input:focus {
-    width: 300px;
+    width: 255px;
   }
   .d7 button {
     width: 42px;
@@ -320,10 +357,11 @@ body{
     top: -2px;
     right: 0;
   }
-  .d7 button:before{
-    content: "\f002";
-    font-family: FontAwesome;
-    color: #324b4e;
+
+  .searchicon{
+	  position: relative;
+	  left: -35px;
+	  opacity: 0.7;
   }
 .search_box{
 	background-color: white;
@@ -346,9 +384,13 @@ body{
 	display: flex;
 	flex-direction: row;
 	text-decoration: none;
+	align-items: center;
 }
 .sitem:hover{
 	background-color: #e1f6fc;
+}
+.sitem_price{
+	margin-left: 15px;
 }
 .sphoto{
 	/* width: 27px;
@@ -364,6 +406,13 @@ body{
 	}
 }
 @media all and (max-width: 720px) {
+	.obshii{
+		margin-top:50px;
+		min-height: 100px;
+	}
+	.bloki3{
+		height: 0;
+	}
 	.bloki1-sub1{
 		display: none;
 	}
@@ -375,6 +424,15 @@ body{
 	}
 	.header-list{
 		flex-direction: column;
+	}
+	.bloki2{
+		flex-wrap: wrap;
+		justify-content: space-around;
+	}
+}
+@media all and (max-width: 480px) {
+	.bloki1-sub2{
+		display: none;
 	}
 }
 </style>

@@ -12,16 +12,22 @@ const store = new Vuex.Store({
     cart_products: [],
     boats: [],
     products: [],
+    searchproducts: [],
     categories: [],
     filtersProductSet: {}, 
     // last_category: [],
     heart_products: [],
+    compare_products: [],
   },
   mutations: {
+    UPDATE_COMPARE_PRODUCTS(state, compare_products) {
+      state.compare_products = compare_products
+    },
     UPDATE_PRODUCTS(state, products) {
       state.products = products
     },
     UPDATE_BOATS(state, boats) {
+      console.log('лодки в сторе',boats)
       state.boats = boats
     },
     UPDATE_CART_PRODUCTS(state, cart_products) {
@@ -35,41 +41,68 @@ const store = new Vuex.Store({
     // },
     CHANGE_FILTERS_PRODUCTS_SET(state, filtersProductSet) {
       state.filtersProductSet = filtersProductSet
+    },
+    CHANGE_SEARCH_PRODUCTS_SET(state, searchproducts) {
+      state.searchproducts = searchproducts
     }
 
     
   },
   actions: {
     async FETCH_PRODUCTS(ctx) {
+      console.log('запрос товаров')
       const res = await fetch(
         `${this.state.backendUrl}/products/`
       )
+      console.log('запрос товаров выполнен')
       const products = await res.json()
       ctx.commit('UPDATE_PRODUCTS', products)
     },
     async FETCH_BOATS(ctx) {
+      console.log('запрос лодок')
       const res = await fetch(
         `${this.state.backendUrl}/boats/`
       )
+      console.log('запрос лодок выполнен')
       const boats = await res.json()
       ctx.commit('UPDATE_BOATS', boats)
     },
     async FETCH_CATEGORIES(ctx) {
+      console.log('Запрос категорий')
       const res = await fetch(
         `${this.state.backendUrl}/category/`
       )
-      console.log('Запрос категорий')
+      console.log('Запрос категорий выполнен')
       const categories = await res.json()
       ctx.commit('UPDATE_CATEGORIES', categories)
     },
     async FILTERS_PRODUCTS_SET(context, params) {
-      var Set = this.state.filtersProductSet
-      var obj = Object.assign({},Set, params);
+      // let Set = this.state.filtersProductSet
+      let Set = Object.assign({},this.state.filtersProductSet);
+      let obj = Object.assign({},Set, params);
+      if(params.manufacturer){
+        console.log(params.manufacturer)
+        if(!params.manufacturer.length || params.manufacturer === 'net'){
+          console.log('! length manufacturer DELETE')
+          console.log(params)
+          delete Set.manufacturer
+          // delete Set[0]
+          obj = Set
+        }
+      }
       if(params.reset){
         obj = {}
       }
+      console.log('FILTERS_PRODUCTS_SET params', params)
+      console.log('FILTERS_PRODUCTS_SET obj', obj)
       context.commit('CHANGE_FILTERS_PRODUCTS_SET', obj)
     },
+    async SEARCH_PRODUCTS_SET(context, params) {
+      var obj = params;
+
+      context.commit('CHANGE_SEARCH_PRODUCTS_SET', obj)
+    },
+
     // Добавил мутацию для корзины, нужно добавить экшн и геттер
 
 
@@ -77,8 +110,13 @@ const store = new Vuex.Store({
     //   context.commit('UPDATE_LAST_CATEGORY', params)
     // },
     async ADD_HEART_PRODUCTS(context, params) {
-      context.commit('UPDATE_LAST_CATEGORY', params)
-    }
+      context.commit('', params)
+    },
+    ADD_COMPARE_PRODUCTS(context, params) {
+      let cp = [...this.state.compare_products]
+      console.log(params)
+      context.commit('UPDATE_COMPARE_PRODUCTS', params)
+    },
 
   },
   getters: {
@@ -90,6 +128,9 @@ const store = new Vuex.Store({
     },
     GET_PRODUCTS: state => {
       return state.products
+    },
+    GET_COMPARE_PRODUCTS: state => {
+      return state.compare_products
     },
     GET_BOATS: state => {
       return state.boats
@@ -105,6 +146,9 @@ const store = new Vuex.Store({
     // },
     GET_FILTER_PRODUCTS_SET: state => {
       return state.filtersProductSet
+    },
+    GET_SEARCHPRODUCTS: state => {
+      return state.searchproducts
     },
   }
 })

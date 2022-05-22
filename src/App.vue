@@ -3,7 +3,9 @@
     <keep-alive>
     <Nav/>
     </keep-alive>
+    <keep-alive>
     <router-view/>
+    </keep-alive>
     <keep-alive>
     <Footer/>
     </keep-alive>
@@ -32,7 +34,7 @@
 
       },
       methods: { 
-        ...mapActions(['FETCH_CATEGORIES', 'FETCH_PRODUCTS']),
+        ...mapActions(['FETCH_CATEGORIES', 'FETCH_PRODUCTS', 'FETCH_BOATS']),
         // async loadListCategory() {
         //   this.listCategory = await fetch(
         //     `${this.GET_SERVER_URL}/category`
@@ -49,11 +51,16 @@
       // },
       mounted() {
         // this.FETCH_CATEGORIES();
-        // this.FETCH_PRODUCTS();
+        // await this.FETCH_PRODUCTS();
+        // await this.FETCH_BOATS();
+
       },
       created() {
-        this.FETCH_CATEGORIES();
+        // this.FETCH_CATEGORIES();
         this.FETCH_PRODUCTS();
+        this.FETCH_BOATS();
+        this.FETCH_CATEGORIES();
+        console.log('app created')
       },
 
     }

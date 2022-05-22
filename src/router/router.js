@@ -22,7 +22,12 @@ const routes = [
     path: '/category/:id',
     name: 'categorypage',
     component: HomeView
-  },  
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: HomeView
+  },   
   {
     path: '/contactform/',
     name: 'contactformpage',
