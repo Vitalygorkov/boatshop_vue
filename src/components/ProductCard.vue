@@ -514,4 +514,14 @@ export default {
     height: 50%;
     flex-basis: 50%;
   }
+@media all and (max-width: 720px) {
+    .card-sravni{
+      opacity: 0.8;
+    }
+    .card-heart{
+      opacity: 0.8;
+    }
+
+
+}  
 </style>
