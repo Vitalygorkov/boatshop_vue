@@ -507,6 +507,10 @@ export default {
           this.get_paginatedProducts()  
           // console.log('watch')
           document.title = `Нептун 55 ${this.current_category(this.category.id)}`
+        }else if(this.$route.name === 'home') {
+          this.pagefirst()
+          this.get_categorizedProducts()
+          this.get_paginatedProducts()  
         }
       }
     },
@@ -639,6 +643,7 @@ export default {
   background: white;
 }
 .sort_box{
+  padding: 15px;
   margin-left: 20px;
   display: flex;
   flex-direction: row;
@@ -646,6 +651,7 @@ export default {
   flex-wrap: wrap;
 }
 .sort_item{
+  /* margin-top: 7px; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -677,11 +683,12 @@ export default {
 .tags_box{
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   flex-wrap: wrap;
 }
 .tags_item{
-  background-color: white;
+  margin-top: 5px;
+  background-color: rgb(227, 249, 252);
   border-radius: 5px;
   margin-left: 15px;
   padding: 5px;
