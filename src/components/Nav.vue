@@ -30,55 +30,57 @@
 				<img src="../assets/img/nept55text.png">
 				</router-link>
 			</div>
-
-			<div class="d7">
-				<form @submit.prevent="search_go">		
-					<input @mouseover="visible = false" @mouseleave="visible = true" type="text" placeholder="Искать здесь..." v-model="searchstring" >
-					<img @mouseover="visible = false" class="searchicon" v-on:click="search_go" src="../assets/img/searchicon.png">
-					<button type="submit" v-on:click="search_go"></button>
-					<!-- <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }"></router-link> -->
-				</form>
-				<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }" ref="nav_search">
-					<div v-for="product in searchproducts">
-					<router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
-						<div class="sitem" @click="visible = true">
-							<div class="sphoto"><img :src="GET_MEDIA_URL+product.image.split('media')[1]"></div>
-							<div>{{product.name}}</div>
-							<div class="sitem_price"><h4>{{product.price}} Руб.</h4></div>
+			<div class="search_form">
+				<div class="d7">
+					<form @submit.prevent="search_go">		
+						<input @mouseover="visible = false" @mouseleave="visible = true" type="text" placeholder="Искать здесь..." v-model="searchstring" >
+						<img @mouseover="visible = false" class="searchicon" v-on:click="search_go" src="../assets/img/searchicon.png">
+						<button type="submit" v-on:click="search_go"></button>
+						<!-- <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }"></router-link> -->
+					</form>
+					<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }" ref="nav_search">
+						<div v-for="product in searchproducts">
+						<router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
+							<div class="sitem" @click="visible = true">
+								<div class="sphoto"><img :src="GET_MEDIA_URL+product.image.split('media')[1]"></div>
+								<div>{{product.name}}</div>
+								<div class="sitem_price"><h4>{{product.price}} Руб.</h4></div>
+							</div>
+						</router-link>
 						</div>
-					</router-link>
 					</div>
 				</div>
 
 			</div>
+			<div class="cart_compare_heart">
+				<div class="bloki2-sub2">
+					<div class="bloki2-icon">
+						<a href="#"><img src="../assets/img/sravni.png"></a>
+					</div>
+					<div class="bloki2-text">
+						<a href="#">СРАВНИТЬ</a>
+					</div>
+				</div>
 
-			<div class="bloki2-sub2">
-				<div class="bloki2-icon">
-					<a href="#"><img src="../assets/img/sravni.png"></a>
+				<div class="bloki2-sub2">
+					<div class="bloki2-icon">
+						<a href="#"><img src="../assets/img/like.png"></a>
+					</div>
+					<div class="bloki2-text">
+						<a href="#">ИЗБРАННОЕ</a>
+					</div>
 				</div>
-				<div class="bloki2-text">
-					<a href="#">СРАВНИТЬ</a>
+
+				<div class="bloki2-sub2">
+					<div class="bloki2-icon">
+						<a href="#"><img src="../assets/img/shopping.png"></a>
+					</div>
+					<div class="bloki2-text">
+						<a href="#">КОРЗИНА</a>
+					</div>
 				</div>
+
 			</div>
-
-			<div class="bloki2-sub2">
-				<div class="bloki2-icon">
-					<a href="#"><img src="../assets/img/like.png"></a>
-				</div>
-				<div class="bloki2-text">
-					<a href="#">ИЗБРАННОЕ</a>
-				</div>
-			</div>
-
-			<div class="bloki2-sub2">
-				<div class="bloki2-icon">
-					<a href="#"><img src="../assets/img/shopping.png"></a>
-				</div>
-				<div class="bloki2-text">
-					<a href="#">КОРЗИНА</a>
-				</div>
-			</div>
-
 
 		</div>
 
@@ -274,6 +276,15 @@ body{
 .bloki2-sub1 img{
 	min-width: 100%;
 }
+.cart_compare_heart{
+	width: 100%;
+	display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+	flex-wrap: nowrap;
+    margin-right: 10px;
+}
 .bloki2-sub2{
     display: flex;
     align-items: center;
@@ -317,13 +328,16 @@ body{
     font-weight: 900;   
 }
 
-
-  .d7 {
+  .search_form{
+	  width: 320px;
+  }
+  .d7{
+	  margin-left: 20px;
 	  display: flex;
 	  background: #F4FBFF;
 	  justify-content: left;
-	  width: 330px;
-	  }
+	  width: 320px;
+	}
   .d7:after {content:""; clear:both; display:table}
   .d7 form {
     width: auto;
