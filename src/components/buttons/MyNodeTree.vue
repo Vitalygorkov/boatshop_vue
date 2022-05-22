@@ -60,7 +60,7 @@ export default {
     },
     toggle_item(item_id){
       // console.log('toggle item')
-      this.tab_click =!this.tab_click
+      this.tab_click = false
       this.toggle_last_children = item_id
     },
     show_listOne_func(show_listOne){

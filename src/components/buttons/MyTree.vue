@@ -7,7 +7,7 @@
         <li v-bind:class="{ menu_li_on: showmenu }" v-for="category in treeData" v-if="category.level ==0" :key="category.id">
           <!-- <a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)"> -->
           <div class="menu_li_item">
-            <div class="menu_name_box" @click="showmenu = !showmenu, toggle_last= ''">
+            <div class="menu_name_box" @click="showmenu = true, toggle_last= ''">
             <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
             <!-- @mouseover="listOne = true" @mouseleave="listOne = false" -->
             {{category.name}}
@@ -87,8 +87,10 @@ export default {
     showmenu(){
       // console.log('watch mytree')
       if(this.showmenu == true){
+        console.log('unbblockscroll')
         document.body.classList.remove('blockscroll')
       }else{
+        console.log('blockscroll')
         document.body.classList.add('blockscroll')
       }
     }
