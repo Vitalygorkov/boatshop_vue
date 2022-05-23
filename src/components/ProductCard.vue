@@ -1,11 +1,11 @@
 <template>
 <div class="card">
-    <div class="card-heart" v-bind:class="{ card_sravni_active: GET_HEART_PRODUCTS.includes(product.id) }" @click="ADD_HEART_PRODUCTS(product.id)">
+    <div class="card-heart" v-bind:class="{ card_sravni_active: GET_HEART_PRODUCTS.includes(product) }" @click="ADD_HEART_PRODUCTS(product)">
         <!-- <a href="#"> -->
             <img src="../assets/img/like.png">
         <!-- </a> -->
     </div>
-    <div class="card-sravni" v-bind:class="{ card_sravni_active: GET_COMPARE_PRODUCTS.includes(product.id) }" @click="ADD_COMPARE_PRODUCTS(product.id)" >
+    <div class="card-sravni" v-bind:class="{ card_sravni_active: GET_COMPARE_PRODUCTS.includes(product) }" @click="ADD_COMPARE_PRODUCTS(product)" >
         <!-- <a href="#"> -->
             <img src="../assets/img/sravni.png">
         <!-- </a> -->

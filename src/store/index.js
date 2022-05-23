@@ -127,6 +127,8 @@ const store = new Vuex.Store({
       }else{
         cp.push(params)
       } 
+      // console.log(params)
+      // console.log(cp)
       context.commit('UPDATE_COMPARE_PRODUCTS', cp)
     },
     ADD_HEART_PRODUCTS(context, params) {

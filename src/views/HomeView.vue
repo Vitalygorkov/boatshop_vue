@@ -13,9 +13,10 @@
     </div>
   </div>
   <div class="filter_and_results">
-    <filter-menu :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
+    <filter-menu v-if="this.$route.name != 'favorit'" :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
-      <h3>Найдено товаров: {{this.filteredProducts.length}}</h3>
+      <h3 v-if="this.$route.name != 'favorit'">Найдено товаров: {{this.filteredProducts.length}}</h3>
+      <div class="favorit_prod_box" v-if="this.$route.name === 'favorit'"><h3>Избранные товары: {{this.filteredProducts.length}}</h3><div class="favorit_prod_sbtos">сбросить все</div></div> 
       <!-- <radio-box title="Сортировка:" v-on:CheckedRadioBox="CheckedRadioBox"/> -->
       <div class="sort_box">
 <!-- {{GET_FILTER_PRODUCTS_SET}}         -->
@@ -39,7 +40,7 @@
         <div class="sort_item">весу <img v-bind:class="{ sort_active_img: sort_active}" src="../assets/img/sort.svg"></div> -->
       
       </div>
-      <div class="tags_box">
+      <div v-if="this.$route.name != 'favorit'" class="tags_box">
         <div  v-bind:class="{ tags_item_active: category.id == category_tag.id}" class="tags_item" v-for="category_tag in cats_tags" :key="category_tag.id">
         <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }">
           {{category_tag.name}}
@@ -158,6 +159,16 @@ export default {
         this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
         return this.filteredProducts.slice(from,to)
       }
+    },
+    get_paginatedProducts2() {
+      // console.log('get_paginatedProducts2')
+      let from = (this.pageNumber - 1)*this.productsPerPage
+      let to = from + this.productsPerPage
+        console.log(' get paginated products 2')
+        this.sort_filtered_products(this.sort_by)
+        this.paginatedProducts = [...this.filteredProducts.slice(from,to)]
+        return this.filteredProducts.slice(from,to)
+
     },
     get_filterProducts() {
       // console.log('копирование объектов')
@@ -444,7 +455,7 @@ export default {
     },
   },
   computed: {
-  ...mapGetters(['GET_PRODUCTS', 'GET_BOATS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES', 'GET_SEARCHPRODUCTS']),
+  ...mapGetters(['GET_PRODUCTS', 'GET_BOATS','GET_FILTER_PRODUCTS_SET','GET_CATEGORIES', 'GET_SEARCHPRODUCTS', 'GET_HEART_PRODUCTS']),
 
   pages () {
     return Math.ceil(this.filteredProducts.length/this.productsPerPage)
@@ -510,12 +521,19 @@ export default {
           // Лодки: купить по выгодным ценам в магазине 
           document.title = `Лодки ПВХ, ${this.current_category(this.category.id)} купить по выгодным ценам в магазине Нептун 55`
         }else if(this.$route.name === 'home') {
-          console.log('watcher homeviews выполняется else')
+          console.log('watcher homeviews выполняется else домашней страницы')
           this.FILTERS_PRODUCTS_SET({reset: true})
           this.pagefirst()
           this.get_categorizedProducts()
           this.get_paginatedProducts()  
           document.title = `Лодки: купить по выгодным ценам в магазине Нептун 55`
+        }else if(this.$route.name === 'favorit'){
+          console.log('watcher homeviews выполняется else страницы понравившихся товаров')
+          // this.FILTERS_PRODUCTS_SET({reset: true})
+          this.pagefirst()
+          this.filteredProducts = this.GET_HEART_PRODUCTS
+          console.log(this.filteredProducts)
+          this.get_paginatedProducts2()
         }
       }
     },
@@ -646,6 +664,12 @@ export default {
   display: flex;
   flex-direction: column;
   background: white;
+}
+.favorit_prod_box{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
 }
 .sort_box{
   padding: 15px;

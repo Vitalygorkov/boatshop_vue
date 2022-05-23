@@ -9,6 +9,11 @@
 			<div class="bloki1-sub2">
 				<h3>Email:clients@neptun55.ru</h3>
 			</div>
+			<div class="nept_mini">
+				<router-link :to="{ name: 'home' }">
+				<img class="img-logo-mini" src="../assets/img/neptfoto.png" alt="neptfoto">
+				</router-link>
+			</div>
 			<div class="bloki1-sub3">
 				<img src="../assets/img/phone-call.png">
 				<a href="tel:+79039274690">
@@ -55,37 +60,52 @@
 
 			</div>
 			<div class="cart_compare_heart">
+				
 				<div class="bloki2-sub2">
 					<div  class="bloki2_icon_count">
 						<div v-if="GET_COMPARE_PRODUCTS.length" class="count_products">{{GET_COMPARE_PRODUCTS.length}}</div>
+						<router-link :to="{ name: 'favorit' }">
 						<div class="bloki2-icon">
-							<a href="#"><img src="../assets/img/sravni.png"></a>
+							<img src="../assets/img/sravni.png">
 						</div>
+						</router-link>
 					</div>
+					<router-link :to="{ name: 'favorit' }">
 					<div class="bloki2-text">
-						<a href="#">СРАВНИТЬ</a>
+						СРАВНИТЬ
 					</div>
+					</router-link>
 				</div>
 
+
 				<div class="bloki2-sub2">
-					<div  class="bloki2_icon_count">
+					<div class="bloki2_icon_count">
 						<div v-if="GET_HEART_PRODUCTS.length" class="count_products">{{GET_HEART_PRODUCTS.length}}</div>
+						<router-link :to="{ name: 'favorit' }">
 						<div class="bloki2-icon">
-							<a href="#"><img src="../assets/img/like.png"></a>
+							<img src="../assets/img/like.png">
 						</div>
+						</router-link>
 					</div>
+					<router-link :to="{ name: 'favorit' }">
 					<div class="bloki2-text">
-						<a href="#">ИЗБРАННОЕ</a>
+						ИЗБРАННОЕ
 					</div>
+					</router-link>
 				</div>
-
+				
+				
 				<div class="bloki2-sub2">
+					<router-link :to="{ name: 'favorit' }">
 					<div class="bloki2-icon">
-						<a href="#"><img src="../assets/img/shopping.png"></a>
+						<img src="../assets/img/shopping.png">
 					</div>
+					</router-link>
+					<router-link :to="{ name: 'favorit' }">
 					<div class="bloki2-text">
-						<a href="#">КОРЗИНА</a>
+						КОРЗИНА
 					</div>
+					</router-link>
 				</div>
 
 			</div>
@@ -288,6 +308,9 @@ body{
 	min-width: 100%;
 }
 .cart_compare_heart{
+	/* opacity: 0.5; */
+	/* text-decoration: none;
+    color: #000; */
 	width: 100%;
 	display: flex;
     align-items: center;
@@ -296,7 +319,14 @@ body{
 	flex-wrap: nowrap;
     margin-right: 10px;
 }
+.cart_compare_heart a{
+	opacity: 0.5;
+	text-decoration: none;
+    color: #000;
+
+}
 .bloki2-sub2{
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -327,8 +357,8 @@ body{
 	max-width: 100%;
 }
 .bloki2-icon a{
-	opacity: 0.5; 
-    margin: auto;
+	/* opacity: 0.5; 
+    margin: auto; */
 }
 .bloki2-text{
     font-weight: 900;
@@ -336,8 +366,8 @@ body{
 }
 
 .bloki2-text a{
-    text-decoration: none;
-    color: #000;
+    /* text-decoration: none;
+    color: #000; */
 }
 
 
@@ -475,5 +505,21 @@ body{
 	.bloki1-sub2{
 		display: none;
 	}
+	.nept_mini{
+		width: 100px;
+		height: 100px;
+	}
+	.img-logo-mini{
+		/* top: 23px; */
+		left: -25px;
+		position: relative;
+		max-height: 140px;
+	}
+}
+@media all and (min-width: 480px) {
+	.nept_mini{
+		display: none;
+	}
+
 }
 </style>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductPage from '../views/ProductPage.vue'
 import ContactView from '../views/ContactView.vue'
+import FavoritView from '../views/FavoritView.vue'
 
 
 Vue.use(VueRouter)
@@ -27,20 +28,25 @@ const routes = [
     path: '/search',
     name: 'search',
     component: HomeView
-  },   
+  },
+  {
+    path: '/favorit',
+    name: 'favorit',
+    component: FavoritView
+  },     
   {
     path: '/contactform/',
     name: 'contactformpage',
     component: ContactView
   }, 
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+  // {
+  //   path: '/about',
+  //   name: 'about',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  // }
 ]
 
 const router = new VueRouter({
