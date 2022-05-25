@@ -117,33 +117,55 @@ const store = new Vuex.Store({
     },
     ADD_COMPARE_PRODUCTS(context, params) {
       let cp = [...this.state.compare_products]
-      if(cp.includes(params)){
-        if(cp.length == 1){
-          cp = []
-        }else{
-          let item = cp.indexOf(params)
-          cp.splice(item, 1)
-        }
+      if(params === 'reset'){
+        cp = []
+        context.commit('UPDATE_COMPARE_PRODUCTS', cp)
       }else{
-        cp.push(params)
-      } 
+        if(cp.includes(params)){
+          if(cp.length == 1){
+            cp = []
+          }else{
+            let item = cp.indexOf(params)
+            cp.splice(item, 1)
+          }
+        }else{
+          cp.push(params)
+        } 
+        context.commit('UPDATE_COMPARE_PRODUCTS', cp)
+      }      
+
+      // if(cp.includes(params)){
+      //   if(cp.length == 1){
+      //     cp = []
+      //   }else{
+      //     let item = cp.indexOf(params)
+      //     cp.splice(item, 1)
+      //   }
+      // }else{
+      //   cp.push(params)
+      // } 
       // console.log(params)
       // console.log(cp)
-      context.commit('UPDATE_COMPARE_PRODUCTS', cp)
+      // context.commit('UPDATE_COMPARE_PRODUCTS', cp)
     },
     ADD_HEART_PRODUCTS(context, params) {
       let cp = [...this.state.heart_products]
-      if(cp.includes(params)){
-        if(cp.length == 1){
-          cp = []
-        }else{
-          let item = cp.indexOf(params)
-          cp.splice(item, 1)
-        }
+      if(params === 'reset'){
+        cp = []
+        context.commit('UPDATE_HEART_PRODUCTS', cp)
       }else{
-        cp.push(params)
-      } 
-      context.commit('UPDATE_HEART_PRODUCTS', cp)
+        if(cp.includes(params)){
+          if(cp.length == 1){
+            cp = []
+          }else{
+            let item = cp.indexOf(params)
+            cp.splice(item, 1)
+          }
+        }else{
+          cp.push(params)
+        } 
+        context.commit('UPDATE_HEART_PRODUCTS', cp)
+      }
     },
 
   },

@@ -7,12 +7,17 @@
         <li v-bind:class="{ menu_li_on: showmenu }" v-for="category in treeData" v-if="category.level ==0" :key="category.id">
           <!-- <a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)"> -->
           <div class="menu_li_item">
+            
             <div class="menu_name_box" @click="showmenu = true, toggle_last= ''">
-            <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
+            
             <!-- @mouseover="listOne = true" @mouseleave="listOne = false" -->
-            {{category.name}}
-            </router-link>
+            
+                  <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
+                <div class="menu_name_box_name">{{category.name}}</div>
+                  </router-link>
+            
             </div>
+            
             <div @click="toggle_item(category.id)" class="menu_arrow_box"><img v-if="getcatschildren(treeData,category.id).length" class="menu_arrow" v-bind:class="{ menu_arrow_turn: category.id == toggle_last && listOne}" src="../../assets/img/arrow.png"></div>
             <!-- </a> -->
           </div>
@@ -112,8 +117,17 @@ export default {
     } */
     .menu_name_box{
       display: flex;
-      justify-content: center;
+      flex-grow: 1;
+      width: 100%;
+      flex-basis: 100%;
+      box-sizing: content-box;
+      justify-content: left;
+      /* width: 100%; */
       align-items: center;
+    }
+    .menu_name_box_name{
+      width: 100%;
+      height: 100%;
     }
     .menu_arrow_box{
       display: flex;

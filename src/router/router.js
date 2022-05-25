@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import ProductPage from '../views/ProductPage.vue'
 import ContactView from '../views/ContactView.vue'
 import FavoritView from '../views/FavoritView.vue'
-
+import CompareView from '../views/CompareView.vue'
 
 Vue.use(VueRouter)
 
@@ -33,7 +33,12 @@ const routes = [
     path: '/favorit',
     name: 'favorit',
     component: FavoritView
-  },     
+  },   
+  {
+    path: '/compare',
+    name: 'compare',
+    component: CompareView
+  },   
   {
     path: '/contactform/',
     name: 'contactformpage',

@@ -41,8 +41,8 @@
 						 <!-- @mouseover="visible = false" @mouseleave="visible = true"	 -->
 						<input type="text" placeholder="Искать здесь..." v-model="searchstring" >
 						<!-- @mouseover="visible = false" -->
-						<img class="searchicon" v-on:click="search_go, visible = true" src="../assets/img/searchicon.png">
-						<button type="submit" v-on:click="search_go, visible = true"></button>
+						<img class="searchicon" v-on:click="search_go" src="../assets/img/searchicon.png">
+						<button type="submit" v-on:click="search_go"></button>
 						<!-- <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }"></router-link> -->
 					</form>
 					<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }" ref="nav_search">
@@ -64,13 +64,13 @@
 				<div class="bloki2-sub2">
 					<div  class="bloki2_icon_count">
 						<div v-if="GET_COMPARE_PRODUCTS.length" class="count_products">{{GET_COMPARE_PRODUCTS.length}}</div>
-						<router-link :to="{ name: 'favorit' }">
+						<router-link :to="{ name: 'compare' }">
 						<div class="bloki2-icon">
 							<img src="../assets/img/sravni.png">
 						</div>
 						</router-link>
 					</div>
-					<router-link :to="{ name: 'favorit' }">
+					<router-link :to="{ name: 'compare' }">
 					<div class="bloki2-text">
 						СРАВНИТЬ
 					</div>

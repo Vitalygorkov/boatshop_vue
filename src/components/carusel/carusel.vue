@@ -1,7 +1,8 @@
 <template>
 <div class="wrapper">
-    <button class="prev" @click="prevSlide">Prev</button>
-    <button class="next" @click="nextSlide">Next</button>
+    <button v-if="carusel_data.length > 1" class="prev" @click="prevSlide">Prev</button>
+    <button v-if="carusel_data.length > 1"  class="next" @click="nextSlide">Next</button>
+    
     <div class="carusel" :style="{ 'margin-left': '-' + (100 * currentSLideIndex) + '%' }">
         <carusel-item
         v-for="item in carusel_data"

@@ -15,9 +15,9 @@
   <div class="filter_and_results">
     <filter-menu v-if="this.$route.name != 'favorit'" :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
-      <h3 v-if="this.$route.name != 'favorit'">Найдено товаров: {{this.filteredProducts.length}}</h3>
-      <div class="favorit_prod_box" v-if="this.$route.name === 'favorit'"><h3>Избранные товары: {{this.filteredProducts.length}}</h3><div class="favorit_prod_sbtos">сбросить все</div></div> 
-      <!-- <radio-box title="Сортировка:" v-on:CheckedRadioBox="CheckedRadioBox"/> -->
+      <h3>Найдено товаров: {{this.filteredProducts.length}}</h3>
+      <!-- <div class="favorit_prod_box" v-if="this.$route.name === 'favorit'"><h3>Избранные товары: {{this.filteredProducts.length}}</h3><div class="favorit_prod_sbtos">сбросить все</div></div>  -->
+
       <div class="sort_box">
 <!-- {{GET_FILTER_PRODUCTS_SET}}         -->
         <div>Сортировать по: </div>
@@ -527,14 +527,15 @@ export default {
           this.get_categorizedProducts()
           this.get_paginatedProducts()  
           document.title = `Лодки: купить по выгодным ценам в магазине Нептун 55`
-        }else if(this.$route.name === 'favorit'){
-          console.log('watcher homeviews выполняется else страницы понравившихся товаров')
-          // this.FILTERS_PRODUCTS_SET({reset: true})
-          this.pagefirst()
-          this.filteredProducts = this.GET_HEART_PRODUCTS
-          console.log(this.filteredProducts)
-          this.get_paginatedProducts2()
         }
+        // else if(this.$route.name === 'favorit'){
+        //   console.log('watcher homeviews выполняется else страницы понравившихся товаров')
+        //   // this.FILTERS_PRODUCTS_SET({reset: true})
+        //   this.pagefirst()
+        //   this.filteredProducts = this.GET_HEART_PRODUCTS
+        //   console.log(this.filteredProducts)
+        //   this.get_paginatedProducts2()
+        // }
       }
     },
     GET_SEARCHPRODUCTS() {
@@ -664,12 +665,6 @@ export default {
   display: flex;
   flex-direction: column;
   background: white;
-}
-.favorit_prod_box{
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
 }
 .sort_box{
   padding: 15px;

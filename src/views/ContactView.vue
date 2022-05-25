@@ -11,10 +11,11 @@
 <input type="text" name="city" ><br>
 <label for="fname">Email:</label><br>
 <input type="text" name="email" ><br>
-<p><textarea rows="10" cols="45" name="text">Напишите дополнительную информацию и пожелания к заказу</textarea></p>
+<p><textarea rows="10" cols="22" name="text">Напишите дополнительную информацию и пожелания к заказу</textarea></p>
 <input type="submit">
 </form>
 </div>
+
 </template>
 
 
