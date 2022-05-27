@@ -2,10 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './store'
-import ToggleButton from 'vue-js-toggle-button'
+import 'material-design-icons-iconfont'
+import Viewer from 'v-viewer'
 
 
-Vue.use(ToggleButton)
+
+Vue.use(Viewer)
 Vue.config.productionTip = false
 // Добавил фильтр для вывода true false
 Vue.filter('yesno', function (value) {

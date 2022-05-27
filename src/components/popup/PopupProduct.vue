@@ -1,9 +1,11 @@
 <template>
 
  <div class="popup">
-<span class="material-icons">
-close
+<span>
+  <i class="material-icons">close</i>
 </span>
+
+
 <slot></slot>
  </div>
 
@@ -27,7 +29,7 @@ export default {
     },
     watch: {
 
-      }
+      
     },
 }
 

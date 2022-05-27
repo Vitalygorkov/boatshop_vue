@@ -1,14 +1,15 @@
 <template>
 <div class="wrapper">
-    <button v-if="carusel_data.length > 1" class="prev" @click="prevSlide">Prev</button>
-    <button v-if="carusel_data.length > 1"  class="next" @click="nextSlide">Next</button>
-    
+    <button v-if="this.carusel_data.length > 1" class="prev" @click="prevSlide">Prev</button>
+    <button v-if="this.carusel_data.length > 1"  class="next" @click="nextSlide">Next</button>
+    <viewer :images="carusel_data">
     <div class="carusel" :style="{ 'margin-left': '-' + (100 * currentSLideIndex) + '%' }">
         <carusel-item
         v-for="item in carusel_data"
         :item_data="item"
         />
     </div>
+    </viewer>
 </div>
 </template>
 
@@ -16,6 +17,8 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 import CaruselItem from './carusel-item.vue'
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
 
 export default {
     name: "carusel",
@@ -48,6 +51,11 @@ export default {
             }
 
         },
+        show() {
+            this.$viewerApi({
+            images: this.images,
+            })
+        },
 
     }
 }
@@ -75,17 +83,34 @@ export default {
     }
 
 }
-@media all and (max-width: 480px) {
+@media all and (max-width: 514px) {
     .wrapper{
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 400px;
+    max-height: 400px;
     }
     .carusel{  
-    max-width: 300px;
-    max-height: 300px; 
+    max-width: 400px;
+    max-height: 400px; 
     }
     .next{
-        left: 200px;
+        left: 300px;
+    }
+    .prev{
+        left: 10px;
+    }
+
+}
+@media all and (max-width: 434px) {
+    .wrapper{
+    max-width: 270px;
+    max-height: 270px;
+    }
+    .carusel{  
+    max-width: 270px;
+    max-height: 270px; 
+    }
+    .next{
+        left: 170px;
     }
     .prev{
         left: 10px;
@@ -94,8 +119,8 @@ export default {
 }
 .wrapper{
     position: relative;
-    width: 600px;
-    height: 600px;
+    max-width: 600px;
+    max-height: 600px;
     /* max-height: 300px; */
     overflow: hidden;
     z-index: 1;

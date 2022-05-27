@@ -4,26 +4,30 @@
     <div @click="showmenu = !showmenu, toggle_last= ''" class="menu__icon" v-bind:class="{ menu__icon_active: !showmenu}"><span></span></div>
     <ul class="menu__list">
       <!-- <div class="menu__icon"><span></span></div> -->
+        
         <li v-bind:class="{ menu_li_on: showmenu }" v-for="category in treeData" v-if="category.level ==0" :key="category.id">
           <!-- <a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)"> -->
+            <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
           <div class="menu_li_item">
             
             <div class="menu_name_box" @click="showmenu = true, toggle_last= ''">
             
             <!-- @mouseover="listOne = true" @mouseleave="listOne = false" -->
             
-                  <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
+                  
                 <div class="menu_name_box_name">{{category.name}}</div>
-                  </router-link>
+                  
             
             </div>
             
             <div @click="toggle_item(category.id)" class="menu_arrow_box"><img v-if="getcatschildren(treeData,category.id).length" class="menu_arrow" v-bind:class="{ menu_arrow_turn: category.id == toggle_last && listOne}" src="../../assets/img/arrow.png"></div>
             <!-- </a> -->
           </div>
+          </router-link>
         <my-node-tree :toggle_item_prop="{id: toggle_last, toggle: listOne}" :node="treeData" :parent="category.id" @show_listOne="show_listOne_func"></my-node-tree>
          <!-- @show_listOne="show_listOne_func" -->
         </li>
+        
     </ul>
     </nav>
 
@@ -117,6 +121,8 @@ export default {
     } */
     .menu_name_box{
       display: flex;
+      margin-left: auto;
+      margin-right: auto; 
       flex-grow: 1;
       width: 100%;
       flex-basis: 100%;
@@ -176,6 +182,7 @@ export default {
     .menu_li_item{
       display: flex;
       flex-direction: row;
+      width: 100%;
       justify-content: space-between;
       transition: all 0.3s ease 0s;
     }

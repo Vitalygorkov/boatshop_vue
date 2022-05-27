@@ -4,15 +4,17 @@
 <!-- <ul class="sub-sub-menu__list"> -->
   <li v-for="category in node" v-if="category.parent == parent" :key="category.id">
     <!-- <a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)"> -->
+      <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id, parent: category.parent} }"> 
       <div class="menu_li_item">
-          <div @click="show_listOne_func()">
-                <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id, parent: category.parent} }"> 
+        
+          <div class="menu_name_box" @click="show_listOne_func()">
             <!-- @mouseover="listOne = true" @mouseleave="listOne = false"  -->
-          {{category.name}}
-                </router-link>
+          {{category.name}} 
           </div>
+          
           <div @click="toggle_item(category.id)" class="menu_arrow_box"><img v-if="getcatschildren(node,category.id).length" class="menu_arrow" v-bind:class="{ menu_arrow_turn: category.id == toggle_last_children && tab_click}" src="../../assets/img/arrow.png"></div>
       </div>
+      </router-link>
     <!-- </a> -->
   <ul class="sub-sub-menu__list">
   <mynode :toggle_item_prop="{id: toggle_last_children, toggle: tab_click}" :node="node" :parent="category.id" @show_listOne="show_listOne_func"></mynode>
@@ -59,8 +61,10 @@ export default {
       return arr
     },
     toggle_item(item_id){
-      // console.log('toggle item')
-      this.tab_click = false
+      console.log('toggle item')
+      console.log(this.tab_click)
+      this.tab_click = !this.tab_click
+      console.log(this.tab_click)
       this.toggle_last_children = item_id
     },
     show_listOne_func(show_listOne){

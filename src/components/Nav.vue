@@ -78,7 +78,7 @@
 				</div>
 
 
-				<div class="bloki2-sub2">
+				<div class="bloki2-sub2" :style="{ 'margin-left': 30 + '%'}">
 					<div class="bloki2_icon_count">
 						<div v-if="GET_HEART_PRODUCTS.length" class="count_products">{{GET_HEART_PRODUCTS.length}}</div>
 						<router-link :to="{ name: 'favorit' }">
@@ -95,7 +95,7 @@
 				</div>
 				
 				
-				<div class="bloki2-sub2">
+				<div class="bloki2-sub2" :style="{ 'margin-left': 55 + '%'  , 'display' : 'none'}">
 					<router-link :to="{ name: 'favorit' }">
 					<div class="bloki2-icon">
 						<img src="../assets/img/shopping.png">
@@ -477,6 +477,12 @@ body{
 	}
 }
 @media all and (max-width: 720px) {
+	.bloki2-sub2{
+		position: fixed;
+		top: 10px;
+		left: 8%;
+		z-index: 22;
+	}
 	.obshii{
 		margin-top:50px;
 		min-height: 100px;
