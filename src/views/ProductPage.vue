@@ -145,7 +145,7 @@
     <h2>Видео с товаром</h2>
     <div class="videos">
       <div v-for="video in product.prodvideos">
-              <iframe :src="'http://www.youtube.com/embed/' + video.video" loading="lazy" width="300" height="250" frameborder="1" > </iframe>
+              <iframe :src="'https://www.youtube.com/embed/' + video.video" loading="lazy" width="300" height="250" frameborder="1" > </iframe>
       </div>
     </div>
   </div>
