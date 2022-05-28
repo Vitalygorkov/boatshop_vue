@@ -7,7 +7,7 @@
 				<h2>Доставка лодок во все регионы россии</h2>
 			</div>
 			<div class="bloki1-sub2">
-				<h3>Email:clients@neptun55.ru</h3>
+				<h3>Email: <a href="mailto:clients@neptun55.ru">clients@neptun55.ru</a></h3>
 			</div>
 			<div class="nept_mini">
 				<router-link :to="{ name: 'home' }">

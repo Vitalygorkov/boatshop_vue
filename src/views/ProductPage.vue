@@ -118,9 +118,36 @@
     <h2>Описание</h2>
     <span v-html="product.description"></span>
   </div>
-  <div class="videos">
-    <h2>Видео</h2>
 
+  <div v-if="accessories_products.length">
+    <h2>Аксессуары:</h2>
+    <div class="product_recomends">
+      <VueSlickCarousel :arrows="true" :slidesToShow="get_slide_to_show" :slidesToScroll="get_slide_to_scroll" :swipeToSlide="true" :focusOnSelect="true">
+      <div v-for="recprod in accessories_products" :key="recprod.id">
+            <product-card-mini :product="recprod"/>
+      </div>
+      </VueSlickCarousel>
+    </div>
+  </div>
+
+  <div v-if="recomend_products.length">
+    <h2>С этим товаром покупают:</h2>
+    <div class="product_recomends">
+      <VueSlickCarousel :arrows="true" :slidesToShow="get_slide_to_show" :slidesToScroll="get_slide_to_scroll" :swipeToSlide="true" :focusOnSelect="true">
+      <div v-for="recprod in recomend_products" :key="recprod.id">
+            <product-card-mini :product="recprod"/>
+      </div>
+      </VueSlickCarousel>
+    </div>
+  </div>
+
+  <div v-if="product.prodvideos.length">
+    <h2>Видео с товаром</h2>
+    <div class="videos">
+      <div v-for="video in product.prodvideos">
+              <iframe :src="'http://www.youtube.com/embed/' + video.video" loading="lazy" width="300" height="250" frameborder="1" > </iframe>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -128,29 +155,47 @@
 </template>
 
 <script>
-import carusel from "../components/carusel/carusel"
+// import carusel from "../components/carusel/carusel"
 import {mapGetters, mapActions} from 'vuex'
 import Carusel from '@/components/carusel/carusel.vue'
-// import "../assets/js/slickmin.js"
-// import "../assets/js/slick-script.js"
+import ProductCardMini from "../components/ProductCardMini"
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+
 export default {
     data() {
       return {
         product: [],
+        recomend_products: [],
+        accessories_products: [],
+
         // productID: this.$route.params.id,
       }
     },
     props:{
     },
     computed: {
-    ...mapGetters(['GET_MEDIA_URL','GET_SERVER_URL','GET_CATEGORIES']),
+    ...mapGetters(['GET_MEDIA_URL','GET_SERVER_URL','GET_CATEGORIES','GET_PRODUCTS']),
+    get_slide_to_show(){
+      console.log(Math.floor(window.innerWidth/150))
+      return Math.floor(window.innerWidth/150)
+      },
+    get_slide_to_scroll(){
+    console.log(Math.ceil(window.innerWidth/300))
+    return Math.floor(window.innerWidth/300)
+    }
+  
 
     },
     components: {
-      carusel,
-    },
+    Carusel,
+    ProductCardMini,
+    VueSlickCarousel, 
+},
     
     methods: {
+      ...mapActions(['FETCH_PRODUCTS']),
       getcatschildren(object, catparent, arr=[]){
         getChildren(object,catparent)
             function getChildren(obj, parent,){
@@ -165,6 +210,37 @@ export default {
         arr.push(catparent)
         return arr
       },
+      get_recomend_products(){
+        // console.log(this.product.id ,'func recomend_products')
+        if(this.GET_PRODUCTS.length){
+          let prod = this.product
+          this.recomend_products = [...this.GET_PRODUCTS]
+          this.recomend_products = this.recomend_products.filter(function(item){
+            if(prod.recommendations.some(elem => elem == item.id)){
+              return item
+            }else{
+              console.log('else')
+            }
+          })
+        }
+      },
+      get_accessories_products(){
+        // console.log(this.product.id ,'func recomend_products')
+        if(this.GET_PRODUCTS.length){
+          let prod = this.product
+          this.accessories_products = [...this.GET_PRODUCTS]
+          this.accessories_products = this.accessories_products.filter(function(item){
+            if(prod.accessories.some(elem => elem == item.id)){
+              return item
+            }else{
+              console.log('else')
+            }
+          })
+        }
+      },
+      // get_slide_to_show(){
+      //   return Math.floor(window.innerWidth/150)
+      // }
 
       // async FETCH_PRODUCT() {
       //   console.log(`${this.GET_SERVER_URL}/product/${this.productID}`)
@@ -208,7 +284,6 @@ export default {
     //   document.title = `Нептун 55 ${this.product.name}`
     },
     async created(){
-
       console.log('product page created')
       console.log(this.$route.params.id)
       console.log(this.$route.params.category)
@@ -240,6 +315,9 @@ export default {
         console.log(this.product)
         console.log('Запрос товара, категория товаров')
       }
+      console.log(this.GET_PRODUCTS)
+      this.get_recomend_products()
+      this.get_accessories_products()
       document.title = `Купить лодки и аксессуары:${this.product.name} в магазине Нептун 55`
     },
     watch: {
@@ -279,6 +357,8 @@ export default {
               console.log(this.product)
               console.log('Запрос товара, категория товаров')
             }
+            this.get_recomend_products()
+            this.get_accessories_products()
             document.title = `Купить лодки и аксессуары:${this.product.name} в магазине Нептун 55`
           }
         },
@@ -369,26 +449,39 @@ export default {
   justify-content: space-between;
   border-bottom: 1px dashed rgb(209, 209, 245);
 }
-  .card-shopping {
-    text-decoration: none;
-    display: inline-block;
-    padding: 15px 30px;
-    margin: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 40px 40px #55ccd9 inset, 0 0 0 0 #55ccd9;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    letter-spacing: 2px;
-    color: rgb(255, 255, 255);
-    transition: .15s ease-in-out;
-  }
-  .card-shopping:hover {
-    box-shadow: 0 0 10px 0 #55ccd9 inset, 0 0 10px 4px #55ccd9;
-    color: #55ccd9;
-  }
-  .card-shopping a{
-    text-decoration: none;
-    color: #000;
-  }
+.card-shopping {
+  text-decoration: none;
+  display: inline-block;
+  padding: 15px 30px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 40px 40px #55ccd9 inset, 0 0 0 0 #55ccd9;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: rgb(255, 255, 255);
+  transition: .15s ease-in-out;
+}
+.card-shopping:hover {
+  box-shadow: 0 0 10px 0 #55ccd9 inset, 0 0 10px 4px #55ccd9;
+  color: #55ccd9;
+}
+.card-shopping a{
+  text-decoration: none;
+  color: #000;
+}
+.videos{
+  display: flex;
+  flex-wrap: wrap;
+}
+.product_recomends{
+  overflow: hidden;
+  /* display: flex; */
+  /* flex-direction: row;  */
+  max-height: 280px;
+}
+.rec_item{
+
+}
 
 </style>

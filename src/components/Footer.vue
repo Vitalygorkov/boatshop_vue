@@ -32,8 +32,7 @@
                         <h4>+79039274690</h4>
                     </a>
                 </div>
-                <li>
-                    Email:9039274690@mail.ru
+                <li>Email: <a href="mailto:clients@neptun55.ru">clients@neptun55.ru</a>
                 </li>
                 <li>
                     Адрес: город Омск
