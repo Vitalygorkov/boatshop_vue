@@ -190,7 +190,7 @@ img{
   justify-content: space-between;
   padding: 9px;
   background-color: #e1f6fc;
-  width: 100%;
+  width: 90%;
 }
 .accordion_title:hover {
   background-color: rgb(201, 216, 218);
@@ -209,7 +209,7 @@ img{
 
 
 .slider{
-  width: 90%;
+  width: 235px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -220,6 +220,7 @@ img{
 }
 /* Style the accordion panel. Note: hidden by default */
 .panel {
+  width: 233px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -417,5 +418,13 @@ input[type=range]::-webkit-slider-thumb {
   flex-direction: row;
   width: 90%;
   justify-content: space-around;
+}
+
+@media all and (max-width: 720px) {
+    .panel {
+    width: 90%;
+    }
+
+
 }
 </style>

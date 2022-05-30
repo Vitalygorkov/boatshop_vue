@@ -802,13 +802,13 @@ export default {
 } */
 .filter_view_results{
   display: flex;
-  position: absolute;
+  position: fixed;
   background-color: white;
   justify-content: center;
   align-items: center;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 97%;
   height: 55px;
   background-color: #ffffff;
   border: solid 4px;

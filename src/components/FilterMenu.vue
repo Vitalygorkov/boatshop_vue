@@ -145,10 +145,10 @@ export default {
     display: block;
     min-width: 230px;
 }
-.filter_panel{
+/* .filter_panel{
     position: fixed;
     top:40px;
-}
+} */
 .sbros{
     display: flex;
     justify-content: center;
@@ -167,9 +167,10 @@ export default {
 @media all and (max-width: 720px) {
     .filter_box{
         position: fixed;
+        min-height: 100%;
         top: 60px;
         z-index: 23;
-        margin-left: -10px;
+        margin-left: 0px;
         width: 100%;
         height: 100%;
         overflow: auto;

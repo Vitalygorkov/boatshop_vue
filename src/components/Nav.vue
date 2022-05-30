@@ -42,7 +42,7 @@
 						<input type="text" placeholder="Искать здесь..." v-model="searchstring" >
 						<!-- @mouseover="visible = false" -->
 						<img class="searchicon" v-on:click="search_go" src="../assets/img/searchicon.png">
-						<button type="submit" v-on:click="search_go"></button>
+						<button class="button_search" type="submit" v-on:click="search_go"></button>
 						<!-- <router-link :to="{ name: 'categorypage', params: {id: category_tag.id, tree_id: category_tag.tree_id} }"></router-link> -->
 					</form>
 					<div v-if="searchproducts.length" @mouseover="visible = false" @mouseleave="visible = true" class="search_box" v-bind:class="{ visible: visible }" ref="nav_search">
@@ -311,7 +311,7 @@ body{
 	/* opacity: 0.5; */
 	/* text-decoration: none;
     color: #000; */
-	width: 100%;
+	width: 40%;
 	display: flex;
     align-items: center;
     justify-content: space-around;
@@ -420,13 +420,14 @@ body{
     width: 215px;
   }
   .d7 button {
-    width: 42px;
-    height: 42px;
+	
+    /* width: 42px;
+    height: 42px; */
     background: none;
     border: none;
     position: absolute;
     top: -2px;
-    right: 0;
+    right: 30;
   }
 
   .searchicon{

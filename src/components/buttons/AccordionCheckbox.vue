@@ -132,13 +132,14 @@ img{
   justify-content: space-between;
   padding: 9px;
   background-color: #e1f6fc;
-  width: 100%;
+  width: 90%;
 }
 .accordion_title:hover {
   background-color: rgb(201, 216, 218);
 }
 
 .panel {
+  width: 233px;
   font-family: Montserrat, Helvetica, sans-serif;
   font-size: 14px;
   padding: 0 10px;
@@ -147,6 +148,13 @@ img{
 }
 .panel_on {
   display: none;
+}
+@media all and (max-width: 720px) {
+    .panel {
+    width: 90%;
+    }
+
+
 }
 
 </style>
