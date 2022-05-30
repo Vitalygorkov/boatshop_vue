@@ -173,7 +173,7 @@ export default {
 /* Style the buttons that are used to open and close the accordion panel */
 img{
   /* display: none; */
-  margin-right: 15px;
+  margin-right: 25px;
   transform: rotate(180deg);
   width: 15px;
   height: 15px;
@@ -209,15 +209,21 @@ img{
 
 
 .slider{
-  width: 200px;
+  width: 90%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 .unit_type{
   margin-right: 10px;
 }
 /* Style the accordion panel. Note: hidden by default */
 .panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-family: Montserrat, Helvetica, sans-serif;
   font-size: 14px;
   padding: 0 10px;
@@ -409,6 +415,7 @@ input[type=range]::-webkit-slider-thumb {
 .range-values{
   display: flex;
   flex-direction: row;
+  width: 90%;
   justify-content: space-around;
 }
 </style>

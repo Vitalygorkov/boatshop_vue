@@ -152,7 +152,10 @@ export default {
 .sbros{
     display: flex;
     justify-content: center;
-    padding: 14px;
+    align-items: center;
+    /* padding: 5px; */
+    height: 30px;
+    width: 95%;
     background-color: #ffffff;
     border: solid 4px;
     border-color: #dadada;
@@ -163,7 +166,16 @@ export default {
 }
 @media all and (max-width: 720px) {
     .filter_box{
-        display: none;
+        position: fixed;
+        top: 60px;
+        z-index: 23;
+        margin-left: -10px;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: #F4FBFF   ;
+        
+        /* display: none; */
     }
 }
 

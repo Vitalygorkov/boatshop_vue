@@ -13,13 +13,17 @@
     </div>
   </div>
   <div class="filter_and_results">
-    <filter-menu v-if="this.$route.name != 'favorit'" :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
+    <filter-menu v-bind:class="{ filter_on: filter_toggle}" v-if="this.$route.name != 'favorit'" :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
       <h3>Найдено товаров: {{this.filteredProducts.length}}</h3>
       <!-- <div class="favorit_prod_box" v-if="this.$route.name === 'favorit'"><h3>Избранные товары: {{this.filteredProducts.length}}</h3><div class="favorit_prod_sbtos">сбросить все</div></div>  -->
 
       <div class="sort_box">
 <!-- {{GET_FILTER_PRODUCTS_SET}}         -->
+        <div @click="filter_toggle = !filter_toggle" v-if="!filter_toggle" class="filter_view_results">Показать товары </div>
+        <div class="filter_open">
+          <img @click="filter_toggle = !filter_toggle" src="../assets/img/filter-icon-crop.png">
+        </div>
         <div>Сортировать по: </div>
         <div class="sort_item">
           <sort-button v-bind:class="{ sort_item_active: 'name_up' == sort_by || 'name_down' == sort_by  }" title="наименованию" up="name_up" down="name_down" v-on:CheckedButton="CheckedButton"/><img class="sort_img" v-bind:class="{ sort_active_img: this.sort_by == 'name_up', sort_reverse_img: this.sort_by == 'name_down'}" src="../assets/img/sort.svg">
@@ -86,6 +90,7 @@ export default {
       cats_tags: [],
       paginatedProducts: [],
       sort_by: 'name_down',
+      filter_toggle: true,
       
     }
   },
@@ -501,7 +506,17 @@ export default {
 
     document.title = `Нептун 55 ${this.current_category(this.category.id)}`
 	},
-  watch: { 
+  watch: {
+    filter_toggle(){
+            console.log('watch filter_toggle')
+      if(this.filter_toggle == true){
+        console.log('unbblockscroll')
+        document.body.classList.remove('blockscroll')
+      }else{
+        console.log('blockscroll')
+        document.body.classList.add('blockscroll')
+      }
+    },
     '$route.params.id': {
       // deep: true,
       // immediate: true,
@@ -747,6 +762,8 @@ export default {
   justify-content: center;
 }
 .pagination{
+  max-width: 100%;
+  overflow: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -780,12 +797,47 @@ export default {
   cursor: pointer;
   color: #ffffff;
 }
+/* .filter_on{
+  display: none;
+} */
+.filter_view_results{
+  display: flex;
+  position: absolute;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 55px;
+  background-color: #ffffff;
+  border: solid 4px;
+  border-color: #dadada;  
+  z-index: 23;
+}
+.filter_open{
+  width: 30px;
+  height: 30px;
+  padding: 12px;
+}
+.filter_open img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 @media all and (max-width: 720px) {
-    /* .categories_path{
-    padding: 0;
-    margin-left: 0;
-  } */
+  .filter_on{
+    display: none;
+  }
 
 
 }
+@media all and (min-width: 720px) {
+  .filter_open{
+    display: none;
+  }
+
+
+}
+
 </style>

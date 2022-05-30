@@ -115,7 +115,7 @@ export default {
 
 img{
   /* display: none; */
-  margin-right: 15px;
+  margin-right: 25px;
   transform: rotate(180deg);
   width: 15px;
   height: 15px;

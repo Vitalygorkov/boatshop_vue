@@ -386,14 +386,14 @@ body{
 }
 
   .search_form{
-	  width: 330px;
+	  width: 300px;
   }
   .d7{
 	  margin-left: 20px;
 	  display: flex;
 	  background: #F4FBFF;
 	  justify-content: left;
-	  width: 325px;
+	  width: 300px;
 	}
   .d7:after {content:""; clear:both; display:table}
   .d7 form {
@@ -402,7 +402,7 @@ body{
     margin-right: 30px;
   }
   .d7 input {
-    width: 240px;
+    width: 200px;
     height: 42px;
     padding-left: 15px;
     border-radius: 42px;
@@ -417,7 +417,7 @@ body{
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   }
   .d7 input:focus {
-    width: 255px;
+    width: 215px;
   }
   .d7 button {
     width: 42px;
