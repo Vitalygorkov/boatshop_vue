@@ -144,6 +144,7 @@ export default {
     background-color: white;
     display: block;
     min-width: 230px;
+    /* overflow: auto; */
 }
 /* .filter_panel{
     position: fixed;
@@ -166,17 +167,21 @@ export default {
 }
 @media all and (max-width: 720px) {
     .filter_box{
-        position: fixed;
-        min-height: 100%;
-        top: 60px;
-        z-index: 23;
+        /* position: fixed; */
+        /* min-height: 100%; */
+        /* top: 60px; */
+        /* z-index: 23; */
         margin-left: 0px;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
+        /* width: 100%; */
+        /* height: 100%; */
+        /* overflow: scroll; */
         background-color: #F4FBFF   ;
         
         /* display: none; */
+    }
+    .search-menu-box{
+        /* height: 100%; */
+        /* overflow: scroll; */
     }
 }
 

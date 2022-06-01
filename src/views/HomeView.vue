@@ -13,6 +13,7 @@
     </div>
   </div>
   <div class="filter_and_results">
+    <div @click="filter_toggle = !filter_toggle" v-if="!filter_toggle" class="filter_view_results"><h3>Показать товары: {{this.filteredProducts.length}}</h3></div>
     <filter-menu v-bind:class="{ filter_on: filter_toggle}" v-if="this.$route.name != 'favorit'" :category="parseInt(this.$route.params.id)" :tree_id="parseInt(this.$route.params.tree_id)" :parent="parseInt(this.$route.params.parent)" :products="this.categorizedProducts" :prod_count="filteredProducts.length"/>
     <div class="block-results">
       <h3>Найдено товаров: {{this.filteredProducts.length}}</h3>
@@ -20,8 +21,16 @@
 
       <div class="sort_box">
 <!-- {{GET_FILTER_PRODUCTS_SET}}         -->
-        <div @click="filter_toggle = !filter_toggle" v-if="!filter_toggle" class="filter_view_results">Показать товары </div>
-        <div class="filter_open">
+          <!-- {{Object.keys(this.GET_FILTER_PRODUCTS_SET).length != 0}}
+          {{this.GET_FILTER_PRODUCTS_SET.manufacturer}}
+           {{this.GET_FILTER_PRODUCTS_SET.manufacturer.length > 0}}
+           {{this.GET_FILTER_PRODUCTS_SET.manufacturer[0] == 'reset' }}
+           {{this.GET_FILTER_PRODUCTS_SET.manufacturer.length > 1}} -->
+           <!-- right {{this.GET_FILTER_PRODUCTS_SET.manufacturer && this.GET_FILTER_PRODUCTS_SET.manufacturer.length > 0 && this.GET_FILTER_PRODUCTS_SET.manufacturer[0] == 'reset' && this.GET_FILTER_PRODUCTS_SET.manufacturer.length > 1}} -->
+            <!-- v-bind:class="{ filter_open_active: Object.keys(this.GET_FILTER_PRODUCTS_SET).length >=1 && this.GET_FILTER_PRODUCTS_SET.manufacturer && this.GET_FILTER_PRODUCTS_SET.manufacturer.length > 0 && this.GET_FILTER_PRODUCTS_SET.manufacturer[0] == 'reset' && this.GET_FILTER_PRODUCTS_SET.manufacturer.length > 1 }" -->
+
+          <div class="filter_open">
+
           <img @click="filter_toggle = !filter_toggle" src="../assets/img/filter-icon-crop.png">
         </div>
         <div>Сортировать по: </div>
@@ -62,7 +71,7 @@
       <div class="pagination_box">
         <div class="more" @click="pageMore()">Показать еще</div>
         <div class="pagination">
-          <div class="page" v-bind:class="{ pageactive: pageNumber == page }" v-for="page in pages" :key="page" @click="pageClick(page)">{{page}}</div>
+          <div class="page" v-bind:class="{ pageactive: pageNumber == page }" v-for="page in pages" :key="page" @click="pageClick(page),go_to_top(200)">{{page}}</div>
         </div>
      </div>
     </div>
@@ -104,6 +113,12 @@ export default {
       console.log('сработал емит')
       console.log(this.sort_by)
       console.log(this.CheckedEmit)
+    },
+    go_to_top(pixels){
+      window.scrollTo({
+          top: pixels,
+          behavior: "smooth"
+      });
     },
 
     sort_filtered_products(sort_by) {
@@ -507,16 +522,16 @@ export default {
     document.title = `Нептун 55 ${this.current_category(this.category.id)}`
 	},
   watch: {
-    filter_toggle(){
-            console.log('watch filter_toggle')
-      if(this.filter_toggle == true){
-        console.log('unbblockscroll')
-        document.body.classList.remove('blockscroll')
-      }else{
-        console.log('blockscroll')
-        document.body.classList.add('blockscroll')
-      }
-    },
+    // filter_toggle(){
+    //         console.log('watch filter_toggle')
+    //   if(this.filter_toggle == true){
+    //     console.log('unbblockscroll')
+    //     document.body.classList.remove('blockscroll')
+    //   }else{
+    //     console.log('blockscroll')
+    //     document.body.classList.add('blockscroll')
+    //   }
+    // },
     '$route.params.id': {
       // deep: true,
       // immediate: true,
@@ -825,17 +840,24 @@ export default {
   height: 100%;
   object-fit: contain;
 }
+.filter_open_active{
+  border: #A4E2FD solid 3px;
+  box-shadow: 0px 0px 23px 33px rgba(144,  192,  247, 0.5);
+}
 @media all and (max-width: 720px) {
   .filter_on{
     display: none;
   }
-
+  .filter_and_results{
+    flex-direction: column;
+  }
 
 }
 @media all and (min-width: 720px) {
   .filter_open{
     display: none;
   }
+
 
 
 }

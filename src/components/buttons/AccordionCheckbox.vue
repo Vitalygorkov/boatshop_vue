@@ -85,8 +85,9 @@ export default {
         if(this.choice.length){
           this.FILTERS_PRODUCTS_SET(this.setfilter)
         }else{
+          this.choice = ["reset"]
           this.FILTERS_PRODUCTS_SET(this.setfilter)
-          // this.showForm = true
+          this.showForm = true
         }
 
       },
