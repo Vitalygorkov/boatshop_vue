@@ -4,9 +4,10 @@ import router from './router/router'
 import store from './store'
 import 'material-design-icons-iconfont'
 import Viewer from 'v-viewer'
+import Meta from 'vue-meta';
 
 
-
+Vue.use(Meta);
 Vue.use(Viewer)
 Vue.config.productionTip = false
 // Добавил фильтр для вывода true false

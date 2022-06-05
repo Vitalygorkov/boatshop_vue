@@ -88,6 +88,13 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'HomeView',
+  metaInfo: {
+    title: 'Нептун 55: купить лодки пвх ',
+    meta: [
+      { vmid: 'description', property: 'description', content: 'Купить надувные моторные лодки пвх с доставкой по всей России по самым выгодным ценам, лодочные моторы, распродажи, акции и скидки только в нашем магазине. Лодки ПВХ НДНД для рыбалки гребные и под мотор от проверенных брендов ' },
+      // { vmid: 'og:description', property: 'og:description', content: 'Vue App' },
+    ],
+  },
   data() {
     return {
       productsPerPage: 9,
@@ -519,7 +526,7 @@ export default {
     // await this.FETCH_BOATS()
 
 
-    document.title = `Нептун 55 ${this.current_category(this.category.id)}`
+    document.title = `Нептун 55: купить лодки пвх, ${this.current_category(this.category.id)}`
 	},
   watch: {
     // filter_toggle(){
