@@ -4,8 +4,15 @@ import router from './router/router'
 import store from './store'
 import 'material-design-icons-iconfont'
 import Viewer from 'v-viewer'
-import Meta from 'vue-meta';
+import Meta from 'vue-meta'
+import VueYandexMetrika from 'vue-yandex-metrika'
 
+Vue.use(VueYandexMetrika, {
+  id: 89091089,
+  router: router,
+  env: process.env.NODE_ENV
+  // other options
+})
 
 Vue.use(Meta);
 Vue.use(Viewer)
