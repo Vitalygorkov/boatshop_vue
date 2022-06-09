@@ -39,7 +39,7 @@
 
           <div class="params_compare_item">
             <div class="param_compare_name">Цена</div>
-            <div class="param_compare_numbers" >
+            <div class="param_compare_numbers">
                     <div>
                         <div v-if="this.slide_products_0.length">{{this.slide_products_0[0].price}}</div>
                     </div>
@@ -102,17 +102,17 @@
             <div class="param_compare_name">Цвет</div>
             <div class="param_compare_numbers" >
                     <div>
-                        <div v-if="this.slide_products_0[0].color">{{this.slide_products_0[0].color.name}}</div>
+                        <div v-if="this.slide_products_0[0] && this.slide_products_0[0].color">{{this.slide_products_0[0].color.name}}</div>
                     </div>
                     <div>
-                        <div v-if="this.slide_products_1[0].color">{{this.slide_products_1[0].color.name}}</div>
+                        <div v-if="this.slide_products_1[0] && this.slide_products_1[0].color">{{this.slide_products_1[0].color.name}}</div>
                     </div>
 
-                    <div v-if="this.slide_products_2.length" class="dop-item">
+                    <div v-if="this.slide_products_2[0] && this.slide_products_2.color" class="dop-item">
                         <div v-if="this.slide_products_2[0].color">{{this.slide_products_2[0].color.name}}</div>
                     </div>
 
-                    <div v-if="this.slide_products_3.length" class="dop-item">
+                    <div v-if="this.slide_products_3[0] && this.slide_products_3.color" class="dop-item">
                         <div v-if="this.slide_products_3[0].color">{{this.slide_products_3[0].color.name}}</div>
                     </div>
             </div>

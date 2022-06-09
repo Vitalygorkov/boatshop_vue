@@ -105,7 +105,7 @@ export default {
       filteredProducts: [],
       cats_tags: [],
       paginatedProducts: [],
-      sort_by: 'name_down',
+      sort_by: 'name_up',
       filter_toggle: true,
       
     }

@@ -5,7 +5,7 @@
 <form v-on:submit.prevent class="form_contact">
 <label for="fname">Ваше имя:</label><br>
 <input v-model="first_name" type="text" name="name" ><br>
-<input v-model="last_name" type="hidden" name="last_name"></input>
+<input v-model="last_name" type="hidden" name="last_name">
 <label for="fname">Телефон:</label><br>
 <input v-model="phone" type="text" name="phone" ><br>
 <label for="fname">Город:</label><br>

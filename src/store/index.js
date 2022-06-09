@@ -118,7 +118,9 @@ const store = new Vuex.Store({
     ADD_COMPARE_PRODUCTS(context, params) {
       let cp = [...this.state.compare_products]
       if(params === 'reset'){
+        
         cp = []
+        // console.log('ADD_COMPARE_PRODUCTS action if', cp)
         context.commit('UPDATE_COMPARE_PRODUCTS', cp)
       }else{
         if(cp.includes(params)){
