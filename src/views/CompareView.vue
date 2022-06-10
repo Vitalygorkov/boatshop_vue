@@ -12,12 +12,12 @@
 
         <div class="compare_products_box">
           
-          <div v-for="product in slide_products_0" :key="product.id + 'A'">
+          <div class="compare_products_box_1" v-for="product in slide_products_0" :key="product.id + 'A'">
               <button v-if="filteredProducts.length" class="compare_prev" @click="prevSlide0()">Prev</button>
               <button v-if="filteredProducts.length" class="compare_next" @click="nextSlide0()">Next</button>
               <product-card :product="product"/>
           </div>
-          <div v-for="product in slide_products_1" :key="product.id + 'B'">
+          <div class="compare_products_box_2" v-for="product in slide_products_1" :key="product.id + 'B'">
               <button v-if="filteredProducts.length" class="compare_prev" @click="prevSlide1()">Prev</button>
               <button v-if="filteredProducts.length" class="compare_next" @click="nextSlide1()">Next</button>
               <product-card :product="product"/>
@@ -27,7 +27,7 @@
               <button v-if="filteredProducts.length" class="compare_next" @click="nextSlide2()">Next</button>
               <product-card :product="product"/>
           </div>
-          <div class="dop-item" v-for="product in slide_products_3" :key="product.id + 'D'">
+          <div class="dop-item1" v-for="product in slide_products_3" :key="product.id + 'D'">
               <button v-if="filteredProducts.length" class="compare_prev" @click="prevSlide3()">Prev</button>
               <button v-if="filteredProducts.length" class="compare_next" @click="nextSlide3()">Next</button>
               <product-card :product="product"/>
@@ -720,6 +720,9 @@ export default {
 }
 @media all and (max-width: 820px) {
     .dop-item{
+      display: none;
+    }
+    .dop-item1{
       display: none;
     }
 

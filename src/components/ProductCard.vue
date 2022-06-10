@@ -29,7 +29,7 @@
             <span v-if="product.sale !== 0" class="card-discount-size">{{product.sale}}%</span>
         </div>
         <!-- <div class="card-xarakteristiki card-brona"> card brona это желтая эмблема акция -->
-        <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category) && this.$route.name != 'compare'" class="tabs_parametr">
+        <div v-if="product_boat.length && getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category) && this.$route.name != 'compare'" class="tabs_parametr">
             <div class="tab_parametr">
                 <div class="name_parametr">Длина</div>
                 <div v-if="product_boat.length" class="number_parametr">{{product_boat.length}} СМ</div>
