@@ -108,11 +108,11 @@
                         <div v-if="this.slide_products_1[0] && this.slide_products_1[0].color">{{this.slide_products_1[0].color.name}}</div>
                     </div>
 
-                    <div v-if="this.slide_products_2[0] && this.slide_products_2.color" class="dop-item">
+                    <div v-if="this.slide_products_2[0] && this.slide_products_2[0].color" class="dop-item">
                         <div v-if="this.slide_products_2[0].color">{{this.slide_products_2[0].color.name}}</div>
                     </div>
 
-                    <div v-if="this.slide_products_3[0] && this.slide_products_3.color" class="dop-item">
+                    <div v-if="this.slide_products_3[0] && this.slide_products_3[0].color" class="dop-item">
                         <div v-if="this.slide_products_3[0].color">{{this.slide_products_3[0].color.name}}</div>
                     </div>
             </div>
@@ -616,7 +616,11 @@ export default {
       if(this.$route.name === 'compare'){
         console.log('if in watcher GET_COMPARE_PRODUCTS in compareview')
         this.filteredProducts = [...this.GET_COMPARE_PRODUCTS]
-      }
+        this.currentSLideIndex0 = 0
+        this.currentSLideIndex1 = 1
+        this.currentSLideIndex2 = 2
+        this.currentSLideIndex3 = 3
+        }
     },
      
   }  
