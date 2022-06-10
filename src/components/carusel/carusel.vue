@@ -1,13 +1,12 @@
 <template>
 <div class="wrapper">
-    <button class="prev" @click="prevSlide">Prev</button>
-    <button class="next" @click="nextSlide">Next</button>
+    <button v-if="this.carusel_data && this.carusel_data.length > 1" class="prev" @click="prevSlide">Prev</button>
+    <button v-if="this.carusel_data && this.carusel_data.length > 1"  class="next" @click="nextSlide">Next</button>
     <viewer :images="carusel_data">
     <div class="carusel" :style="{ 'margin-left': '-' + (100 * currentSLideIndex) + '%' }">
         <carusel-item
         v-for="item in carusel_data"
         :item_data="item"
-        :key="item"
         />
     </div>
     </viewer>
