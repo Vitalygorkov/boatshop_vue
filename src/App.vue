@@ -3,9 +3,7 @@
     <keep-alive>
     <Nav/>
     </keep-alive>
-    <keep-alive>
     <router-view/>
-    </keep-alive>
     <keep-alive>
     <Footer/>
     </keep-alive>

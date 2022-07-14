@@ -10,11 +10,11 @@
             <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
           <div class="menu_li_item">
             
-            <div class="menu_name_box" @click="showmenu = true, toggle_last= ''">
+            <div v-bind:class="{ menu_name_box_name_active: category.id == $route.params.id || category.id == $route.params.tree_id}" class="menu_name_box" @click="showmenu = true, toggle_last= ''">
             
             <!-- @mouseover="listOne = true" @mouseleave="listOne = false" -->
             
-                  
+                  <!-- v-bind:class="{ menu_name_box_name_active: category.id == category_tag.id}"  -->
                 <div class="menu_name_box_name">{{category.name}}</div>
                   
             
@@ -166,6 +166,7 @@ export default {
     /* height: 65px;
     overflow: hidden; */
     }
+
     .menu_on{
       height: 50px;
       overflow: hidden;
@@ -179,6 +180,9 @@ export default {
       flex-direction: column;
     /* justify-content: space-between; */
      }
+    /* .menu_list:active{
+      background-color: rgb(214, 202, 202);
+    } */
     .menu_li_item{
       display: flex;
       flex-direction: row;
@@ -294,13 +298,18 @@ export default {
     color: #000;
 }
 .menu li{
+  margin-left: 20px;
   position: relative;
   list-style: none;
 }
 
+
 .menu__list{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+.menu_name_box_name_active{
+  background-color: rgb(214, 202, 202);
 }
 
 /* .sub-menu__list{

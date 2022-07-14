@@ -7,7 +7,7 @@
       <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id, parent: category.parent} }"> 
       <div class="menu_li_item">
         
-          <div class="menu_name_box" @click="show_listOne_func()">
+          <div v-bind:class="{ menu_name_box_name_active: category.id == $route.params.id || category.id == $route.params.tree_id}" class="menu_name_box" @click="show_listOne_func()">
             <!-- @mouseover="listOne = true" @mouseleave="listOne = false"  -->
           {{category.name}} 
           </div>
@@ -107,6 +107,9 @@ export default {
 .menu_arrow_turn{
   transform: rotate(0deg);
   transition: 0.25s;
+}
+.menu_name_box_name_active{
+  background-color: rgb(214, 202, 202);
 }
 
 </style>

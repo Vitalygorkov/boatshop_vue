@@ -1,7 +1,7 @@
 <template>
 <div class="home">
   <div class="categories_path_box">
-    <div class="category_path"><router-link :to="{ name: 'home' }">Главная</router-link></div>
+    <div class="category_path"><router-link to="/category/1">Главная</router-link></div>
     <div class="categories_path" v-if="this.$route.name == 'categorypage'">
       <div v-for="category_path in getcatsparent(this.GET_CATEGORIES, this.category.id)" :key="category_path.id" class="category_path">
         <img src="../assets/img/arrow-right-solid.svg">
@@ -513,6 +513,7 @@ export default {
     SortButton,
   },
   created(){
+    this.$router.push('/category/1')
     // this.get_categorizedProducts(this.category.id)
     // this.get_paginatedProducts()
     // this.getcats_tags(this.GET_CATEGORIES,this.category.id)
