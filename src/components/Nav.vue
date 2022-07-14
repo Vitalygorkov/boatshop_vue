@@ -10,7 +10,7 @@
 				<h3>Email: <a href="mailto:clients@neptun55.ru">clients@neptun55.ru</a></h3>
 			</div>
 			<div class="nept_mini">
-				<router-link :to="{ name: 'home' }">
+				<router-link to="/category/1">
 				<img class="img-logo-mini" src="../assets/img/neptfoto.png" alt="neptfoto">
 				</router-link>
 			</div>
@@ -25,13 +25,13 @@
 		<div class="bloki2">
 
 			<div class="bloki2-sub1">
-				<router-link :to="{ name: 'home' }">
+				<router-link to="/category/1">
 				<img class="img-logo" src="../assets/img/neptfoto.png" alt="neptfoto">
 				</router-link>
 			</div>
 
 			<div class="bloki2-sub1">
-				<router-link :to="{ name: 'home' }">
+				<router-link to="/category/1">
 				<img src="../assets/img/nept55text.png">
 				</router-link>
 			</div>

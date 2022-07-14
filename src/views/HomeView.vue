@@ -489,6 +489,7 @@ export default {
   },
   },
   mounted() {
+    this.$router.push('/category/6')
     console.log('mounted homeview')
     this.pagefirst()
     this.get_categorizedProducts(this.category.id)
@@ -503,6 +504,8 @@ export default {
     // this.FILTERS_PRODUCTS_SET({reset: true})
     // this.get_categorizedProducts()
     // this.getcats_tags(this.GET_CATEGORIES,this.$route.params.id)
+    this.$router.push('/category/1')
+    this.get_paginatedProducts()
     console.log('mounted')
     // document.title = `Нептун 55 ${this.current_category(this.category.id)}`
   },
@@ -513,7 +516,6 @@ export default {
     SortButton,
   },
   created(){
-    this.$router.push('/category/1')
     // this.get_categorizedProducts(this.category.id)
     // this.get_paginatedProducts()
     // this.getcats_tags(this.GET_CATEGORIES,this.category.id)
