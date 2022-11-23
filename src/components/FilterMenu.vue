@@ -13,8 +13,8 @@
         <accordion-section-range parametr="boat_weight" title="Вес лодки" :min_value="getmin('boat_weight')" :max_value="getmax('boat_weight')" :step="1" unitType="КГ"/>
         <accordion-section-range parametr="complete_set_weight" title="Вес полного комплекта" :min_value="getmin('complete_set_weight')" :max_value="getmax('complete_set_weight')" :step="1" unitType="КГ"/>
         <accordion-section-range parametr="maximum_motor_power" title="Макс. мощность мотора" :min_value="getmin('maximum_motor_power')" :max_value="getmax('maximum_motor_power')" :step="1" unitType="ЛС"/>
-        <accordion-section-range parametr="fabric_thickness_side" title="Плотность ткни борта" :min_value="getmin('fabric_thickness_side')" :max_value="getmax('fabric_thickness_side')" :step="1" unitType="Г/м2"/>
-        <accordion-section-range parametr="fabric_thickness_bottom" title="Плотность ткни дна" :min_value="getmin('fabric_thickness_bottom')" :max_value="getmax('fabric_thickness_bottom')" :step="1" unitType="Г/м2"/>
+        <accordion-section-range parametr="fabric_thickness_side" title="Плотность ткани борта" :min_value="getmin('fabric_thickness_side')" :max_value="getmax('fabric_thickness_side')" :step="1" unitType="Г/м2"/>
+        <accordion-section-range parametr="fabric_thickness_bottom" title="Плотность ткани дна" :min_value="getmin('fabric_thickness_bottom')" :max_value="getmax('fabric_thickness_bottom')" :step="1" unitType="Г/м2"/>
         <accordion-section-range parametr="inflatable_compartments" title="Кол-во надувных отсеков" :min_value="getmin('inflatable_compartments')" :max_value="getmax('inflatable_compartments')" :step="1" unitType="ШТ"/>
         <accordion-section-range parametr="passenger_capacity" title="Пассажировместимость" :min_value="getmin('passenger_capacity')" :max_value="getmax('passenger_capacity')" :step="1" unitType="Чел"/>
         <accordion-checkbox parametr="manufacturer" title="Производитель" :points="get_manufacturers()"/>

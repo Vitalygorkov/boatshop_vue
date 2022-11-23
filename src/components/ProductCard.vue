@@ -5,11 +5,15 @@
             <img src="../assets/img/like.png">
         <!-- </a> -->
     </div>
+
     <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="card-sravni" v-bind:class="{ card_sravni_active: GET_COMPARE_PRODUCTS.includes(product) || GET_COMPARE_PRODUCTS.includes(product_boat), compare_img_icon : this.$route.name == 'compare' }" @click="add_compare()" >
         <!-- <a href="#"> -->
             <img src="../assets/img/sravni.png">
+           
         <!-- </a> -->
     </div>
+    <div class="ksravn">сравнить</div> 
+
       <router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
     <!-- <a :href="product.product_abs_url"></a> -->
       <img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image">
@@ -340,7 +344,7 @@ export default {
     background: rgb(166, 234, 246);
     padding: 5px;
     border-radius: 30px;
-    opacity: 0;
+    opacity: 0.75;
     transition: opacity .5s ease-in;
     z-index: 1;
   }
@@ -357,7 +361,7 @@ export default {
     background: rgb(174, 234, 251);
     padding: 5px;
     border-radius: 30px;
-    opacity: 0;
+    opacity: 0.75;
     transition: opacity .5s ease-in-out;
     z-index: 1;
   }
@@ -368,6 +372,16 @@ export default {
   }
   .card-sravni:hover{
     box-shadow: 0 0 5px rgb(166, 234, 246);
+  }
+  .ksravn{
+    font-style: italic;
+    word-wrap: normal;
+    height: 2px;
+    width: 2px;
+    position: absolute;
+    top: 215px;
+    left: 1px;
+    
   }
   .compare_img_icon{
     margin-top: -160px;

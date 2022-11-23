@@ -45,7 +45,10 @@
                 <b>Бесплатный звонок:</b>
             </ul>
             <div class="obratn-zvonok">
-                <a href="#">ОБРАТНЫЙ ЗВОНОК</a>
+              <router-link :to="{ name: 'contactformpage'}">
+              ОБРАТНЫЙ ЗВОНОК
+              </router-link>
+                
             </div>
         </div>
         <div class="footer4">
