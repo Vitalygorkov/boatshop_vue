@@ -318,7 +318,7 @@ export default {
       console.log(this.GET_PRODUCTS)
       this.get_recomend_products()
       this.get_accessories_products()
-      document.title = `Купить лодки и аксессуары:${this.product.name} в магазине Нептун 55`
+      document.title = `${this.product.name}, купить в магазине Нептун 55`
     },
     watch: {
       '$route.params.id':{
@@ -359,7 +359,7 @@ export default {
             }
             this.get_recomend_products()
             this.get_accessories_products()
-            document.title = `Купить лодки и аксессуары:${this.product.name} в магазине Нептун 55`
+            document.title = `${this.product.name}, купить в магазине Нептун 55`
           }
         },
       },

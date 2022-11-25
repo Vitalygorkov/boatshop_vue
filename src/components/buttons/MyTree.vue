@@ -7,23 +7,22 @@
         
         <li v-bind:class="{ menu_li_on: showmenu }" v-for="category in treeData" v-if="category.level ==0" :key="category.id">
           <!-- <a href="#"  @mouseover="listOne = true" @mouseleave="listOne = false" @click="changeLastCategory(category.id,listOne)"> -->
-            <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
           <div class="menu_li_item">
+            <div class="name_box_for_width">
+            <router-link :to="{ name: 'categorypage', params: {id: category.id, tree_id: category.tree_id} }" >
             
-            <div v-bind:class="{ menu_name_box_name_active: category.id == $route.params.id || category.id == $route.params.tree_id}" class="menu_name_box" @click="showmenu = true, toggle_last= ''">
-            
+              <div v-bind:class="{ menu_name_box_name_active: category.id == $route.params.id || category.id == $route.params.tree_id}" class="menu_name_box" @click="showmenu = true, toggle_last= ''">
             <!-- @mouseover="listOne = true" @mouseleave="listOne = false" -->
             
                   <!-- v-bind:class="{ menu_name_box_name_active: category.id == category_tag.id}"  -->
                 <div class="menu_name_box_name">{{category.name}}</div>
-                  
-            
+              </div>
+            </router-link>
             </div>
-            
+
             <div @click="toggle_item(category.id)" class="menu_arrow_box"><img v-if="getcatschildren(treeData,category.id).length" class="menu_arrow" v-bind:class="{ menu_arrow_turn: category.id == toggle_last && listOne}" src="../../assets/img/arrow.png"></div>
             <!-- </a> -->
           </div>
-          </router-link>
         <my-node-tree :toggle_item_prop="{id: toggle_last, toggle: listOne}" :node="treeData" :parent="category.id" @show_listOne="show_listOne_func"></my-node-tree>
          <!-- @show_listOne="show_listOne_func" -->
         </li>
@@ -76,7 +75,8 @@ export default {
       return arr
     },
     toggle_item(item_id){
-      // console.log('toggle item')
+      console.log('toggle item parent')
+      console.log(item_id)
       this.listOne =!this.listOne
       this.toggle_last = item_id
     },
@@ -112,6 +112,9 @@ export default {
 .blockscroll{
   overflow: hidden;
 }
+.name_box_for_width{
+      width: 100%;
+    }
 @media all and (max-width: 720px) {
     /* .menu__list>li:hover .sub-menu__list{
       display: block;
@@ -287,7 +290,7 @@ export default {
 
 
 .menu{
-  width: 100%;
+  min-width: 100%;
 }
 .menu img{
   width: 15px;

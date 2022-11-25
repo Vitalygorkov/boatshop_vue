@@ -88,13 +88,13 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'HomeView',
-  metaInfo: {
-    title: 'Нептун 55: купить лодки пвх ',
-    meta: [
-      { vmid: 'description', property: 'description', content: 'Купить надувную моторную лодку пвх с доставкой по всей России по самым выгодным ценам, лодочные моторы, распродажи, акции и скидки только в нашем магазине. Лодки ПВХ НДНД для рыбалки гребные и под мотор от проверенных брендов ' },
-      // { vmid: 'og:description', property: 'og:description', content: 'Vue App' },
-    ],
-  },
+  // metaInfo: {
+  //   title: 'Купить лодку пвх в магазине нептун 55',
+  //   meta: [
+  //     // { vmid: 'description', property: 'description', content: 'Лодки пвх с доставкой по всей России по самым выгодным ценам, лодочные моторы, распродажи, акции и скидки только в нашем магазине. Лодки ПВХ НДНД для рыбалки гребные и под мотор от проверенных брендов ' },
+  //     // { vmid: 'og:description', property: 'og:description', content: 'Vue App' },
+  //   ],
+  // },
   data() {
     return {
       productsPerPage: 9,
@@ -469,10 +469,17 @@ export default {
     },
     current_category(id){
       if(id){
+        // console.log('THIS current_category function',id)
         const result = this.GET_CATEGORIES.filter(function(item) {
             return item.id == id
             })
-        if(result[0] !== undefined){
+        if(result[0].name == undefined){
+          return ''
+        }
+        else if(result[0].name == 'Лодки'){
+          return ''
+        }
+        else{
           return result[0].name
         }
         
@@ -529,7 +536,7 @@ export default {
     // await this.FETCH_BOATS()
 
 
-    document.title = `Нептун 55: купить лодки пвх, ${this.current_category(this.category.id)}`
+    document.title = `Лодки, ${this.current_category(this.category.id)} купить в магазине Нептун 55`
 	},
   watch: {
     // filter_toggle(){
@@ -559,14 +566,13 @@ export default {
           this.get_paginatedProducts()  
           // console.log('watch')
           // Лодки: купить по выгодным ценам в магазине 
-          document.title = `Лодки ПВХ, ${this.current_category(this.category.id)} купить по выгодным ценам в магазине Нептун 55`
+          document.title = `Лодки, ${this.current_category(this.category.id)} купить в магазине Нептун 55`
         }else if(this.$route.name === 'home') {
           console.log('watcher homeviews выполняется else домашней страницы')
           this.FILTERS_PRODUCTS_SET({reset: true})
           this.pagefirst()
           this.get_categorizedProducts()
           this.get_paginatedProducts()  
-          document.title = `Лодки: купить по выгодным ценам в магазине Нептун 55`
         }
         // else if(this.$route.name === 'favorit'){
         //   console.log('watcher homeviews выполняется else страницы понравившихся товаров')

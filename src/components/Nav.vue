@@ -72,7 +72,7 @@
 					</div>
 					<router-link :to="{ name: 'compare' }">
 					<div class="bloki2-text">
-						СРАВНИТЬ
+						СРАВНЕНИЕ
 					</div>
 					</router-link>
 				</div>
@@ -256,7 +256,7 @@ body{
 }
 .obshii{
     width: 100%;
-    min-height: 155px;
+    min-height: 90px;
 
 }
 .bloki1{
@@ -294,10 +294,16 @@ body{
 
 .bloki2{
     max-width: 100%;
-    max-height: 90px;
+    max-height: 65px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center; 
+
+	top: 0;
+	min-width: 100%;
+	background-color: rgba(255, 255, 255, 0.8);
+	z-index: 50;
+	position: fixed;
 }
 .bloki2-sub1{
     display: flex;
@@ -305,7 +311,9 @@ body{
     justify-content: center;
 }
 .bloki2-sub1 img{
-	min-width: 100%;
+	/* min-width: 100%; */
+
+	width: 70%;
 }
 .cart_compare_heart{
 	/* opacity: 0.5; */
@@ -318,7 +326,20 @@ body{
     flex-direction: row;
 	flex-wrap: nowrap;
     margin-right: 10px;
+
+	/* top: 0;
+	right: 0;
+	background-color: rgba(255, 255, 255, 0.8);
+	opacity: 0.5;
+	transition: 0.5s;
+	z-index: 50;
+	position: fixed; */
 }
+/* .cart_compare_heart:hover{
+	background-color: rgba(255, 255, 255, 0.8);
+	opacity: 1;
+	transition: 0.5s;
+} */
 .cart_compare_heart a{
 	opacity: 0.5;
 	text-decoration: none;
@@ -376,7 +397,7 @@ body{
 }
 
 .bloki3{
-    width: 90%;
+    width: 100%;
     height: 45px;
     display: flex;
     flex-direction: row;
@@ -391,7 +412,8 @@ body{
   .d7{
 	  margin-left: 20px;
 	  display: flex;
-	  background: #F4FBFF;
+	  background-color: rgba(255, 255, 255, 0.0);
+	  /* background: #F4FBFF; */
 	  justify-content: left;
 	  width: 300px;
 	}
@@ -485,8 +507,8 @@ body{
 		z-index: 22;
 	}
 	.obshii{
-		margin-top:50px;
-		min-height: 100px;
+		margin-top: 30px;
+		min-height: 70px;
 	}
 	.bloki3{
 		height: 0;
@@ -506,6 +528,11 @@ body{
 	.bloki2{
 		flex-wrap: wrap;
 		justify-content: space-around;
+
+		position: relative;
+	}
+	.search_form{
+		display: none;
 	}
 }
 @media all and (max-width: 480px) {
@@ -522,6 +549,10 @@ body{
 		position: relative;
 		max-height: 140px;
 	}
+	.search_form{
+		display: none;
+	}
+
 }
 @media all and (min-width: 480px) {
 	.nept_mini{

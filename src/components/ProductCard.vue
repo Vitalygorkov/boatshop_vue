@@ -12,12 +12,14 @@
            
         <!-- </a> -->
     </div>
-    <div class="ksravn">сравнить</div> 
+      <div v-if="getcatschildren(GET_CATEGORIES, 1).some(elem => elem == product.category)" class="ksravn" v-bind:class="{ ksravn_active: GET_COMPARE_PRODUCTS.includes(product) || GET_COMPARE_PRODUCTS.includes(product_boat), compare_img_icon : this.$route.name == 'compare' }" @click="add_compare()" >
 
-      <router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }">
+      в сравнение</div> 
+
+      <!-- <router-link :to="{ name: 'productpage', params:{ id: product.id, category: product.category } }"> -->
     <!-- <a :href="product.product_abs_url"></a> -->
       <img :src="GET_MEDIA_URL+product.image.split('media')[1]" alt="" class="card-image">
-      </router-link>
+      <!-- </router-link> -->
     <div class="card-body">
         <div class="card-title" v-bind:class="{ cardsale: product.sale !== 0 }">
             <!-- <a :href="product.product_abs_url"></a> -->
@@ -269,7 +271,7 @@ export default {
     font-family: montserrat;
   }
   .card-image{
-    width: 100%;
+    max-width: 100%;
     max-height: 250px;
     transition: 1s;
    }
@@ -339,7 +341,7 @@ export default {
   }
   .card-heart{
     position: absolute;
-    top: 170px;
+    top: 5%;
     right: 10px;
     background: rgb(166, 234, 246);
     padding: 5px;
@@ -347,6 +349,7 @@ export default {
     opacity: 0.75;
     transition: opacity .5s ease-in;
     z-index: 1;
+    cursor: pointer;
   }
   .card:hover{
     box-shadow: 0 0 5px rgb(132, 229, 246);
@@ -356,14 +359,15 @@ export default {
   }
   .card-sravni{
     position: absolute;
-    top: 170px;
+    top: 19%;
     left: 8px;
     background: rgb(174, 234, 251);
     padding: 5px;
     border-radius: 30px;
-    opacity: 0.75;
+    opacity: 0.65;
     transition: opacity .5s ease-in-out;
     z-index: 1;
+    cursor: pointer;
   }
   .card_sravni_active{
     background-color: #0ab3fc;
@@ -374,14 +378,22 @@ export default {
     box-shadow: 0 0 5px rgb(166, 234, 246);
   }
   .ksravn{
+    cursor: pointer;
     font-style: italic;
     word-wrap: normal;
-    height: 2px;
-    width: 2px;
     position: absolute;
-    top: 215px;
+    top: 30%;
     left: 1px;
-    
+    background: rgb(174, 234, 251);
+    padding: 5px;
+    border-radius: 30px;
+    opacity: 0.75;
+    z-index: 10;
+  }
+  .ksravn_active{
+    background-color: #0ab3fc;
+    transition: 0.3s ease-in-out;
+    opacity: 1;
   }
   .compare_img_icon{
     margin-top: -160px;

@@ -581,7 +581,7 @@ export default {
   mounted() {
   console.log('mounted compareview')
   this.filteredProducts = [...this.GET_COMPARE_PRODUCTS]
-  document.title = `Нептун 55: Сравнение. Лодки ПВХ купить по выгодным ценам`
+  document.title = `Сравнение лодок ПВХ для покупки в магазине нептун 55`
   // this.get_categorizedProducts(this.category.id)
   // this.get_paginatedProducts()
   // if (this.GET_CATEGORIES){
@@ -607,7 +607,7 @@ export default {
         if (this.$route.name === 'compare') {
           console.log('watcher compare выполняется if')
           this.filteredProducts = [...this.GET_COMPARE_PRODUCTS]
-          document.title = `Нептун 55: Сравнение. Лодки ПВХ купить по выгодным ценам`
+          document.title = `Сравнение лодок ПВХ для покупки в магазине нептун 55`
         }
       }
     },

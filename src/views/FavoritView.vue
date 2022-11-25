@@ -167,7 +167,7 @@ export default {
   this.pagefirst()
   this.filteredProducts = [...this.GET_HEART_PRODUCTS]
   this.get_paginatedProducts() 
-  document.title = `Нептун 55: Избранное.Лодки ПВХ купить по выгодным ценам`
+  document.title = `Избранные товары в магазине лодок нептун55`
   // this.get_categorizedProducts(this.category.id)
   // this.get_paginatedProducts()
   // if (this.GET_CATEGORIES){
@@ -194,7 +194,7 @@ export default {
           this.pagefirst()
           this.filteredProducts = [...this.GET_HEART_PRODUCTS]
           this.get_paginatedProducts() 
-          document.title = `Нептун 55: Избранное.Лодки ПВХ купить по выгодным ценам`
+          document.title = `Избранные товары в магазине лодок нептун55`
         }
       }
     },
