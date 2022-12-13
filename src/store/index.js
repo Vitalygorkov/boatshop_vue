@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     // last_category: [],
     heart_products: [],
     compare_products: [],
+    blog_categories: [],
   },
   mutations: {
     UPDATE_HEART_PRODUCTS(state, heart_products) {
@@ -25,6 +26,9 @@ const store = new Vuex.Store({
     },
     UPDATE_COMPARE_PRODUCTS(state, compare_products) {
       state.compare_products = compare_products
+    },
+    UPDATE_BLOG_CATEGORIES(state, blog_categories) {
+      state.products = blog_categories
     },
     UPDATE_PRODUCTS(state, products) {
       state.products = products
@@ -52,6 +56,16 @@ const store = new Vuex.Store({
     
   },
   actions: {
+    async FETCH_BLOG_CATEGORIES(ctx) {
+      console.log('запрос категорий блога')
+      console.log(`${this.state.backendUrl}/CategoryBlog/`)
+      const res = await fetch(
+        `${this.state.backendUrl}/CategoryBlog/`
+      )
+      console.log('запрос категорий блога выполнен')
+      const blog_categories = await res.json()
+      ctx.commit('UPDATE_BLOG_CATEGORIES', blog_categories)
+    },
     async FETCH_PRODUCTS(ctx) {
       console.log('запрос товаров')
       const res = await fetch(
@@ -177,6 +191,10 @@ const store = new Vuex.Store({
     },
     GET_MEDIA_URL: state => {
       return state.mediaUrl
+    },
+    GET_BLOG_CATEGORIES: state => {
+      console.log('Геттер катогорий блога')
+      return state.blog_categories
     },
     GET_PRODUCTS: state => {
       return state.products

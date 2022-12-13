@@ -5,6 +5,8 @@ import ProductPage from '../views/ProductPage.vue'
 import ContactView from '../views/ContactView.vue'
 import FavoritView from '../views/FavoritView.vue'
 import CompareView from '../views/CompareView.vue'
+import BlogView from '../views/BlogView.vue'
+import PostView from '../views/PostView.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +45,16 @@ const routes = [
     path: '/contactform/',
     name: 'contactformpage',
     component: ContactView
+  },
+  {
+    path: '/blog',
+    name: 'blog',
+    component: BlogView
+  }, 
+  {
+    path: '/post/:id',
+    name: 'post',
+    component: PostView
   }, 
   // {
   //   path: '/about',
