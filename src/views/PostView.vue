@@ -21,7 +21,7 @@
                 <h2 class="card-title__article">{{post.title}}</h2>
                 </div>
 
-            <div v-html="post.content"></div>
+            <div class="post_body" v-html="post.content"></div>
             <div class="card-footer__article">
                 <div class="article__date">{{post.created_ad.slice(0,10)}}</div>
                 <div class="article__author">Автор: {{post.author_name}}</div>
@@ -44,6 +44,7 @@ export default {
         return {
             blog_categories: [],
             post: [],
+            post_title: ''
     
             }
     },
@@ -86,6 +87,7 @@ export default {
         async get_post () {
             console.log("начало computed get_post")
             this.post = await this.straight_fetch_blog_post()
+            this.post_title = this.post.title
             // console.log(cat_obj)    
             console.log("начало computed get_post")
             return this.post
@@ -103,17 +105,12 @@ export default {
         console.log('mounted')
     },
     watch: {
-        // blog_categories(){
-        //     сonsole.log('ВОТЧЕР blog_categories')
-        // }
-        // GET_BLOG_CATEGORIES(){
-        //     console.log('вотчер геттера категорий блога')
-        //     this.blog_categories = [...this.GET_BLOG_CATEGORIES]
-        // },
-        // FETCH_BLOG_CATEGORIES(){
-        //     console.log('вотчер экшина категорий блога')
-        //     this.blog_categories = [...this.GET_BLOG_CATEGORIES]
-        // }
+        post_title(){
+                // console.log('post_title handler')
+                // console.log(this.post_title)
+                document.title = `${this.post_title},Блог магазина лодок пвх нептун 55`
+            }       
+
     },
 
 }
@@ -196,6 +193,9 @@ body {
     color: rgb(2, 38, 71);
     font-weight: 700;
     padding: 0px 20px ;
+}
+.post_body{
+    max-width: 90%;
 }
 .card-footer__article{
     display: flex;
